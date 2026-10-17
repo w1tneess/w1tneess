@@ -1,0 +1,26 @@
+name: Update profile
+on:
+  schedule: [{ cron: '17 */12 * * *' }]
+  workflow_dispatch:
+  push:
+    paths: [now.md, scripts/update.mjs, scripts/typeset.mjs]
+permissions:
+  contents: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node scripts/update.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Commit
+        run: |
+          git add -A README.md assets/generated
+          git diff --cached --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update generated profile blocks"
+          git push
