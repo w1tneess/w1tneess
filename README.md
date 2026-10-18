@@ -54,18 +54,18 @@ The most recently pushed public repositories, read from GitHub.
 <table>
 <tr>
 <td width="50%" valign="top">
-<a href="https://github.com/w1tneess/supportadvaita"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-1-7bf21383-dark.svg"><img src="assets/generated/repo-1-7bf21383-light.svg" alt="supportadvaita, 17 Oct 2026" height="61"></picture></a><br>
-Merge pull request #1 from w1tneess/audit/payment-compl…
+<a href="https://github.com/w1tneess/declutter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-1-f86b8a1b-dark.svg"><img src="assets/generated/repo-1-f86b8a1b-light.svg" alt="declutter, 16 Oct 2026" height="61"></picture></a><br>
+Merge pull request #19 from w1tneess/fix-duplicate-supp…
 </td>
 <td width="50%" valign="top">
-<a href="https://github.com/w1tneess/advaita-website"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-2-d9f0e068-dark.svg"><img src="assets/generated/repo-2-d9f0e068-light.svg" alt="advaita-website, 16 Oct 2026" height="61"></picture></a><br>
-fix: sync Vite 8 lockfile and dependencies
+<a href="https://github.com/w1tneess/supportadvaita"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-2-7bf21383-dark.svg"><img src="assets/generated/repo-2-7bf21383-light.svg" alt="supportadvaita, 17 Oct 2026" height="61"></picture></a><br>
+Merge pull request #1 from w1tneess/audit/payment-compl…
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="https://github.com/w1tneess/declutter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-3-f86b8a1b-dark.svg"><img src="assets/generated/repo-3-f86b8a1b-light.svg" alt="declutter, 16 Oct 2026" height="61"></picture></a><br>
-Merge pull request #19 from w1tneess/fix-duplicate-supp…
+<a href="https://github.com/w1tneess/advaita-website"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-3-e5480731-dark.svg"><img src="assets/generated/repo-3-e5480731-light.svg" alt="advaita-website, 18 Oct 2026" height="61"></picture></a><br>
+Merge pull request #27: audit pass (security, SEO, a11y…
 </td>
 <td width="50%" valign="top">
 <a href="https://github.com/w1tneess/osho-documentary"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-4-3dd2b994-dark.svg"><img src="assets/generated/repo-4-3dd2b994-light.svg" alt="osho-documentary, 16 Oct 2026" height="61"></picture></a><br>
@@ -78,11 +78,11 @@ chore(deps): bump @typescript-eslint/parser to 8.71.2 (…
 <h2><a name="field-notes"></a><picture><source media="(prefers-color-scheme: dark)" srcset="assets/headings/field-notes-dark.svg"><img src="assets/headings/field-notes-light.svg" alt="Field notes" height="46"></picture></h2>
 
 <!--WRITING:START-->
-<a href="https://advaitachandra.in/philosophy#note-krishnamurti-observer"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-1-1220c730-dark.svg"><img src="assets/generated/note-1-1220c730-light.svg" alt="1. On Krishnamurti and the Mechanics of the Observer, 14 Nov 2025" height="100"></picture></a>
+<a href="https://advaitachandra.in/philosophy/krishnamurti-observer"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-1-1220c730-dark.svg"><img src="assets/generated/note-1-1220c730-light.svg" alt="1. On Krishnamurti and the Mechanics of the Observer, 14 Nov 2025" height="100"></picture></a>
 
-<a href="https://advaitachandra.in/philosophy#note-camus-absurd"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-2-75ab4545-dark.svg"><img src="assets/generated/note-2-75ab4545-light.svg" alt="2. Camus: The Absurd as an Epistemic Baseline, 2 Oct 2025" height="100"></picture></a>
+<a href="https://advaitachandra.in/philosophy/camus-absurd"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-2-75ab4545-dark.svg"><img src="assets/generated/note-2-75ab4545-light.svg" alt="2. Camus: The Absurd as an Epistemic Baseline, 2 Oct 2025" height="100"></picture></a>
 
-<a href="https://advaitachandra.in/philosophy#note-dostoevsky-underground"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-3-baa4f1d8-dark.svg"><img src="assets/generated/note-3-baa4f1d8-light.svg" alt="3. Dostoevsky on Rational Egoism and Irrational Will, 19 Aug 2025" height="100"></picture></a>
+<a href="https://advaitachandra.in/philosophy/dostoevsky-underground"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-3-baa4f1d8-dark.svg"><img src="assets/generated/note-3-baa4f1d8-light.svg" alt="3. Dostoevsky on Rational Egoism and Irrational Will, 19 Aug 2025" height="100"></picture></a>
 <!--WRITING:END-->
 
 Working through Krishnamurti, Camus, Dostoevsky, Ramana Maharshi and Osho.
