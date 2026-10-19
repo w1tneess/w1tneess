@@ -54,18 +54,18 @@ The most recently pushed public repositories, read from GitHub.
 <table>
 <tr>
 <td width="50%" valign="top">
-<a href="https://github.com/w1tneess/declutter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-1-f86b8a1b-dark.svg"><img src="assets/generated/repo-1-f86b8a1b-light.svg" alt="declutter, 16 Oct 2026" height="61"></picture></a><br>
-Merge pull request #19 from w1tneess/fix-duplicate-supp…
+<a href="https://github.com/w1tneess/advaita-website"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-1-e5480731-dark.svg"><img src="assets/generated/repo-1-e5480731-light.svg" alt="advaita-website, 18 Oct 2026" height="61"></picture></a><br>
+Merge pull request #28 from w1tneess/hardening/site-sec…
 </td>
 <td width="50%" valign="top">
-<a href="https://github.com/w1tneess/supportadvaita"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-2-7bf21383-dark.svg"><img src="assets/generated/repo-2-7bf21383-light.svg" alt="supportadvaita, 17 Oct 2026" height="61"></picture></a><br>
-Merge pull request #1 from w1tneess/audit/payment-compl…
+<a href="https://github.com/w1tneess/declutter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-2-f86b8a1b-dark.svg"><img src="assets/generated/repo-2-f86b8a1b-light.svg" alt="declutter, 16 Oct 2026" height="61"></picture></a><br>
+Merge pull request #19 from w1tneess/fix-duplicate-supp…
 </td>
 </tr>
 <tr>
 <td width="50%" valign="top">
-<a href="https://github.com/w1tneess/advaita-website"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-3-e5480731-dark.svg"><img src="assets/generated/repo-3-e5480731-light.svg" alt="advaita-website, 18 Oct 2026" height="61"></picture></a><br>
-Merge pull request #27: audit pass (security, SEO, a11y…
+<a href="https://github.com/w1tneess/supportadvaita"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-3-7bf21383-dark.svg"><img src="assets/generated/repo-3-7bf21383-light.svg" alt="supportadvaita, 17 Oct 2026" height="61"></picture></a><br>
+Merge pull request #1 from w1tneess/audit/payment-compl…
 </td>
 <td width="50%" valign="top">
 <a href="https://github.com/w1tneess/osho-documentary"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-4-3dd2b994-dark.svg"><img src="assets/generated/repo-4-3dd2b994-light.svg" alt="osho-documentary, 16 Oct 2026" height="61"></picture></a><br>
@@ -136,7 +136,7 @@ philosophy, history, photography, creative computing.
 <div align="right">
 
 <!--STAMP:START-->
-<sub>Generated 18 Oct 2026 by <a href="https://github.com/w1tneess/w1tneess/blob/main/.github/workflows/update.yml">a scheduled action</a></sub>
+<sub>Generated 19 Oct 2026 by <a href="https://github.com/w1tneess/w1tneess/blob/main/.github/workflows/update.yml">a scheduled action</a></sub>
 <!--STAMP:END-->
 
 </div>
