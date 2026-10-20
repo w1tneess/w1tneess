@@ -55,7 +55,7 @@ The most recently pushed public repositories, read from GitHub.
 <tr>
 <td width="50%" valign="top">
 <a href="https://github.com/w1tneess/declutter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-1-38b1a8d5-dark.svg"><img src="assets/generated/repo-1-38b1a8d5-light.svg" alt="declutter, 19 Oct 2026" height="61"></picture></a><br>
-Merge pull request #24 from w1tneess/r5-ui-polish
+Merge pull request #27 from w1tneess/roadmap-0.2.1
 </td>
 <td width="50%" valign="top">
 <a href="https://github.com/w1tneess/advaita-website"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-2-e5480731-dark.svg"><img src="assets/generated/repo-2-e5480731-light.svg" alt="advaita-website, 18 Oct 2026" height="61"></picture></a><br>
@@ -136,7 +136,7 @@ philosophy, history, photography, creative computing.
 <div align="right">
 
 <!--STAMP:START-->
-<sub>Generated 19 Oct 2026 by <a href="https://github.com/w1tneess/w1tneess/blob/main/.github/workflows/update.yml">a scheduled action</a></sub>
+<sub>Generated 20 Oct 2026 by <a href="https://github.com/w1tneess/w1tneess/blob/main/.github/workflows/update.yml">a scheduled action</a></sub>
 <!--STAMP:END-->
 
 </div>
