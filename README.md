@@ -54,12 +54,12 @@ The most recently pushed public repositories, read from GitHub.
 <table>
 <tr>
 <td width="50%" valign="top">
-<a href="https://github.com/w1tneess/declutter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-1-e035cdad-dark.svg"><img src="assets/generated/repo-1-e035cdad-light.svg" alt="declutter, 20 Oct 2026" height="61"></picture></a><br>
-Merge pull request #29 from w1tneess/release-0.2.2
+<a href="https://github.com/w1tneess/advaita-website"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-1-f64ffde5-dark.svg"><img src="assets/generated/repo-1-f64ffde5-light.svg" alt="advaita-website, 22 Oct 2026" height="61"></picture></a><br>
+Merge pull request #29: drop temporary table-read fallb…
 </td>
 <td width="50%" valign="top">
-<a href="https://github.com/w1tneess/advaita-website"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-2-e5480731-dark.svg"><img src="assets/generated/repo-2-e5480731-light.svg" alt="advaita-website, 18 Oct 2026" height="61"></picture></a><br>
-Merge pull request #28 from w1tneess/hardening/site-sec…
+<a href="https://github.com/w1tneess/declutter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-2-e035cdad-dark.svg"><img src="assets/generated/repo-2-e035cdad-light.svg" alt="declutter, 20 Oct 2026" height="61"></picture></a><br>
+Merge pull request #29 from w1tneess/release-0.2.2
 </td>
 </tr>
 <tr>
