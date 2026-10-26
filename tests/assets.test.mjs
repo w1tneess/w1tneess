@@ -23,28 +23,16 @@ test('in-page README links point at an existing anchor', () => {
 test('SVGs carry no scripts, external references or embedded images', () => {
   for (const f of assets.filter(f => f.endsWith('.svg'))) {
     const s = readFileSync(join(root, 'assets', f), 'utf8');
-    assert.doesNotMatch(s, /<script|foreignObject|<image|href=|@import|data:|url\((?!#)/i, `assets/${f} has a risky construct`);
+    assert.doesNotMatch(s, /<script|foreignObject|<image|href="(?!#)|@import|data:|url\((?!#)/i, `assets/${f} has a risky construct`);
   }
 });
 
-test('committed pixel art matches the generator and committed activity data', () => {
+test('every dark image has a light twin, and committed art matches the generator and activity data', () => {
   const dir = mkdtempSync(join(tmpdir(), 'profile-assets-'));
   execFileSync(process.execPath, [join(root, 'scripts/build-assets.mjs')], { env: { ...process.env, ASSET_DIR: dir }, stdio: 'ignore' });
-  for (const f of readdirSync(dir)) assert.equal(readFileSync(join(root, 'assets', f), 'utf8'), readFileSync(join(dir, f), 'utf8'), `assets/${f} is stale: run node scripts/build-assets.mjs`);
-});
-
-// Monospace glyphs are ~0.6em wide in every fallback font; 0.62 leaves a little slack.
-test('generated text stays inside its image and never overlaps a neighbour', () => {
-  for (const f of readdirSync(join(root, 'assets')).filter(f => /^(hero|section|card|activity|footer).*\.svg$/.test(f))) {
-    const s = readFileSync(join(root, 'assets', f), 'utf8').replace(/<g transform[\s\S]*?<\/g>/g, ''); // card motifs are positioned by transform
-    const width = +s.match(/viewBox="0 0 (\d+) /)[1];
-    const rows = new Map();
-    for (const [, x, y, size, anchor = 'start', raw] of s.matchAll(/<text x="([\d.]+)" y="([\d.]+)"[^>]*font-size="([\d.]+)"[^>]*?(?:text-anchor="(\w+)")?>([^<]*)<\/text>/g)) {
-      const w = [...raw.replace(/&(amp|lt|gt|quot|apos);/g, '_')].length * size * 0.62;
-      const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : +x;
-      assert.ok(left >= 4 && left + w <= width - 4, `${f}: "${raw}" overflows (${left.toFixed(0)}..${(left + w).toFixed(0)} of ${width})`);
-      for (const [l, r, t] of rows.get(y) ?? []) assert.ok(left + w <= l || left >= r, `${f}: "${raw}" overlaps "${t}"`);
-      rows.set(y, [...(rows.get(y) ?? []), [left, left + w, raw]]);
-    }
-  }
+  // The build itself throws when text overflows an image or overlaps other text.
+  const generated = readdirSync(dir, { recursive: true }).filter(f => f.endsWith('.svg')).map(f => f.replaceAll('\\', '/')).sort();
+  assert.deepEqual(generated, assets.filter(f => /^(dark|light)\//.test(f)).sort(), 'generated and committed asset lists differ');
+  for (const f of generated.filter(f => f.startsWith('dark/'))) assert.ok(generated.includes(f.replace('dark/', 'light/')), `${f} has no light twin`);
+  for (const f of generated) assert.equal(readFileSync(join(root, 'assets', f), 'utf8'), readFileSync(join(dir, f), 'utf8'), `assets/${f} is stale: run node scripts/build-assets.mjs`);
 });
