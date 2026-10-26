@@ -1,114 +1,94 @@
 <div align="center">
-  <a href="https://www.advaitachandra.in/"><img src="assets/hero.svg" alt="w1tneess. Student, explorer, builder. A mind under construction." width="100%"></a>
-  <p>
-    <a href="#selected-work"><img src="assets/pill-projects.svg" alt="Projects" height="40"></a>
-    <a href="#field-notes"><img src="assets/pill-notes.svg" alt="Field notes" height="40"></a>
-    <a href="https://www.advaitachandra.in/philosophy"><img src="assets/pill-philosophy.svg" alt="Philosophy" height="40"></a>
-    <a href="https://www.advaitachandra.in/photography"><img src="assets/pill-photography.svg" alt="Photography" height="40"></a>
-    <a href="#contact"><img src="assets/pill-contact.svg" alt="Contact" height="40"></a>
-  </p>
+<a href="https://www.advaitachandra.in/"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/hero-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/hero-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/hero.svg"><img src="assets/light/hero.svg" width="100%" alt="Advaita Chandra / w1tneess — Student · Explorer · Builder. West Bengal, India."></picture></a>
+
+**Building small things. Keeping the questions open.**
+
+[Website](https://www.advaitachandra.in/) &nbsp; / &nbsp; [Projects](#selected-work) &nbsp; / &nbsp; [Photography](https://www.advaitachandra.in/photography) &nbsp; / &nbsp; [Notebook](#field-notes)
 </div>
 
-<h2><a name="right-now"></a><picture><source media="(prefers-color-scheme: dark)" srcset="assets/headings/right-now-dark.svg"><img src="assets/headings/right-now-light.svg" alt="Right now" height="46"></picture></h2>
+<h2><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/section-about-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/section-about-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/section-about.svg"><img src="assets/light/section-about.svg" width="100%" alt="About me"></picture></h2>
+
+Hey, I'm **Advaita** — also **Wit**. A student from West Bengal, somewhere between software, philosophy, and history.
+
+- **I build** websites, useful little tools, and interactive archives.
+- **I explore** how things work — from a line of code to the mind reading it.
+- **Beyond code:** photography, reading, and questions I haven't fully worked out yet.
+
+<details open>
+<summary><b>On my desk right now</b></summary>
 
 <!--NOW:START-->
-*Reading Krishnamurti against cognitive psychology, and asking whether the "silent observer" is just another narrator.*
+Reading Krishnamurti against cognitive psychology, and asking whether the &quot;silent observer&quot; is just another narrator.
 <!--NOW:END-->
 
-<h2><a name="selected-work"></a><picture><source media="(prefers-color-scheme: dark)" srcset="assets/headings/selected-work-dark.svg"><img src="assets/headings/selected-work-light.svg" alt="Selected work" height="46"></picture></h2>
+</details>
 
-<table>
-  <tr>
-    <td width="50%" align="left" valign="top">
-      <a href="https://oshodocumentary.advaitachandra.in/"><img src="assets/card-osho-documentary.svg" alt="Osho Documentary. Evidence-graded interactive archive on Osho and Rajneeshpuram, with timeline and map. Next.js, TypeScript." width="100%"></a><br>
-      <a href="https://oshodocumentary.advaitachandra.in/"><img src="assets/btn-live.svg" alt="Live demo of Osho Documentary" height="34"></a>
-      <a href="https://github.com/w1tneess/osho-documentary"><img src="assets/btn-source.svg" alt="Source for Osho Documentary" height="34"></a>
-    </td>
-    <td width="50%" align="left" valign="top">
-      <a href="https://declutter.advaitachandra.in/"><img src="assets/card-declutter.svg" alt="Declutter. Windows app that sorts a messy folder and finds duplicates. Previews first, never permanently deletes. Python." width="100%"></a><br>
-      <a href="https://declutter.advaitachandra.in/"><img src="assets/btn-live.svg" alt="Live site for Declutter" height="34"></a>
-      <a href="https://github.com/w1tneess/declutter"><img src="assets/btn-source.svg" alt="Source for Declutter" height="34"></a>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" align="left" valign="top">
-      <a href="https://www.advaitachandra.in/"><img src="assets/card-advaita-website.svg" alt="advaitachandra.in. Personal site and public notebook, pre-rendered with a Supabase-backed admin. React, Vite, Tailwind, Supabase." width="100%"></a><br>
-      <a href="https://www.advaitachandra.in/"><img src="assets/btn-live.svg" alt="Live site advaitachandra.in" height="34"></a>
-      <a href="https://github.com/w1tneess/advaita-website"><img src="assets/btn-source.svg" alt="Source for advaitachandra.in" height="34"></a>
-    </td>
-    <td width="50%" align="left" valign="top">
-      <a href="https://support.advaitachandra.in/"><img src="assets/card-supportadvaita.svg" alt="Support page. Zero-fee UPI page for supporting independent software, research and photography. JavaScript." width="100%"></a><br>
-      <a href="https://support.advaitachandra.in/"><img src="assets/btn-live.svg" alt="Live support page" height="34"></a>
-      <a href="https://github.com/w1tneess/supportadvaita"><img src="assets/btn-source.svg" alt="Source for the support page" height="34"></a>
-    </td>
-  </tr>
+<h2><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/section-stack-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/section-stack-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/section-stack.svg"><img src="assets/light/section-stack.svg" width="100%" alt="Tools and technologies"></picture></h2>
+
+Tools I use across my projects. Still learning as I build.
+
+<picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/stack-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/stack-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/stack.svg"><img src="assets/light/stack.svg" width="100%" alt="Tools and technologies: TypeScript, JavaScript, Python, HTML, CSS, React, Next.js, Vite, Tailwind CSS, Supabase, Node.js, Git."></picture>
+
+<a id="selected-work"></a>
+<h2><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/section-projects-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/section-projects-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/section-projects.svg"><img src="assets/light/section-projects.svg" width="100%" alt="Selected work"></picture></h2>
+
+<table width="100%">
+<tr>
+<td width="50%" valign="top" align="center"><a href="https://oshodocumentary.advaitachandra.in/"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/card-osho-documentary-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/card-osho-documentary-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/card-osho-documentary.svg"><img src="assets/light/card-osho-documentary.svg" width="100%" alt="Osho Documentary. Evidence-graded archive on Osho and Rajneeshpuram, with timeline and map. Next.js, TypeScript."></picture></a><br><sub><a href="https://oshodocumentary.advaitachandra.in/">Explore ↗&#xFE0E;</a> · <a href="https://github.com/w1tneess/osho-documentary">Source ↗&#xFE0E;</a></sub></td>
+<td width="50%" valign="top" align="center"><a href="https://declutter.advaitachandra.in/"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/card-declutter-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/card-declutter-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/card-declutter.svg"><img src="assets/light/card-declutter.svg" width="100%" alt="Declutter. Sorts a messy folder and finds duplicates. Previews first, never permanently deletes. Python."></picture></a><br><sub><a href="https://declutter.advaitachandra.in/">Explore ↗&#xFE0E;</a> · <a href="https://github.com/w1tneess/declutter">Source ↗&#xFE0E;</a></sub></td>
+</tr>
+<tr>
+<td width="50%" valign="top" align="center"><a href="https://www.advaitachandra.in/"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/card-advaita-website-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/card-advaita-website-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/card-advaita-website.svg"><img src="assets/light/card-advaita-website.svg" width="100%" alt="advaitachandra.in. Personal site and public notebook: projects, reading notes, photography. React, Vite, Tailwind, Supabase."></picture></a><br><sub><a href="https://www.advaitachandra.in/">Explore ↗&#xFE0E;</a> · <a href="https://github.com/w1tneess/advaita-website">Source ↗&#xFE0E;</a></sub></td>
+<td width="50%" valign="top" align="center"><a href="https://support.advaitachandra.in/"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/card-supportadvaita-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/card-supportadvaita-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/card-supportadvaita.svg"><img src="assets/light/card-supportadvaita.svg" width="100%" alt="Support page. Zero-fee UPI page to support independent software, research, photography and philosophy. JavaScript."></picture></a><br><sub><a href="https://support.advaitachandra.in/">Explore ↗&#xFE0E;</a> · <a href="https://github.com/w1tneess/supportadvaita">Source ↗&#xFE0E;</a></sub></td>
+</tr>
 </table>
 
-<p>More, including data-visualisation and system-design work, on the <a href="https://www.advaitachandra.in/projects">projects page</a>.</p>
+[More from the archive ↗&#xFE0E;](https://www.advaitachandra.in/projects)
 
-<h2><a name="current-explorations"></a><picture><source media="(prefers-color-scheme: dark)" srcset="assets/headings/explorations-dark.svg"><img src="assets/headings/explorations-light.svg" alt="Current explorations" height="46"></picture></h2>
+<h2><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/section-activity-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/section-activity-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/section-activity.svg"><img src="assets/light/section-activity.svg" width="100%" alt="Public repository activity"></picture></h2>
 
-The most recently pushed public repositories, read from GitHub.
+<a href="https://github.com/w1tneess?tab=repositories"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/activity-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/activity-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/activity.svg"><img src="assets/light/activity.svg" width="100%" alt="Daily commits across five public repositories over the last 91 days. Counts include merge commits and exclude bot commits; this is not the GitHub contribution calendar."></picture></a>
+
+<details>
+<summary>Recent commits</summary>
 
 <!--ACTIVITY:START-->
-<table>
-<tr>
-<td width="50%" valign="top">
-<a href="https://github.com/w1tneess/advaita-website"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-1-607ca458-dark.svg"><img src="assets/generated/repo-1-607ca458-light.svg" alt="advaita-website, 26 Oct 2026" height="61"></picture></a><br>
-Merge pull request #38 from w1tneess/dependabot/github_…
-</td>
-<td width="50%" valign="top">
-<a href="https://github.com/w1tneess/declutter"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-2-e035cdad-dark.svg"><img src="assets/generated/repo-2-e035cdad-light.svg" alt="declutter, 20 Oct 2026" height="61"></picture></a><br>
-Merge pull request #29 from w1tneess/release-0.2.2
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-<a href="https://github.com/w1tneess/osho-documentary"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-3-3dd2b994-dark.svg"><img src="assets/generated/repo-3-3dd2b994-light.svg" alt="osho-documentary, 16 Oct 2026" height="61"></picture></a><br>
-chore(deps): bump @typescript-eslint/parser to 8.71.2 (…
-</td>
-<td width="50%" valign="top">
-<a href="https://github.com/w1tneess/supportadvaita"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/repo-4-7bf21383-dark.svg"><img src="assets/generated/repo-4-7bf21383-light.svg" alt="supportadvaita, 17 Oct 2026" height="61"></picture></a><br>
-Merge pull request #1 from w1tneess/audit/payment-compl…
-</td>
-</tr>
-</table>
+<ul>
+<li><a href="https://github.com/w1tneess/declutter">declutter</a> — Bump version to 0.2.2 <a href="https://github.com/w1tneess/declutter/commit/7a62acdb26f0d18b729e34d799d55a5fe00739f7">(20 Oct 2026)</a></li>
+<li><a href="https://github.com/w1tneess/advaita-website">advaita-website</a> — refactor(content): drop the temporary table-read fallback for the public RPC <a href="https://github.com/w1tneess/advaita-website/commit/34335c3923a2b17e905952b6db67f6094767763a">(19 Oct 2026)</a></li>
+<li><a href="https://github.com/w1tneess/supportadvaita">supportadvaita</a> — fix(wrangler): add previews block for Workers Builds branch previews <a href="https://github.com/w1tneess/supportadvaita/commit/6ff7052950261ef53e6b7355edfb56b66510a959">(17 Oct 2026)</a></li>
+<li><a href="https://github.com/w1tneess/osho-documentary">osho-documentary</a> — chore(deps): bump @typescript-eslint/parser to 8.71.2 (#16) <a href="https://github.com/w1tneess/osho-documentary/commit/4bf36556a49e9c4e64a1ec21b9b7d56d16071777">(16 Oct 2026)</a></li>
+</ul>
 <!--ACTIVITY:END-->
 
-<h2><a name="field-notes"></a><picture><source media="(prefers-color-scheme: dark)" srcset="assets/headings/field-notes-dark.svg"><img src="assets/headings/field-notes-light.svg" alt="Field notes" height="46"></picture></h2>
+</details>
+
+<a id="field-notes"></a>
+<h2><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/section-notes-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/section-notes-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/section-notes.svg"><img src="assets/light/section-notes.svg" width="100%" alt="Field notes"></picture></h2>
+
+Notes on books I'm reading and questions I haven't solved yet: Krishnamurti, Camus, Dostoevsky, Ramana Maharshi and Osho.
 
 <!--WRITING:START-->
-<a href="https://advaitachandra.in/philosophy/krishnamurti-observer"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-1-1220c730-dark.svg"><img src="assets/generated/note-1-1220c730-light.svg" alt="1. On Krishnamurti and the Mechanics of the Observer, 14 Nov 2025" height="100"></picture></a>
-
-<a href="https://advaitachandra.in/philosophy/camus-absurd"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-2-75ab4545-dark.svg"><img src="assets/generated/note-2-75ab4545-light.svg" alt="2. Camus: The Absurd as an Epistemic Baseline, 2 Oct 2025" height="100"></picture></a>
-
-<a href="https://advaitachandra.in/philosophy/dostoevsky-underground"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/generated/note-3-baa4f1d8-dark.svg"><img src="assets/generated/note-3-baa4f1d8-light.svg" alt="3. Dostoevsky on Rational Egoism and Irrational Will, 19 Aug 2025" height="100"></picture></a>
+<ol>
+<li><a href="https://advaitachandra.in/philosophy/krishnamurti-observer">On Krishnamurti and the Mechanics of the Observer</a> — 14 Nov 2025</li>
+<li><a href="https://advaitachandra.in/philosophy/camus-absurd">Camus: The Absurd as an Epistemic Baseline</a> — 2 Oct 2025</li>
+<li><a href="https://advaitachandra.in/philosophy/dostoevsky-underground">Dostoevsky on Rational Egoism and Irrational Will</a> — 19 Aug 2025</li>
+</ol>
 <!--WRITING:END-->
 
-Working through Krishnamurti, Camus, Dostoevsky, Ramana Maharshi and Osho.
+[Philosophy ↗&#xFE0E;](https://www.advaitachandra.in/philosophy) &nbsp; · &nbsp; [Writing ↗&#xFE0E;](https://www.advaitachandra.in/blog) &nbsp; · &nbsp; [Algorithmic art ↗&#xFE0E;](https://www.advaitachandra.in/art) &nbsp; · &nbsp; [RSS](https://www.advaitachandra.in/rss.xml)
 
-<p>
-  <a href="https://www.advaitachandra.in/philosophy"><strong>Full notebook ↗</strong></a> &nbsp;/&nbsp;
-  <a href="https://www.advaitachandra.in/blog">Writing ↗</a> &nbsp;/&nbsp;
-  <a href="https://www.advaitachandra.in/art">Algorithmic art ↗</a> &nbsp;/&nbsp;
-  <a href="https://www.advaitachandra.in/rss.xml">RSS ↗</a>
-</p>
+<h2><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/section-contact-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/section-contact-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/section-contact.svg"><img src="assets/light/section-contact.svg" width="100%" alt="Connect"></picture></h2>
 
-<h2><a name="contact"></a><picture><source media="(prefers-color-scheme: dark)" srcset="assets/headings/contact-dark.svg"><img src="assets/headings/contact-light.svg" alt="Contact" height="46"></picture></h2>
+A question, an idea, or something worth sharing — I'm around.
 
-<p>
-  <a href="https://www.advaitachandra.in/contact" aria-label="Contact form on advaitachandra.in">Website ↗</a> &nbsp;/&nbsp;
-  <a href="mailto:hi@advaitachandra.in" aria-label="Email hi@advaitachandra.in">Email ↗</a> &nbsp;/&nbsp;
-  <a href="https://x.com/w1tneess_" aria-label="w1tneess on X">X ↗</a> &nbsp;/&nbsp;
-  <a href="https://instagram.com/adva1ta_" aria-label="adva1ta_ on Instagram">Instagram ↗</a> &nbsp;/&nbsp;
-  <a href="https://github.com/w1tneess" aria-label="w1tneess on GitHub">GitHub ↗</a>
-</p>
+**[Email ↗&#xFE0E;](mailto:hi@advaitachandra.in)** &nbsp; / &nbsp; **[Website ↗&#xFE0E;](https://www.advaitachandra.in/contact)** &nbsp; / &nbsp; **[Instagram ↗&#xFE0E;](https://instagram.com/adva1ta_)** &nbsp; / &nbsp; **[X ↗&#xFE0E;](https://x.com/w1tneess_)**
+
+[Support my independent work ↗&#xFE0E;](https://support.advaitachandra.in/)
 
 <br>
 
-<a href="https://support.advaitachandra.in"><img src="assets/btn-support.svg" alt="Support my work (opens the UPI support page)" height="44"></a>
-
-<hr>
+<picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/footer-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/footer-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/footer.svg"><img src="assets/light/footer.svg" width="100%" alt="Be, not become. / wit"></picture>
 
 <details>
 <summary><code>~/w1tneess $ ls -a</code></summary>
@@ -133,10 +113,6 @@ philosophy, history, photography, creative computing.
 
 </details>
 
-<div align="right">
-
 <!--STAMP:START-->
-<sub>Generated 26 Oct 2026 by <a href="https://github.com/w1tneess/w1tneess/blob/main/.github/workflows/update.yml">a scheduled action</a></sub>
+<sub>Activity and writing refresh automatically; unavailable sources keep their last successful content.</sub>
 <!--STAMP:END-->
-
-</div>
