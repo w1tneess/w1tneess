@@ -38,12 +38,12 @@ grid; their license is retained in scripts/icons/LICENSE. See https://github.com
 for their source. Brand names and marks belong to their respective owners.
 
 Activity data in data/activity.json comes from default-branch commit history for
-the five public repositories. It includes merge commits, excludes commits authored by
+all public, non-fork, non-archived repositories. It includes merge commits, excludes commits authored by
 bots (Dependabot, the profile's own refresh commits) and is not a GitHub contribution
 count. The panel uses 91 UTC dates ending on asOf, with daily counts. On refresh,
 the updater fetches paginated history before replacing the snapshot; failed
 sources keep the previous data. If a repository is renamed, made private or archived,
-the activity source fails until `tracked` in scripts/update.mjs is updated. "Recent
+the repository drops out of the snapshot on the next refresh. "Recent
 commits" lists each repository's latest non-bot, non-merge commit.
 The workflow commits the snapshot and SVGs too.
 
