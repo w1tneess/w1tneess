@@ -64,8 +64,9 @@ async function activity() {
   if(results.some(r=>r.status==='rejected')||!results.length) throw new Error('Incomplete repository activity');
   const asOf=new Date().toISOString().slice(0,10);
   const start=new Date(asOf+'T00:00:00Z'); start.setUTCDate(start.getUTCDate()-90);
-  const tracked=repos.filter(r=>!r.fork&&!r.private&&!r.archived&&[USER,'advaita-website','declutter','osho-documentary','supportadvaita'].includes(r.name));
-  if(tracked.length!==5) throw new Error('Incomplete activity source set');
+  // Every public, non-fork, non-archived repo counts, so new projects appear without editing this list.
+  const tracked=repos.filter(r=>!r.fork&&!r.private&&!r.archived);
+  if(!tracked.length) throw new Error('No tracked repositories');
   const history=await Promise.all(tracked.map(async r=>{
     const commits=[];
     for(let page=1;page<=20;page++){

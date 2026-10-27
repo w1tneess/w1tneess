@@ -47,16 +47,16 @@ Tools I use across my projects. Still learning as I build.
 
 <h2><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/section-activity-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/section-activity-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/section-activity.svg"><img src="assets/light/section-activity.svg" width="100%" alt="Public repository activity"></picture></h2>
 
-<a href="https://github.com/w1tneess?tab=repositories"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/activity-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/activity-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/activity.svg"><img src="assets/light/activity.svg" width="100%" alt="Daily commits across five public repositories over the last 91 days. Counts include merge commits and exclude bot commits; this is not the GitHub contribution calendar."></picture></a>
+<a href="https://github.com/w1tneess?tab=repositories"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/activity-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/activity-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/activity.svg"><img src="assets/light/activity.svg" width="100%" alt="Daily commits across my public repositories over the last 91 days. Counts include merge commits and exclude bot commits; this is not the GitHub contribution calendar."></picture></a>
 
 <details>
 <summary>Recent commits</summary>
 
 <!--ACTIVITY:START-->
 <ul>
+<li><a href="https://github.com/w1tneess/command-deck">command-deck</a> — Fix the bugs CodeRabbit found in the full-codebase review <a href="https://github.com/w1tneess/command-deck/commit/0296de79cf6b84762c3e15980c17fce942f1b459">(27 Oct 2026)</a></li>
 <li><a href="https://github.com/w1tneess/declutter">declutter</a> — Bump version to 0.2.2 <a href="https://github.com/w1tneess/declutter/commit/7a62acdb26f0d18b729e34d799d55a5fe00739f7">(20 Oct 2026)</a></li>
 <li><a href="https://github.com/w1tneess/advaita-website">advaita-website</a> — refactor(content): drop the temporary table-read fallback for the public RPC <a href="https://github.com/w1tneess/advaita-website/commit/34335c3923a2b17e905952b6db67f6094767763a">(19 Oct 2026)</a></li>
-<li><a href="https://github.com/w1tneess/supportadvaita">supportadvaita</a> — fix(wrangler): add previews block for Workers Builds branch previews <a href="https://github.com/w1tneess/supportadvaita/commit/6ff7052950261ef53e6b7355edfb56b66510a959">(17 Oct 2026)</a></li>
 <li><a href="https://github.com/w1tneess/osho-documentary">osho-documentary</a> — chore(deps): bump @typescript-eslint/parser to 8.71.2 (#16) <a href="https://github.com/w1tneess/osho-documentary/commit/4bf36556a49e9c4e64a1ec21b9b7d56d16071777">(16 Oct 2026)</a></li>
 </ul>
 <!--ACTIVITY:END-->
