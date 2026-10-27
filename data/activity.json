@@ -2,45 +2,12 @@
   "asOf": "2026-10-27",
   "repositories": [
     {
-      "repo": "w1tneess",
-      "commits": [
-        {
-          "date": "2026-10-27T05:39:46Z",
-          "sha": "a47899329fc51c51a978fdee51a5dce4584e8279"
-        },
-        {
-          "date": "2026-10-26T09:27:50Z",
-          "sha": "b67ab814adbec766e2548f9e7a2dd731cab9a3f7"
-        },
-        {
-          "date": "2026-10-17T19:19:12Z",
-          "sha": "41098b0dba4eeebcf9b9b0511c8f3b0653dfc831"
-        },
-        {
-          "date": "2026-10-16T15:17:13Z",
-          "sha": "c4f71fbbcf019c3035181f643a693e361ccc3c41"
-        },
-        {
-          "date": "2026-09-06T15:58:37Z",
-          "sha": "d909030f3fb58445755bdb3c1315fb66014fedcb"
-        },
-        {
-          "date": "2026-08-31T04:13:51Z",
-          "sha": "dffe5a3e4af452c7e42eb5201309bb315ad6db8c"
-        },
-        {
-          "date": "2026-08-31T04:06:17Z",
-          "sha": "ca3a16e5c8ff61b13cae4fd23ffb97d65cba59ee"
-        },
-        {
-          "date": "2026-08-31T04:06:02Z",
-          "sha": "854d7fbd51acd02ba1a25dad38d7333bf123192a"
-        }
-      ]
-    },
-    {
       "repo": "command-deck",
       "commits": [
+        {
+          "date": "2026-10-27T05:41:54Z",
+          "sha": "e00c48da7624f7e38b5837f0ae95e7536a4c8d01"
+        },
         {
           "date": "2026-10-27T05:29:24Z",
           "sha": "a32b6b7390f055489e101322cbed2ce5fc5c8ae1"
@@ -192,6 +159,43 @@
         {
           "date": "2026-10-22T07:07:35Z",
           "sha": "312c7d1267445a59966fcfc371673f7029a0912b"
+        }
+      ]
+    },
+    {
+      "repo": "w1tneess",
+      "commits": [
+        {
+          "date": "2026-10-27T05:39:46Z",
+          "sha": "a47899329fc51c51a978fdee51a5dce4584e8279"
+        },
+        {
+          "date": "2026-10-26T09:27:50Z",
+          "sha": "b67ab814adbec766e2548f9e7a2dd731cab9a3f7"
+        },
+        {
+          "date": "2026-10-17T19:19:12Z",
+          "sha": "41098b0dba4eeebcf9b9b0511c8f3b0653dfc831"
+        },
+        {
+          "date": "2026-10-16T15:17:13Z",
+          "sha": "c4f71fbbcf019c3035181f643a693e361ccc3c41"
+        },
+        {
+          "date": "2026-09-06T15:58:37Z",
+          "sha": "d909030f3fb58445755bdb3c1315fb66014fedcb"
+        },
+        {
+          "date": "2026-08-31T04:13:51Z",
+          "sha": "dffe5a3e4af452c7e42eb5201309bb315ad6db8c"
+        },
+        {
+          "date": "2026-08-31T04:06:17Z",
+          "sha": "ca3a16e5c8ff61b13cae4fd23ffb97d65cba59ee"
+        },
+        {
+          "date": "2026-08-31T04:06:02Z",
+          "sha": "854d7fbd51acd02ba1a25dad38d7333bf123192a"
         }
       ]
     },
