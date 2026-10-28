@@ -1,9 +1,17 @@
 {
-  "asOf": "2026-10-27",
+  "asOf": "2026-10-28",
   "repositories": [
     {
       "repo": "command-deck",
       "commits": [
+        {
+          "date": "2026-10-27T19:42:40Z",
+          "sha": "a1338bb379c34912e2594f7b1587f5f287c9395a"
+        },
+        {
+          "date": "2026-10-27T06:11:23Z",
+          "sha": "e628acdaf184c39cd9e28b513aca2b75c3c5cb1d"
+        },
         {
           "date": "2026-10-27T05:41:54Z",
           "sha": "e00c48da7624f7e38b5837f0ae95e7536a4c8d01"
