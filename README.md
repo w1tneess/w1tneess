@@ -54,9 +54,9 @@ Tools I use across my projects. Still learning as I build.
 
 <!--ACTIVITY:START-->
 <ul>
+<li><a href="https://github.com/w1tneess/declutter">declutter</a> — Hardening: no-overwrite moves, hash-pinned deps, least-privilege release workflow, website… <a href="https://github.com/w1tneess/declutter/commit/a0a50f83107c8b74da5dae38fbe0ec51ae8ac5c9">(1 Nov 2026)</a></li>
+<li><a href="https://github.com/w1tneess/supportadvaita">supportadvaita</a> — Unicode-safe UPI note, verified-artifact deploy, README correction (#2) <a href="https://github.com/w1tneess/supportadvaita/commit/6b46c00baf2ec470efc8e524ead58c760aac4d58">(1 Nov 2026)</a></li>
 <li><a href="https://github.com/w1tneess/command-deck">command-deck</a> — Fix ultrareview findings: danger Btn kind, a11y labels and live region, streak note, sideb… <a href="https://github.com/w1tneess/command-deck/commit/9c4d15d1c6e0420a4d88d873cf335fc13820927a">(29 Oct 2026)</a></li>
-<li><a href="https://github.com/w1tneess/declutter">declutter</a> — Bump version to 0.2.2 <a href="https://github.com/w1tneess/declutter/commit/7a62acdb26f0d18b729e34d799d55a5fe00739f7">(20 Oct 2026)</a></li>
-<li><a href="https://github.com/w1tneess/advaita-website">advaita-website</a> — refactor(content): drop the temporary table-read fallback for the public RPC <a href="https://github.com/w1tneess/advaita-website/commit/34335c3923a2b17e905952b6db67f6094767763a">(19 Oct 2026)</a></li>
 <li><a href="https://github.com/w1tneess/osho-documentary">osho-documentary</a> — chore(deps): bump @typescript-eslint/parser to 8.71.2 (#16) <a href="https://github.com/w1tneess/osho-documentary/commit/4bf36556a49e9c4e64a1ec21b9b7d56d16071777">(16 Oct 2026)</a></li>
 </ul>
 <!--ACTIVITY:END-->
