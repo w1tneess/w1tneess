@@ -40,10 +40,12 @@ Student and developer from India, somewhere between software, philosophy and his
 
 ## GitHub
 
-<div align="center">
-<img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/stats.svg" height="160" alt="GitHub stats">
-<img src="https://raw.githubusercontent.com/w1tneess/w1tneess/languages-output/languages.svg" height="160" alt="Top languages">
-</div>
+<table width="100%">
+<tr>
+<td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/stats-dark.svg"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/stats-light.svg" width="100%" alt="GitHub stats"></picture></td>
+<td width="50%" valign="top"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-dark.svg"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-light.svg" width="100%" alt="Top languages"></picture></td>
+</tr>
+</table>
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/snake-output/snake-dark.svg"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/snake-output/snake.svg" width="100%" alt="Contribution snake"></picture>
 

@@ -3,6 +3,9 @@ on:
   schedule:
     - cron: "0 3 * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [scripts/build-stats.mjs]
 permissions:
   contents: write
 jobs:
@@ -10,12 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: readme-tools/github-readme-stats-action@d82657a0e215a28ec48bfc9b3987999a279f93be # v1
-        with:
-          card: stats
-          options: username=${{ github.repository_owner }}&show_icons=true&bg_color=00000000&title_color=7a7a7a&text_color=7a7a7a&icon_color=7a7a7a&border_color=7a7a7a40
-          path: out/stats.svg
-          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
+      - run: node scripts/build-stats.mjs out ${{ github.repository_owner }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: crazy-max/ghaction-github-pages@df5cc2bfa78282ded844b354faee141f06b41865 # v4
         with:
           target_branch: stats-output
