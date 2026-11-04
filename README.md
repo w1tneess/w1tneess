@@ -49,6 +49,8 @@ Tools I use across my projects. Still learning as I build.
 
 <a href="https://github.com/w1tneess?tab=repositories"><picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/dark/activity-mobile.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/light/activity-mobile.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/dark/activity.svg"><img src="assets/light/activity.svg" width="100%" alt="Daily commits across my public repositories over the last 91 days. Counts include merge commits and exclude bot commits; this is not the GitHub contribution calendar."></picture></a>
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/snake-output/snake-dark.svg"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/snake-output/snake.svg" width="100%" alt="Snake eating my contribution graph"></picture>
+
 <details>
 <summary>Recent commits</summary>
 
