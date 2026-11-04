@@ -6,9 +6,9 @@ const OUT = process.argv[2] || "out";
 const USER = process.argv[3] || process.env.GITHUB_REPOSITORY_OWNER || "w1tneess";
 const SANS = "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif";
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace";
+// One neutral, transparent theme that reads on both light and dark GitHub pages.
 const THEMES = {
-  dark: { text: "#f0f0f0", muted: "#8f8f8f", border: "#383838", a: "#f0f0f0", b: "#8f8f8f" },
-  light: { text: "#0a0a0a", muted: "#5c5c5c", border: "#c9c9c9", a: "#0a0a0a", b: "#5c5c5c" },
+  neutral: { text: "#8a8a8a", muted: "#767676", border: "#7a7a7a66", a: "#8a8a8a", b: "#767676" },
 };
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const W = 580, H = 220;
@@ -72,8 +72,8 @@ function langsCard(t, { langs }) {
 
 const data = await collect();
 mkdirSync(OUT, { recursive: true });
-for (const [mode, t] of Object.entries(THEMES)) {
-  writeFileSync(`${OUT}/stats-${mode}.svg`, statsCard(t, data));
-  writeFileSync(`${OUT}/languages-${mode}.svg`, langsCard(t, data));
+for (const t of Object.values(THEMES)) {
+  writeFileSync(`${OUT}/stats.svg`, statsCard(t, data));
+  writeFileSync(`${OUT}/languages.svg`, langsCard(t, data));
 }
 console.log(JSON.stringify(data.metrics), data.langs.slice(0, 5).map(([l]) => l).join(","));

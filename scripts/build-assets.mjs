@@ -1,5 +1,5 @@
 // Generates the README artwork (light + dark) into assets/ and writes README.md.
-// Run: node scripts/build-assets.mjs   (needs network once, for brand icon paths)
+// Run: node scripts/build-assets.mjs [--readme]  (README is now hand-kept in profile-readme-generator format)   (needs network once, for brand icon paths)
 import { mkdirSync, writeFileSync, readdirSync, unlinkSync } from "node:fs";
 
 const SANS = "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif";
@@ -169,7 +169,7 @@ const rows = [0, 2, 4].map((i) => `<tr>\n${cardCell(CARDS[i])}\n${cardCell(CARDS
 const contactCell = (c) => `<td width="50%">${link(c.href, themed(local(`contact-${c.id}`), 'width="100%"', `${c.label}: ${c.value}`))}</td>`;
 const pills = PILLS.map(([id, label, , href]) => link(href, themed(local(`pill-${id}`), 'height="40"', label))).join("\n");
 
-writeFileSync("README.md", `<div align="center">
+if (process.argv.includes("--readme")) writeFileSync("README.md", `<div align="center">
 
 ${themed(local("hero"), 'width="100%"', "Advaita Chandra, w1tneess. Student, builder, explorer.")}
 

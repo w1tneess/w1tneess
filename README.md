@@ -1,71 +1,79 @@
-<div align="center">
+<h1 data-importer="text" align="center">Advaita Chandra</h1>
 
-<img src="assets/hero-dark.svg#gh-dark-mode-only" width="100%" alt="Advaita Chandra, w1tneess. Student, builder, explorer."><img src="assets/hero-light.svg#gh-light-mode-only" width="100%" alt="Advaita Chandra, w1tneess. Student, builder, explorer.">
+<h3 data-importer="text" align="center">w1tneess · student · builder · explorer</h3>
 
-<br>
+<p data-importer="text" align="center"><i>Building small things. Keeping the questions open.</i></p>
 
-<a href="https://www.advaitachandra.in"><img src="assets/pill-website-dark.svg#gh-dark-mode-only" height="40" alt="Website"><img src="assets/pill-website-light.svg#gh-light-mode-only" height="40" alt="Website"></a>
-<a href="https://x.com/w1tneess_"><img src="assets/pill-x-dark.svg#gh-dark-mode-only" height="40" alt="X · @w1tneess_"><img src="assets/pill-x-light.svg#gh-light-mode-only" height="40" alt="X · @w1tneess_"></a>
-<a href="mailto:hi@advaitachandra.in"><img src="assets/pill-email-dark.svg#gh-dark-mode-only" height="40" alt="Email"><img src="assets/pill-email-light.svg#gh-light-mode-only" height="40" alt="Email"></a>
-<a href="https://support.advaitachandra.in/"><img src="assets/pill-support-dark.svg#gh-dark-mode-only" height="40" alt="Support my work"><img src="assets/pill-support-light.svg#gh-light-mode-only" height="40" alt="Support my work"></a>
-
+<div data-importer="socials" align="center">
+  <a href="https://github.com/w1tneess" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=GitHub&logo=github&label=&color=141414&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="github logo" />
+  </a>
+  <a href="https://x.com/w1tneess_" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=X&logo=x&label=&color=141414&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="x logo" />
+  </a>
+  <a href="mailto:hi@advaitachandra.in" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=Email&logo=gmail&label=&color=141414&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="gmail logo" />
+  </a>
+  <a href="https://www.advaitachandra.in" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=Website&logo=googlechrome&label=&color=141414&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="website logo" />
+  </a>
+  <a href="https://support.advaitachandra.in/" target="_blank">
+    <img src="https://img.shields.io/static/v1?message=Support&logo=githubsponsors&label=&color=141414&logoColor=white&labelColor=&style=for-the-badge" height="35" alt="support logo" />
+  </a>
 </div>
 
-<img src="assets/divider-dark.svg#gh-dark-mode-only" width="100%" alt=""><img src="assets/divider-light.svg#gh-light-mode-only" width="100%" alt="">
+<h2 data-importer="text" align="left">About</h2>
 
-## About
+<p data-importer="text" align="left">Student and developer from India, somewhere between software, philosophy and history.<br>I build websites, useful little tools and interactive archives, and keep a public notebook of what I am reading.</p>
 
-Student and developer from India, somewhere between software, philosophy and history. I build websites, useful little tools and interactive archives, and keep a public notebook of what I am reading.
+<h2 data-importer="text" align="left">Stack</h2>
 
-## Stack
-
-<img src="assets/stack-dark.svg#gh-dark-mode-only" width="100%" alt="Stack: TypeScript, JavaScript, React, Next.js, Vite, Tailwind, Node.js, Python, C#, HTML, CSS, Supabase, Cloudflare, Git"><img src="assets/stack-light.svg#gh-light-mode-only" width="100%" alt="Stack: TypeScript, JavaScript, React, Next.js, Vite, Tailwind, Node.js, Python, C#, HTML, CSS, Supabase, Cloudflare, Git">
-
-## Selected work
-
-<table width="100%">
-<tr>
-<td width="50%" valign="top"><a href="https://oshodocumentary.advaitachandra.in/"><img src="assets/card-osho-dark.svg#gh-dark-mode-only" width="100%" alt="Osho Documentary"><img src="assets/card-osho-light.svg#gh-light-mode-only" width="100%" alt="Osho Documentary"></a><br><a href="https://oshodocumentary.advaitachandra.in/"><img src="assets/btn-live-dark.svg#gh-dark-mode-only" height="40" alt="Live site"><img src="assets/btn-live-light.svg#gh-light-mode-only" height="40" alt="Live site"></a>&nbsp;&nbsp;<a href="https://github.com/w1tneess/osho-documentary"><img src="assets/btn-source-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
-<td width="50%" valign="top"><a href="https://declutter.advaitachandra.in/"><img src="assets/card-declutter-dark.svg#gh-dark-mode-only" width="100%" alt="Declutter"><img src="assets/card-declutter-light.svg#gh-light-mode-only" width="100%" alt="Declutter"></a><br><a href="https://declutter.advaitachandra.in/"><img src="assets/btn-live-dark.svg#gh-dark-mode-only" height="40" alt="Live site"><img src="assets/btn-live-light.svg#gh-light-mode-only" height="40" alt="Live site"></a>&nbsp;&nbsp;<a href="https://github.com/w1tneess/declutter"><img src="assets/btn-source-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
-</tr>
-<tr>
-<td width="50%" valign="top"><a href="https://www.advaitachandra.in/"><img src="assets/card-site-dark.svg#gh-dark-mode-only" width="100%" alt="advaitachandra.in"><img src="assets/card-site-light.svg#gh-light-mode-only" width="100%" alt="advaitachandra.in"></a><br><a href="https://www.advaitachandra.in/"><img src="assets/btn-live-dark.svg#gh-dark-mode-only" height="40" alt="Live site"><img src="assets/btn-live-light.svg#gh-light-mode-only" height="40" alt="Live site"></a>&nbsp;&nbsp;<a href="https://github.com/w1tneess/advaita-website"><img src="assets/btn-source-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
-<td width="50%" valign="top"><a href="https://support.advaitachandra.in/"><img src="assets/card-support-dark.svg#gh-dark-mode-only" width="100%" alt="Support page"><img src="assets/card-support-light.svg#gh-light-mode-only" width="100%" alt="Support page"></a><br><a href="https://support.advaitachandra.in/"><img src="assets/btn-live-dark.svg#gh-dark-mode-only" height="40" alt="Live site"><img src="assets/btn-live-light.svg#gh-light-mode-only" height="40" alt="Live site"></a>&nbsp;&nbsp;<a href="https://github.com/w1tneess/supportadvaita"><img src="assets/btn-source-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
-</tr>
-<tr>
-<td width="50%" valign="top"><a href="https://github.com/w1tneess/w1tos-ui"><img src="assets/card-w1tos-dark.svg#gh-dark-mode-only" width="100%" alt="w1tOS"><img src="assets/card-w1tos-light.svg#gh-light-mode-only" width="100%" alt="w1tOS"></a><br><a href="https://github.com/w1tneess/w1tos-ui"><img src="assets/btn-source-primary-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-primary-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
-<td width="50%" valign="top"><a href="https://github.com/w1tneess/command-deck"><img src="assets/card-deck-dark.svg#gh-dark-mode-only" width="100%" alt="Command Deck"><img src="assets/card-deck-light.svg#gh-light-mode-only" width="100%" alt="Command Deck"></a><br><a href="https://github.com/w1tneess/command-deck"><img src="assets/btn-source-primary-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-primary-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
-</tr>
-</table>
-
-## GitHub
-
-<table width="100%">
-<tr>
-<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/stats-dark.svg#gh-dark-mode-only" width="100%" alt="GitHub stats"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/stats-light.svg#gh-light-mode-only" width="100%" alt="GitHub stats"></td>
-<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-dark.svg#gh-dark-mode-only" width="100%" alt="Top languages"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-light.svg#gh-light-mode-only" width="100%" alt="Top languages"></td>
-</tr>
-</table>
-
-<img src="https://raw.githubusercontent.com/w1tneess/w1tneess/snake-output/snake-dark.svg#gh-dark-mode-only" width="100%" alt="Contribution snake"><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/snake-output/snake.svg#gh-light-mode-only" width="100%" alt="Contribution snake">
-
-## Contact
-
-<table width="100%">
-<tr>
-<td width="50%"><a href="mailto:hi@advaitachandra.in"><img src="assets/contact-email-dark.svg#gh-dark-mode-only" width="100%" alt="Email: hi@advaitachandra.in"><img src="assets/contact-email-light.svg#gh-light-mode-only" width="100%" alt="Email: hi@advaitachandra.in"></a></td>
-<td width="50%"><a href="https://x.com/w1tneess_"><img src="assets/contact-x-dark.svg#gh-dark-mode-only" width="100%" alt="X / Twitter: @w1tneess_"><img src="assets/contact-x-light.svg#gh-light-mode-only" width="100%" alt="X / Twitter: @w1tneess_"></a></td>
-</tr>
-<tr>
-<td width="50%"><a href="https://github.com/w1tneess"><img src="assets/contact-github-dark.svg#gh-dark-mode-only" width="100%" alt="GitHub: w1tneess"><img src="assets/contact-github-light.svg#gh-light-mode-only" width="100%" alt="GitHub: w1tneess"></a></td>
-<td width="50%"><a href="https://www.advaitachandra.in/"><img src="assets/contact-web-dark.svg#gh-dark-mode-only" width="100%" alt="Website: advaitachandra.in"><img src="assets/contact-web-light.svg#gh-light-mode-only" width="100%" alt="Website: advaitachandra.in"></a></td>
-</tr>
-</table>
-
-<div align="center">
-
-<a href="https://support.advaitachandra.in/"><img src="assets/pill-support-dark.svg#gh-dark-mode-only" height="40" alt="Support my work"><img src="assets/pill-support-light.svg#gh-light-mode-only" height="40" alt="Support my work"></a>
-
-<sub>Questions welcome. Ideas better.</sub>
-
+<div data-importer="techs" align="left">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" height="40" alt="vue logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" height="40" alt="vite logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="40" alt="tailwind logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="40" alt="nodejs logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="python logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" height="40" alt="csharp logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" height="40" alt="supabase logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" height="40" alt="cloudflare logo" />
+  <img width="14" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="40" alt="git logo" />
 </div>
+
+<h2 data-importer="text" align="left">Selected work</h2>
+
+<p data-importer="text" align="left">
+<a href="https://oshodocumentary.advaitachandra.in/"><b>Osho Documentary</b></a> · Evidence-graded archive on Osho and Rajneeshpuram, with timeline and map. <i>Next.js, TypeScript</i><br>
+<a href="https://declutter.advaitachandra.in/"><b>Declutter</b></a> · Windows app that sorts a messy folder and finds duplicates, previewing first. <i>Python</i><br>
+<a href="https://www.advaitachandra.in/"><b>advaitachandra.in</b></a> · Personal site and public notebook. <i>React, Vite, Supabase</i><br>
+<a href="https://support.advaitachandra.in/"><b>Support page</b></a> · Zero-fee UPI page to support independent work. <i>JavaScript</i><br>
+<a href="https://github.com/w1tneess/w1tos-ui"><b>w1tOS</b></a> · Dark, keyboard-first web UI for CasaOS home servers. <i>Vue</i><br>
+<a href="https://github.com/w1tneess/command-deck"><b>Command Deck</b></a> · Exam and syllabus study dashboard. <i>TypeScript, Cloudflare Workers</i>
+</p>
+
+<h2 data-importer="text" align="left">GitHub</h2>
+
+<div data-importer="stats" align="left">
+  <img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/stats.svg" height="150" alt="stats graph" />
+  <img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages.svg" height="150" alt="languages graph" />
+</div>
+
+<img data-importer="snake" src="https://raw.githubusercontent.com/w1tneess/w1tneess/snake-output/snake.svg" alt="Snake animation" />

@@ -13,9 +13,7 @@ jobs:
       - uses: Platane/snk/svg-only@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/snake.svg?color_snake=%230a0a0a&color_dots=%23e4e4e4,%23c4c4c4,%239a9a9a,%236a6a6a,%23383838
-            dist/snake-dark.svg?color_snake=%23f0f0f0&color_dots=%23141414,%23383838,%23606060,%239a9a9a,%23f0f0f0
+          outputs: dist/snake.svg?color_snake=%238f8f8f&color_dots=%238f8f8f33,%238f8f8f66,%238f8f8f99,%238f8f8fcc,%238f8f8f
       - uses: crazy-max/ghaction-github-pages@df5cc2bfa78282ded844b354faee141f06b41865 # v4
         with:
           target_branch: snake-output
