@@ -15,7 +15,7 @@ jobs:
           card: stats
           options: username=${{ github.repository_owner }}&show_icons=true&theme=dracula
           path: out/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
       - uses: crazy-max/ghaction-github-pages@df5cc2bfa78282ded844b354faee141f06b41865 # v4
         with:
           target_branch: stats-output
