@@ -7,7 +7,7 @@
 <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#0000000f"/></pattern>
 <clipPath id="c"><rect width="1200" height="320" rx="24"/></clipPath></defs>
 <style>.tag{opacity:0;animation:cy 9s infinite}@keyframes cy{0%{opacity:0}6%,28%{opacity:1}34%,100%{opacity:0}}.cur{animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}@media (prefers-reduced-motion:reduce){.tag,.cur{animation:none}.tag:first-of-type{opacity:1}}</style>
-<g clip-path="url(#c)"><rect width="1200" height="320" fill="url(#bg)"/><rect width="1200" height="320" fill="url(#dots)"/>
+<g clip-path="url(#c)"><rect width="1200" height="320" fill="url(#dots)"/>
 <circle cx="1040" cy="40" r="260" fill="url(#r1)"/><circle cx="180" cy="330" r="240" fill="url(#r2)"/></g>
 <rect x=".5" y=".5" width="1199" height="319" rx="24" fill="none" stroke="#c9c9c9"/>
 <text x="64" y="70" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="16" fill="#5c5c5c"><tspan fill="url(#g)">●</tspan>  ~/w1tneess</text>

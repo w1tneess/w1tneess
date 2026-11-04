@@ -19,7 +19,7 @@ Student and developer from India, somewhere between software, philosophy and his
 
 ## Stack
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/stack-dark.svg"><img src="assets/stack-light.svg" width="100%" alt="Stack: TypeScript, JavaScript, React, Next.js, Vite, Tailwind CSS, Node.js, Python, C#, HTML, CSS, Supabase, Cloudflare, Git"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts,js,react,nextjs,vite,tailwind,nodejs,py,cs,html,css,supabase,cloudflare,git&perline=14&theme=dark"><img src="https://skillicons.dev/icons?i=ts,js,react,nextjs,vite,tailwind,nodejs,py,cs,html,css,supabase,cloudflare,git&perline=14&theme=light" alt="Stack: TypeScript, JavaScript, React, Next.js, Vite, Tailwind CSS, Node.js, Python, C#, HTML, CSS, Supabase, Cloudflare, Git"></picture>
 
 ## Selected work
 
