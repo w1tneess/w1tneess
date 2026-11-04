@@ -60,14 +60,20 @@
 
 <h2 data-importer="text" align="left">Selected work</h2>
 
-<p data-importer="text" align="left">
-<a href="https://oshodocumentary.advaitachandra.in/"><b>Osho Documentary</b></a> · Evidence-graded archive on Osho and Rajneeshpuram, with timeline and map. <i>Next.js, TypeScript</i><br>
-<a href="https://declutter.advaitachandra.in/"><b>Declutter</b></a> · Windows app that sorts a messy folder and finds duplicates, previewing first. <i>Python</i><br>
-<a href="https://www.advaitachandra.in/"><b>advaitachandra.in</b></a> · Personal site and public notebook. <i>React, Vite, Supabase</i><br>
-<a href="https://support.advaitachandra.in/"><b>Support page</b></a> · Zero-fee UPI page to support independent work. <i>JavaScript</i><br>
-<a href="https://github.com/w1tneess/w1tos-ui"><b>w1tOS</b></a> · Dark, keyboard-first web UI for CasaOS home servers. <i>Vue</i><br>
-<a href="https://github.com/w1tneess/command-deck"><b>Command Deck</b></a> · Exam and syllabus study dashboard. <i>TypeScript, Cloudflare Workers</i>
-</p>
+<table width="100%">
+<tr>
+<td width="50%" valign="top"><a href="https://oshodocumentary.advaitachandra.in/"><img src="assets/card-osho-dark.svg#gh-dark-mode-only" width="100%" alt="Osho Documentary"><img src="assets/card-osho-light.svg#gh-light-mode-only" width="100%" alt="Osho Documentary"></a><br><a href="https://oshodocumentary.advaitachandra.in/"><img src="assets/btn-live-dark.svg#gh-dark-mode-only" height="40" alt="Live site"><img src="assets/btn-live-light.svg#gh-light-mode-only" height="40" alt="Live site"></a>&nbsp;&nbsp;<a href="https://github.com/w1tneess/osho-documentary"><img src="assets/btn-source-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
+<td width="50%" valign="top"><a href="https://declutter.advaitachandra.in/"><img src="assets/card-declutter-dark.svg#gh-dark-mode-only" width="100%" alt="Declutter"><img src="assets/card-declutter-light.svg#gh-light-mode-only" width="100%" alt="Declutter"></a><br><a href="https://declutter.advaitachandra.in/"><img src="assets/btn-live-dark.svg#gh-dark-mode-only" height="40" alt="Live site"><img src="assets/btn-live-light.svg#gh-light-mode-only" height="40" alt="Live site"></a>&nbsp;&nbsp;<a href="https://github.com/w1tneess/declutter"><img src="assets/btn-source-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><a href="https://www.advaitachandra.in/"><img src="assets/card-site-dark.svg#gh-dark-mode-only" width="100%" alt="advaitachandra.in"><img src="assets/card-site-light.svg#gh-light-mode-only" width="100%" alt="advaitachandra.in"></a><br><a href="https://www.advaitachandra.in/"><img src="assets/btn-live-dark.svg#gh-dark-mode-only" height="40" alt="Live site"><img src="assets/btn-live-light.svg#gh-light-mode-only" height="40" alt="Live site"></a>&nbsp;&nbsp;<a href="https://github.com/w1tneess/advaita-website"><img src="assets/btn-source-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
+<td width="50%" valign="top"><a href="https://support.advaitachandra.in/"><img src="assets/card-support-dark.svg#gh-dark-mode-only" width="100%" alt="Support page"><img src="assets/card-support-light.svg#gh-light-mode-only" width="100%" alt="Support page"></a><br><a href="https://support.advaitachandra.in/"><img src="assets/btn-live-dark.svg#gh-dark-mode-only" height="40" alt="Live site"><img src="assets/btn-live-light.svg#gh-light-mode-only" height="40" alt="Live site"></a>&nbsp;&nbsp;<a href="https://github.com/w1tneess/supportadvaita"><img src="assets/btn-source-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><a href="https://github.com/w1tneess/w1tos-ui"><img src="assets/card-w1tos-dark.svg#gh-dark-mode-only" width="100%" alt="w1tOS"><img src="assets/card-w1tos-light.svg#gh-light-mode-only" width="100%" alt="w1tOS"></a><br><a href="https://github.com/w1tneess/w1tos-ui"><img src="assets/btn-source-primary-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-primary-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
+<td width="50%" valign="top"><a href="https://github.com/w1tneess/command-deck"><img src="assets/card-deck-dark.svg#gh-dark-mode-only" width="100%" alt="Command Deck"><img src="assets/card-deck-light.svg#gh-light-mode-only" width="100%" alt="Command Deck"></a><br><a href="https://github.com/w1tneess/command-deck"><img src="assets/btn-source-primary-dark.svg#gh-dark-mode-only" height="40" alt="Source code"><img src="assets/btn-source-primary-light.svg#gh-light-mode-only" height="40" alt="Source code"></a><br><br></td>
+</tr>
+</table>
 
 <h2 data-importer="text" align="left">GitHub</h2>
 
