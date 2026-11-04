@@ -14,8 +14,8 @@ jobs:
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/snake.svg
-            dist/snake-dark.svg?palette=github-dark
+            dist/snake.svg?color_snake=%230a0a0a&color_dots=%23e4e4e4,%23c4c4c4,%239a9a9a,%236a6a6a,%23383838
+            dist/snake-dark.svg?color_snake=%23f0f0f0&color_dots=%23141414,%23383838,%23606060,%239a9a9a,%23f0f0f0
       - uses: crazy-max/ghaction-github-pages@df5cc2bfa78282ded844b354faee141f06b41865 # v4
         with:
           target_branch: snake-output

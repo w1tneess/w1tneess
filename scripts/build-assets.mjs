@@ -6,8 +6,9 @@ const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace";
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const THEMES = {
-  dark: { bg1: "#0d1117", bg2: "#161b22", border: "#30363d", text: "#f0f6fc", muted: "#8b949e", chip: "#21262d", a: "#a78bfa", b: "#22d3ee", dot: "#ffffff14", glow: 0.35 },
-  light: { bg1: "#ffffff", bg2: "#f6f8fa", border: "#d0d7de", text: "#1f2328", muted: "#59636e", chip: "#eaeef2", a: "#7c3aed", b: "#0891b2", dot: "#1f23281a", glow: 0.18 },
+  // "Cyberminimalism" palette: #000000 #0A0A0A #141414 #383838 #F0F0F0
+  dark: { bg1: "#0a0a0a", bg2: "#141414", border: "#383838", text: "#f0f0f0", muted: "#8f8f8f", chip: "#141414", a: "#f0f0f0", b: "#8f8f8f", on: "#0a0a0a", dot: "#ffffff0f", glow: 0.1 },
+  light: { bg1: "#f0f0f0", bg2: "#ffffff", border: "#c9c9c9", text: "#0a0a0a", muted: "#5c5c5c", chip: "#e4e4e4", a: "#0a0a0a", b: "#5c5c5c", on: "#f0f0f0", dot: "#0000000f", glow: 0.08 },
 };
 
 const grad = (id, t) =>
@@ -17,7 +18,7 @@ function hero(t) {
   const W = 1200, H = 320;
   const lines = ["Building small things.", "Keeping the questions open.", "Web apps · Windows tools · archives"];
   const tag = lines
-    .map((l, i) => `<text class="tag" style="animation-delay:${i * 3}s" x="64" y="236" font-family="${MONO}" font-size="22" fill="${t.text}">${esc(l)}</text>`)
+    .map((l, i) => `<text class="tag" style="animation-delay:${i * 3}s" x="64" y="236" font-family="Georgia,'Times New Roman',serif" font-style="italic" letter-spacing="1" font-size="24" fill="${t.text}">${esc(l)}</text>`)
     .join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="t d">
 <title id="t">Advaita Chandra, w1tneess</title><desc id="d">Student, builder, explorer. Building small things. Keeping the questions open.</desc>
@@ -33,7 +34,7 @@ function hero(t) {
 <rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="24" fill="none" stroke="${t.border}"/>
 <text x="64" y="70" font-family="${MONO}" font-size="16" fill="${t.muted}"><tspan fill="url(#g)">●</tspan>  ~/w1tneess</text>
 <text x="64" y="150" font-family="${SANS}" font-size="68" font-weight="800" letter-spacing="-1.5" fill="url(#g)">Advaita Chandra</text>
-<text x="64" y="192" font-family="${SANS}" font-size="22" fill="${t.muted}">w1tneess  ·  student  ·  builder  ·  explorer</text>
+<text x="64" y="192" font-family="${SANS}" font-size="15" font-weight="600" letter-spacing="5" fill="${t.muted}">W1TNEESS  ·  STUDENT  ·  BUILDER  ·  EXPLORER</text>
 ${tag}<rect class="cur" x="64" y="268" width="12" height="3" fill="${t.b}"/>
 <text x="${W - 64}" y="${H - 36}" text-anchor="end" font-family="${MONO}" font-size="15" fill="${t.muted}">West Bengal, India</text>
 </svg>`;
@@ -42,7 +43,7 @@ ${tag}<rect class="cur" x="64" y="268" width="12" height="3" fill="${t.b}"/>
 function pill(label, t, filled) {
   const w = Math.round(label.length * 9.4 + 44), h = 40;
   const fill = filled ? "url(#g)" : t.chip;
-  const col = filled ? "#ffffff" : t.text;
+  const col = filled ? t.on : t.text;
   return {
     w,
     svg: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}"><defs>${grad("g", t)}</defs>

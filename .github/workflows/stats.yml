@@ -13,7 +13,7 @@ jobs:
       - uses: readme-tools/github-readme-stats-action@d82657a0e215a28ec48bfc9b3987999a279f93be # v1
         with:
           card: stats
-          options: username=${{ github.repository_owner }}&show_icons=true&theme=dracula
+          options: username=${{ github.repository_owner }}&show_icons=true&bg_color=0a0a0a&title_color=f0f0f0&text_color=8f8f8f&icon_color=f0f0f0&border_color=383838
           path: out/stats.svg
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
       - uses: crazy-max/ghaction-github-pages@df5cc2bfa78282ded844b354faee141f06b41865 # v4
