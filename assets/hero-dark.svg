@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="t d">
+<title id="t">Advaita Chandra, w1tneess</title><desc id="d">Student, builder, explorer. Building small things. Keeping the questions open.</desc>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a78bfa"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+<radialGradient id="r1"><stop offset="0" stop-color="#a78bfa" stop-opacity="0.35"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
+<radialGradient id="r2"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.35"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0d1117"/><stop offset="1" stop-color="#161b22"/></linearGradient>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="#ffffff14"/></pattern>
+<clipPath id="c"><rect width="1200" height="320" rx="24"/></clipPath></defs>
+<style>.tag{opacity:0;animation:cy 9s infinite}@keyframes cy{0%{opacity:0}6%,28%{opacity:1}34%,100%{opacity:0}}.cur{animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}@media (prefers-reduced-motion:reduce){.tag,.cur{animation:none}.tag:first-of-type{opacity:1}}</style>
+<g clip-path="url(#c)"><rect width="1200" height="320" fill="url(#bg)"/><rect width="1200" height="320" fill="url(#dots)"/>
+<circle cx="1040" cy="40" r="260" fill="url(#r1)"/><circle cx="180" cy="330" r="240" fill="url(#r2)"/></g>
+<rect x=".5" y=".5" width="1199" height="319" rx="24" fill="none" stroke="#30363d"/>
+<text x="64" y="70" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="16" fill="#8b949e"><tspan fill="url(#g)">●</tspan>  ~/w1tneess</text>
+<text x="64" y="150" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="68" font-weight="800" letter-spacing="-1.5" fill="url(#g)">Advaita Chandra</text>
+<text x="64" y="192" font-family="-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" fill="#8b949e">w1tneess  ·  student  ·  builder  ·  explorer</text>
+<text class="tag" style="animation-delay:0s" x="64" y="236" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="22" fill="#f0f6fc">Building small things.</text><text class="tag" style="animation-delay:3s" x="64" y="236" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="22" fill="#f0f6fc">Keeping the questions open.</text><text class="tag" style="animation-delay:6s" x="64" y="236" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="22" fill="#f0f6fc">Web apps · Windows tools · archives</text><rect class="cur" x="64" y="268" width="12" height="3" fill="#22d3ee"/>
+<text x="1136" y="284" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="15" fill="#8b949e">West Bengal, India</text>
+</svg>
