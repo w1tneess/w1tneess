@@ -37,5 +37,6 @@ test('committed artwork matches the generator (the build also throws on overflow
   const dir = mkdtempSync(join(tmpdir(), 'profile-art-'));
   execFileSync(process.execPath, [join(root, 'scripts/build-art.mjs')], { env: { ...process.env, ASSET_DIR: dir }, stdio: 'ignore' });
   assert.deepEqual(readdirSync(dir).sort(), [...assets].sort());
-  for (const f of readdirSync(dir)) assert.equal(readFileSync(join(root, 'assets', f), 'utf8'), readFileSync(join(dir, f), 'utf8'), `assets/${f} is stale: run node scripts/build-art.mjs`);
+  // Windows checkouts may convert line endings, so compare without them.
+  for (const f of readdirSync(dir)) assert.equal(readFileSync(join(root, 'assets', f), 'utf8').replaceAll('\r\n', '\n'), readFileSync(join(dir, f), 'utf8'), `assets/${f} is stale: run node scripts/build-art.mjs`);
 });

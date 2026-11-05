@@ -9,7 +9,7 @@
 <a href="mailto:hi@advaitachandra.in"><img src="https://img.shields.io/badge/EMAIL-SAY_HELLO-172235?style=for-the-badge&logo=gmail&logoColor=D9C08E" alt="Email" /></a>
 <a href="https://x.com/w1tneess_"><img src="https://img.shields.io/badge/X-@W1TNEESS_-172235?style=for-the-badge&logo=x&logoColor=F3F4F6" alt="X" /></a>
 
-<br/><br/>
+<br/>
 
 [ABOUT](#about) &nbsp;·&nbsp; [SELECTED WORK](#selected-work) &nbsp;·&nbsp; [TOOLKIT](#toolkit) &nbsp;·&nbsp; [OUTSIDE THE EDITOR](#outside-the-editor)
 
@@ -58,13 +58,13 @@ I'm drawn to thoughtful interfaces, creative technology, and the details that ma
 
 **LANGUAGES**
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts,js,python,html,css&amp;theme=dark"><img src="https://skillicons.dev/icons?i=ts,js,python,html,css&amp;theme=light" alt="TypeScript, JavaScript, Python, HTML and CSS" /></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts%2Cjs%2Cpython%2Chtml%2Ccss&amp;theme=dark"><img src="https://skillicons.dev/icons?i=ts%2Cjs%2Cpython%2Chtml%2Ccss&amp;theme=light" alt="TypeScript, JavaScript, Python, HTML and CSS" /></picture>
 
 <br/><br/>
 
 **FRAMEWORKS & TOOLS**
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react,vue,vite,tailwind,nodejs,supabase,cloudflare,git&amp;theme=dark"><img src="https://skillicons.dev/icons?i=react,vue,vite,tailwind,nodejs,supabase,cloudflare,git&amp;theme=light" alt="React, Vue, Vite, Tailwind CSS, Node.js, Supabase, Cloudflare and Git" /></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react%2Cvue%2Cvite%2Ctailwind%2Cnodejs%2Csupabase%2Ccloudflare%2Cgit&amp;theme=dark"><img src="https://skillicons.dev/icons?i=react%2Cvue%2Cvite%2Ctailwind%2Cnodejs%2Csupabase%2Ccloudflare%2Cgit&amp;theme=light" alt="React, Vue, Vite, Tailwind CSS, Node.js, Supabase, Cloudflare and Git" /></picture>
 
 </div>
 
