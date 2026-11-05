@@ -34,7 +34,5 @@ test('every dark image has a light twin, and committed art matches the generator
   const generated = readdirSync(dir, { recursive: true }).filter(f => f.endsWith('.svg')).map(f => f.replaceAll('\\', '/')).sort();
   assert.deepEqual(generated, assets.filter(f => /^(dark|light)\//.test(f)).sort(), 'generated and committed asset lists differ');
   for (const f of generated.filter(f => f.startsWith('dark/'))) assert.ok(generated.includes(f.replace('dark/', 'light/')), `${f} has no light twin`);
-  for (const f of generated) assert.equal(readFileSync(join(root, 'assets', f), 'utf8').replaceAll('
-', '
-'), readFileSync(join(dir, f), 'utf8'), `assets/${f} is stale: run node scripts/build-assets.mjs`);
+  for (const f of generated) assert.equal(readFileSync(join(root, 'assets', f), 'utf8').replaceAll('\r\n', '\n'), readFileSync(join(dir, f), 'utf8'), `assets/${f} is stale: run node scripts/build-assets.mjs`);
 });
