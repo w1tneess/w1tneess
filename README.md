@@ -19,6 +19,8 @@
 
 ---
 
+## About
+
 I'm a student and developer from India interested in the space between **software, philosophy, history and visual storytelling**.
 
 I build websites, experiment with interfaces, and make tools around problems I encounter. This profile is a record of things made, ideas explored, and experiments still in progress.
@@ -95,70 +97,7 @@ Small builds, prototypes and ideas live across my repositories.
 
 </details>
 
-<!-- legacy-project-grid
-<table>
-<tr>
-<td width="50%" valign="top">
 
-### ◈ Osho Documentary
-
-An interactive documentary exploring the life, timeline and ideas of Osho.
-
-[Explore repository →](https://github.com/w1tneess/osho-documentary) · [Live experience →](https://oshodocumentary.advaitachandra.in/)
-
-</td>
-<td width="50%" valign="top">
-
-### ◈ Declutter
-
-A small product experiment focused on making digital life simpler.
-
-[Explore repository →](https://github.com/w1tneess/declutter) · [Live experience →](https://declutter.advaitachandra.in/)
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### ◈ advaitachandra.in
-
-My personal website and digital notebook for projects, writing and photography.
-
-[Explore repository →](https://github.com/w1tneess/advaita-website) · [Visit website →](https://advaitachandra.in/)
-
-</td>
-<td width="50%" valign="top">
-
-### ◈ w1tOS
-
-An interface experiment exploring the feel of a personal operating environment.
-
-[Explore repository →](https://github.com/w1tneess/w1tos-ui)
-
-</td>
-</tr>
-<tr>
-<td width="50%" valign="top">
-
-### ◈ Command Deck
-
-A project in the personal-tools and workflow space.
-
-[Explore repository →](https://github.com/w1tneess/command-deck)
-
-</td>
-<td width="50%" valign="top">
-
-### ◈ More experiments
-
-Small builds, prototypes and ideas live across my repositories.
-
-[Browse all repositories →](https://github.com/w1tneess?tab=repositories)
-
-</td>
-</tr>
-</table>
-legacy-project-grid -->
 
 ## Technology
 
