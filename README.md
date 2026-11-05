@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/profile-hero.svg" width="100%" alt="Advaita Chandra — student, developer, explorer" />
+<picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/hero-mobile-dark.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/hero-mobile-light.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg"><img src="assets/hero-light.svg" width="100%" alt="Advaita Chandra — student, developer, explorer. Building interfaces. Exploring ideas. Keeping notes."></picture>
 
 <br/>
 
@@ -11,7 +11,7 @@
 
 <br/><br/>
 
-[ABOUT](#about) &nbsp;·&nbsp; [SELECTED WORK](#selected-work) &nbsp;·&nbsp; [TOOLKIT](#toolkit) &nbsp;·&nbsp; [ELSEWHERE](#outside-the-editor)
+[ABOUT](#about) &nbsp;·&nbsp; [SELECTED WORK](#selected-work) &nbsp;·&nbsp; [TOOLKIT](#toolkit) &nbsp;·&nbsp; [OUTSIDE THE EDITOR](#outside-the-editor)
 
 </div>
 
@@ -36,21 +36,19 @@ I'm drawn to thoughtful interfaces, creative technology, and the details that ma
 
 <div align="center">
 
-<img src="assets/project-showcase.svg" width="100%" alt="Four selected projects: Osho Documentary, Declutter, advaitachandra.in and w1tOS" />
+<picture><source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/showcase-mobile-dark.svg"><source media="(max-width: 600px) and (prefers-color-scheme: light)" srcset="assets/showcase-mobile-light.svg"><source media="(prefers-color-scheme: dark)" srcset="assets/showcase-dark.svg"><img src="assets/showcase-light.svg" width="100%" alt="Four selected projects: Osho Documentary, Declutter, advaitachandra.in and w1tOS."></picture>
 
 </div>
 
-| PROJECT | WHAT IT IS | LINKS |
-|:--|:--|:--|
-| **Osho Documentary** | Interactive documentary exploring a life, timeline and ideas | [Live ↗](https://oshodocumentary.advaitachandra.in/) · [Code ↗](https://github.com/w1tneess/osho-documentary) |
-| **Declutter** | A product experiment focused on making digital life simpler | [Live ↗](https://declutter.advaitachandra.in/) · [Code ↗](https://github.com/w1tneess/declutter) |
-| **Personal website** | My digital notebook for projects, writing and photography | [Visit ↗](https://advaitachandra.in/) · [Code ↗](https://github.com/w1tneess/advaita-website) |
-| **w1tOS** | An interface experiment around a personal operating environment | [Code ↗](https://github.com/w1tneess/w1tos-ui) |
-| **Command Deck** | A project in the personal-tools and workflow space | [Code ↗](https://github.com/w1tneess/command-deck) |
+- **Osho Documentary** — an evidence-graded interactive documentary on Osho and Rajneeshpuram, with an archival timeline and map.<br>[Live&nbsp;↗&#xFE0E;](https://oshodocumentary.advaitachandra.in/) · [Code&nbsp;↗&#xFE0E;](https://github.com/w1tneess/osho-documentary)
+- **Declutter** — a Windows app that sorts a messy folder, finds duplicates and large or old files, and previews every change first. It never permanently deletes.<br>[Live&nbsp;↗&#xFE0E;](https://declutter.advaitachandra.in/) · [Code&nbsp;↗&#xFE0E;](https://github.com/w1tneess/declutter)
+- **Personal website** — my public notebook for projects, reading notes and photography.<br>[Visit&nbsp;↗&#xFE0E;](https://advaitachandra.in/) · [Code&nbsp;↗&#xFE0E;](https://github.com/w1tneess/advaita-website)
+- **w1tOS** — a minimal, keyboard-first web UI for CasaOS home servers, with three themes and no telemetry. A fork of CasaOS-UI.<br>[Code&nbsp;↗&#xFE0E;](https://github.com/w1tneess/w1tos-ui)
+- **Command Deck** — a Class 10 exam and syllabus study dashboard on Cloudflare Workers and D1.<br>[Code&nbsp;↗&#xFE0E;](https://github.com/w1tneess/command-deck)
 
 <div align="center">
 
-[EXPLORE ALL REPOSITORIES ↗](https://github.com/w1tneess?tab=repositories)
+[EXPLORE ALL REPOSITORIES ↗&#xFE0E;](https://github.com/w1tneess?tab=repositories)
 
 </div>
 
@@ -60,13 +58,13 @@ I'm drawn to thoughtful interfaces, creative technology, and the details that ma
 
 **LANGUAGES**
 
-<img src="https://skillicons.dev/icons?i=ts,js,python,cs,html,css" alt="TypeScript, JavaScript, Python, C sharp, HTML and CSS" />
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts,js,python,html,css&amp;theme=dark"><img src="https://skillicons.dev/icons?i=ts,js,python,html,css&amp;theme=light" alt="TypeScript, JavaScript, Python, HTML and CSS" /></picture>
 
 <br/><br/>
 
 **FRAMEWORKS & TOOLS**
 
-<img src="https://skillicons.dev/icons?i=react,vue,vite,tailwind,nodejs,supabase,cloudflare,git" alt="React, Vue, Vite, Tailwind CSS, Node.js, Supabase, Cloudflare and Git" />
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react,vue,vite,tailwind,nodejs,supabase,cloudflare,git&amp;theme=dark"><img src="https://skillicons.dev/icons?i=react,vue,vite,tailwind,nodejs,supabase,cloudflare,git&amp;theme=light" alt="React, Vue, Vite, Tailwind CSS, Node.js, Supabase, Cloudflare and Git" /></picture>
 
 </div>
 
@@ -76,9 +74,9 @@ Philosophy, photography, books, music, history, and the occasional rabbit hole t
 
 <div align="center">
 
-<a href="https://github.com/w1tneess?tab=overview">VIEW GITHUB ACTIVITY ↗</a>
+<a href="https://github.com/w1tneess?tab=overview">VIEW GITHUB ACTIVITY ↗&#xFE0E;</a>
 &nbsp;·&nbsp;
-<a href="https://github.com/w1tneess?tab=stars">BROWSE MY STARS ↗</a>
+<a href="https://github.com/w1tneess?tab=stars">BROWSE MY STARS ↗&#xFE0E;</a>
 
 <br/><br/>
 
