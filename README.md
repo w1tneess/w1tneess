@@ -4,7 +4,7 @@
 
 <br/>
 
-<a href="https://advaitachandra.in"><img src="https://img.shields.io/badge/WEBSITE-ADV AITACHANDRA.IN-172235?style=for-the-badge&logo=googlechrome&logoColor=D9C08E" alt="Website" /></a>
+<a href="https://advaitachandra.in"><img src="https://img.shields.io/badge/WEBSITE-ADVAITACHANDRA.IN-172235?style=for-the-badge&logo=googlechrome&logoColor=D9C08E" alt="Website" /></a>
 <a href="https://github.com/w1tneess"><img src="https://img.shields.io/badge/GITHUB-W1TNEESS-172235?style=for-the-badge&logo=github&logoColor=F3F4F6" alt="GitHub" /></a>
 <a href="mailto:hi@advaitachandra.in"><img src="https://img.shields.io/badge/EMAIL-SAY_HELLO-172235?style=for-the-badge&logo=gmail&logoColor=D9C08E" alt="Email" /></a>
 <a href="https://x.com/w1tneess_"><img src="https://img.shields.io/badge/X-@W1TNEESS_-172235?style=for-the-badge&logo=x&logoColor=F3F4F6" alt="X" /></a>
