@@ -65,10 +65,10 @@ Tools I use across my projects. Still learning as I build.
 
 <!--ACTIVITY:START-->
 <ul>
+<li><a href="https://github.com/w1tneess/osho-documentary">osho-documentary</a> — feat(map): render real Natural Earth world map with lat/lng-projected pins and region zoom <a href="https://github.com/w1tneess/osho-documentary/commit/024dd817fe0dda91ebb179cfe80c68654239b3e5">(6 Nov 2026)</a></li>
 <li><a href="https://github.com/w1tneess/w1tos-ui">w1tos-ui</a> — Docs: state the project&#39;s intent, goals and non-goals <a href="https://github.com/w1tneess/w1tos-ui/commit/0acbcd4dc9c6ebeccf6fd3b536e0d199b1f8adbf">(4 Nov 2026)</a></li>
 <li><a href="https://github.com/w1tneess/declutter">declutter</a> — Hardening: no-overwrite moves, hash-pinned deps, least-privilege release workflow, website… <a href="https://github.com/w1tneess/declutter/commit/a0a50f83107c8b74da5dae38fbe0ec51ae8ac5c9">(1 Nov 2026)</a></li>
 <li><a href="https://github.com/w1tneess/advaita-website">advaita-website</a> — refactor(content): drop the temporary table-read fallback for the public RPC <a href="https://github.com/w1tneess/advaita-website/commit/34335c3923a2b17e905952b6db67f6094767763a">(19 Oct 2026)</a></li>
-<li><a href="https://github.com/w1tneess/osho-documentary">osho-documentary</a> — chore(deps): bump @typescript-eslint/parser to 8.71.2 (#16) <a href="https://github.com/w1tneess/osho-documentary/commit/4bf36556a49e9c4e64a1ec21b9b7d56d16071777">(16 Oct 2026)</a></li>
 </ul>
 <!--ACTIVITY:END-->
 
