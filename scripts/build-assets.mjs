@@ -276,8 +276,8 @@ for (const [mode, t] of Object.entries(THEMES)) {
   for (const c of CONTACTS) put(`contact-${c.id}-${mode}`, contact(c, t));
 }
 
-// ---- README (gh-dark/light-mode-only follows GitHub's own theme setting) ----
-const themed = (base, attrs, alt) => `<img src="${base("dark")}#gh-dark-mode-only" ${attrs} alt="${alt}"><img src="${base("light")}#gh-light-mode-only" ${attrs} alt="${alt}">`;
+// ---- README (<picture> + prefers-color-scheme; GitHub maps it to the viewer theme) ----
+const themed = (base, attrs, alt) => `<picture><source media="(prefers-color-scheme: dark)" srcset="${base("dark")}"><img src="${base("light")}" ${attrs} alt="${alt}"></picture>`;
 const local = (name) => (m) => `assets/${name}-${m}.svg`;
 const remote = (name) => (m) => `${RAW}/stats-output/${name}-${m}.svg`;
 const link = (href, inner) => `<a href="${href}">${inner}</a>`;
