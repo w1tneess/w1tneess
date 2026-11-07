@@ -1,173 +1,350 @@
-// GitHub-safe local SVG artwork; deterministic and dependency-free.
-// Every image is drawn in a dark and a light palette (assets/dark, assets/light). Wide images also
-// get a "-mobile" version with larger type. README.md picks one with <picture><source media>.
-// All text is outlined glyph paths (scripts/glyphs.mjs), so it never depends on installed fonts.
-// The build throws if any text leaves its image or overlaps other text.
-import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { FONTS } from './glyphs.mjs';
+// Generates the README artwork (light + dark) into assets/ and writes README.md.
+// Run: node scripts/build-assets.mjs [--readme]  (README is now hand-kept in profile-readme-generator format)   (needs network once, for brand icon paths)
+import { mkdirSync, writeFileSync, readdirSync, unlinkSync } from "node:fs";
 
-const OUT = process.env.ASSET_DIR ?? fileURLToPath(new URL('../assets/', import.meta.url));
+const SANS = "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif";
+const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace";
+const SERIF = "Georgia,'Times New Roman',serif";
+const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const OWNER = "w1tneess";
+const RAW = `https://raw.githubusercontent.com/${OWNER}/${OWNER}`;
+
+// "Cyberminimalism" palette: #000000 #0A0A0A #141414 #383838 #F0F0F0
 const THEMES = {
-  dark: { bg: '#0f1611', panel: '#161f18', line: '#2f4132', ink: '#e8efe2', muted: '#a9b9a4', green: '#b0dc83', dim: '#55704b',
-    noise: ['#273a28', '#385a32', '#528343', '#82b660', '#badb8d', '#d8e5bc', '#667c52', '#1c2e21'], heat: ['#232e25', '#345330', '#537d40', '#85bc61', '#c1e99b'],
-    bezel: '#d9dfce', screen: '#26392a', screenInk: '#b0dc83', stand: '#8ca374', ring: '#e8efe2' },
-  light: { bg: '#f4f7ef', panel: '#e9efe0', line: '#bccbb0', ink: '#14211a', muted: '#44584a', green: '#2d6a1e', dim: '#7fa169',
-    noise: ['#dce7cf', '#c8dcb1', '#a8c98a', '#86b062', '#6a9a48', '#4d7e33', '#93b873', '#ecf2e3'], heat: ['#e0e9d6', '#c4dba6', '#8fbf68', '#4f8f3a', '#2a6420'],
-    bezel: '#c3d1b4', screen: '#16231a', screenInk: '#b8e68c', stand: '#93a887', ring: '#14211a' },
+  dark: { text: "#f0f0f0", muted: "#8f8f8f", border: "#383838", bg: "#0a0a0a", card: "#141414", a: "#f0f0f0", b: "#8f8f8f", on: "#0a0a0a", dot: "#ffffff0f", glow: 0.1 },
+  light: { text: "#0a0a0a", muted: "#5c5c5c", border: "#c9c9c9", bg: "#fafafa", card: "#ffffff", a: "#0a0a0a", b: "#5c5c5c", on: "#f0f0f0", dot: "#0000000f", glow: 0.08 },
 };
+const grad = (id, t) => `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.a}"/><stop offset="1" stop-color="${t.b}"/></linearGradient>`;
 
-// ---- text: outlined glyph runs --------------------------------------------------------------
-let boxes = [], defs = new Map(); // glyph outlines are defined once per image and reused
-function measure(font, s, size, track = 0) {
-  const F = FONTS[font];
-  return [...s].reduce((w, ch) => { if (F.adv[ch] === undefined) throw new Error(`No glyph for ${JSON.stringify(ch)} in ${font}`); return w + F.adv[ch] * size / F.upm + track; }, -track);
-}
-// Largest size <= `size` whose text fits in maxW.
-const fit = (font, s, size, maxW) => Math.min(size, size * maxW / measure(font, s, size));
-function text(x, y, s, { font = 'mono', size = 14, color, anchor = 'start', track = 0, check = true } = {}) {
-  const F = FONTS[font], k = size / F.upm, w = measure(font, s, size, track);
-  const left = anchor === 'end' ? x - w : anchor === 'middle' ? x - w / 2 : x;
-  if (check) boxes.push({ s, l: left, r: left + w, t: y - F.cap * k, b: y + size * 0.22 });
-  let pen = 0, out = '';
-  for (const ch of s) {
-    if (F.g[ch]) { const id = `${font}-${ch.codePointAt(0)}`; defs.set(id, `<path id="${id}" d="${F.g[ch]}"/>`); out += `<use href="#${id}" x="${+pen.toFixed(1)}"/>`; }
-    pen += F.adv[ch] + track / k;
-  }
-  return `<g transform="translate(${+left.toFixed(2)} ${y}) scale(${+k.toFixed(5)})" fill="${color}">${out}</g>`;
-}
-const bitmap = (rows, x, y, s, color) => rows.flatMap((row, r) => [...row].map((on, c) => on === '1' ? `<rect x="${x + c * s}" y="${y + r * s}" width="${s}" height="${s}" fill="${color}"/>` : '')).join('');
-const ARROW = ['0001111', '0000011', '0000101', '0001001', '0010000', '0100000', '1000000'];
-const arrow = (T, xRight, y, s) => bitmap(ARROW, xRight - 7 * s, y, s, T.green);
+// ---- brand icon paths (simple-icons, single 24x24 path each) ----
+const ICON_VERSION = "13.21.0";
+const iconPath = async (slug) => {
+  const r = await fetch(`https://cdn.jsdelivr.net/npm/simple-icons@${ICON_VERSION}/icons/${slug}.svg`);
+  if (!r.ok) return null;
+  return (await r.text()).match(/ d="([^"]+)"/)?.[1] ?? null;
+};
+const GLOBE = "M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c.9 1.1 1.7 2.8 2.1 5H9.9C10.3 6.8 11.1 5.1 12 4zM4.3 11a8 8 0 015.1-6.6C8.8 5.7 8.2 8 8 11H4.3zm0 2H8c.2 3 .8 5.3 1.4 6.6A8 8 0 014.3 13zM12 20c-.9-1.1-1.7-2.8-2.1-5h4.2c-.4 2.2-1.2 3.9-2.1 5zm2.1-7H9.9a17 17 0 010-2h4.2a17 17 0 010 2zm.5 6.6c.6-1.3 1.2-3.6 1.4-6.6h3.7a8 8 0 01-5.1 6.6zM16 11c-.2-3-.8-5.3-1.4-6.6A8 8 0 0119.7 11H16z";
+const glyph = (d, x, y, size, fill) => `<g transform="translate(${x} ${y}) scale(${size / 24})"><path d="${d}" fill="${fill}"/></g>`;
 
-// ---- pixel art ------------------------------------------------------------------------------
-const font5x7 = { A: ['01110', '10001', '10001', '11111', '10001', '10001', '10001'], D: ['11110', '10001', '10001', '10001', '10001', '10001', '11110'], V: ['10001', '10001', '10001', '10001', '10001', '01010', '00100'], I: ['11111', '00100', '00100', '00100', '00100', '00100', '11111'], T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'], C: ['01111', '10000', '10000', '10000', '10000', '10000', '01111'], H: ['10001', '10001', '10001', '11111', '10001', '10001', '10001'], N: ['10001', '11001', '11001', '10101', '10011', '10011', '10001'], R: ['11110', '10001', '10001', '11110', '10100', '10010', '10001'], ' ': ['00000', '00000', '00000', '00000', '00000', '00000', '00000'] };
-const pixels = (label, x, y, scale, color) => [...label].map((ch, i) => bitmap(font5x7[ch] ?? font5x7[' '], x + i * scale * 6, y, scale, color)).join('');
-function noise(T, x, y, cols, rows, cell, seed = 3) {
-  let state = seed, out = '';
-  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-    state = (state * 1664525 + 1013904223) >>> 0;
-    const v = state % 13;
-    if (v < 8) out += `<rect x="${x + c * cell}" y="${y + r * cell}" width="${cell}" height="${cell}" fill="${T.noise[v]}"/>`;
-  }
-  return out;
-}
-// Pixel terminal and cursor, echoing the builder side of the archive.
-const terminal = (T, x, y, k, label, size) => `<rect x="${x}" y="${y}" width="${165 * k}" height="${95 * k}" fill="${T.bezel}"/><rect x="${x + 12 * k}" y="${y + 12 * k}" width="${141 * k}" height="${71 * k}" fill="${T.screen}"/>` + text(x + 24 * k, y + 44 * k, label, { font: 'monoBold', size, color: T.screenInk, check: false }) + `<path d="M${x + 55 * k} ${y + 95 * k}h${54 * k}v${12 * k}h${-54 * k}zM${x + 24 * k} ${y + 107 * k}h${116 * k}v${12 * k}H${x + 24 * k}z" fill="${T.stand}"/>`;
+// ---- hero: a slowly spinning wireframe globe with an orbit, over a floor that flows toward you ----
+// Pure SVG animation (SMIL + CSS) because GitHub shows READMEs' SVGs as <img>: no scripts, no hover.
+const f1 = (n) => n.toFixed(1);
+const rad = (d) => (d * Math.PI) / 180;
+const range = (a, b, n) => Array.from({ length: n }, (_, i) => a + ((b - a) * i) / (n - 1));
 
-const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]));
-function art(name, w, h, title, draw) {
-  for (const [theme, T] of Object.entries(THEMES)) {
-    boxes = []; defs = new Map();
-    const body = draw(T);
-    for (const [i, a] of boxes.entries()) {
-      if (a.l < 4 || a.r > w - 4 || a.t < 2 || a.b > h - 2) throw new Error(`${theme}/${name}: "${a.s}" leaves the image (${a.l.toFixed(0)}..${a.r.toFixed(0)} of ${w})`);
-      for (const b of boxes.slice(i + 1)) if (a.l < b.r && b.l < a.r && a.t < b.b && b.t < a.b) throw new Error(`${theme}/${name}: "${a.s}" overlaps "${b.s}"`);
+function hero(t) {
+  const W = 1200, H = 400, HZ = 272, bg = t.bg;
+  const G = { x: 880, y: 164, r: 100, tilt: rad(22) };
+  // sphere (lat, lon) -> [screenX, screenY, depth]; tilted so the north pole leans toward the viewer
+  const sp = (lat, lon) => {
+    const x = Math.cos(lat) * Math.sin(lon), y = Math.sin(lat), z = Math.cos(lat) * Math.cos(lon);
+    const y2 = y * Math.cos(G.tilt) - z * Math.sin(G.tilt), z2 = y * Math.sin(G.tilt) + z * Math.cos(G.tilt);
+    return [G.x + G.r * x, G.y - G.r * y2, z2];
+  };
+  const poly = (pts) => pts.map((p, i) => `${i ? "L" : "M"}${f1(p[0])} ${f1(p[1])}`).join("");
+  const split = (pts) => { // static curves: front and back runs
+    const o = { f: "", b: "" }; let prev = null;
+    for (const p of pts) { const k = p[2] >= 0 ? "f" : "b"; if (prev && prev !== k) o[prev] += `L${f1(p[0])} ${f1(p[1])}`; o[k] += `${prev === k ? "L" : "M"}${f1(p[0])} ${f1(p[1])}`; prev = k; }
+    return o;
+  };
+
+  // Meridians: with the tilt, every pole-to-pole half meridian crosses from back to front exactly once,
+  // so each frame has the same command structure and SMIL can interpolate the paths smoothly.
+  const STEP = 20, FRAMES = 10, N = 14;
+  const meridians = (theta) => {
+    const o = { f: "", b: "" };
+    for (let k = 0; k < 360 / STEP; k++) {
+      const lon = rad(k * STEP + theta);
+      const c = Math.atan(-Math.cos(lon) * Math.cos(G.tilt) / Math.sin(G.tilt)); // latitude where depth = 0
+      o.f += poly(range(c, Math.PI / 2, N).map((lat) => sp(lat, lon)));
+      o.b += poly(range(-Math.PI / 2, c, N).map((lat) => sp(lat, lon)));
     }
-    mkdirSync(join(OUT, theme), { recursive: true });
-    writeFileSync(join(OUT, theme, name), `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(title)}"><title>${esc(title)}</title><defs>${[...defs.values()].join("")}</defs><rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="4" fill="${T.bg}" stroke="${T.line}"/>${body}</svg>\n`);
-  }
+    return o;
+  };
+  const frames = range(0, STEP, FRAMES + 1).map(meridians);
+  const spin = (side) => `<path d="${frames[0][side]}"><animate attributeName="d" dur="2.4s" repeatCount="indefinite" values="${frames.map((f) => f[side]).join(";")}"/></path>`;
+  const par = [-60, -30, 0, 30, 60].map((d) => split(range(0, 360, 73).map((l) => sp(rad(d), rad(l)))));
+
+  // Orbit ring, nearly edge-on, with a dot that dims while it passes behind the globe
+  const R = 164, beta = rad(12), gam = rad(-14);
+  const orb = (a) => {
+    const x = R * Math.cos(a), y = -R * Math.sin(a) * Math.sin(beta), z = R * Math.sin(a) * Math.cos(beta);
+    return [G.x + x * Math.cos(gam) - y * Math.sin(gam), G.y - (x * Math.sin(gam) + y * Math.cos(gam)), z];
+  };
+  const ring = split(range(0, 2 * Math.PI, 97).map(orb));
+  const dot = range(0, 2 * Math.PI, 73).map(orb);
+  const anim = (attr, vals) => `<animate attributeName="${attr}" dur="9s" repeatCount="indefinite" values="${vals.join(";")}"/>`;
+
+  // Floor: lines to a vanishing point under the globe, plus rows that travel toward the viewer
+  const rays = range(-1200, 2400, 46).map((xb) => `M${G.x} ${HZ}L${f1(xb)} ${H}`).join("");
+  const ROWS = 9, DUR = 4.5, ys = range(0, 1, 13).map((s) => f1(HZ + (H + 20 - HZ) * s ** 2.2));
+  const rows = range(0, ROWS - 1, ROWS).map((i) => `<line x1="0" x2="${W}" y1="${HZ}" y2="${HZ}"><animate attributeName="y1" dur="${DUR}s" begin="-${f1((i * DUR) / ROWS)}s" repeatCount="indefinite" values="${ys.join(";")}"/><animate attributeName="y2" dur="${DUR}s" begin="-${f1((i * DUR) / ROWS)}s" repeatCount="indefinite" values="${ys.join(";")}"/></line>`).join("");
+
+  // Typewriter tagline: a background-coloured cover with the cursor on its edge steps right one character at a time
+  const TX = 64, TY = 236, CW = 13.2, SLOT = 4.5;
+  const lines = ["> building small things", "> keeping the questions open", "> websites · little tools · archives"];
+  const total = SLOT * lines.length;
+  const typeCss = lines.map((l, i) => {
+    const w = f1(l.length * CW), end = f1(((l.length * 0.06) / total) * 100);
+    return `.l${i},.l${i} .cv{animation-delay:${i * SLOT}s}.l${i} .cv{animation-name:ty${i}}@keyframes ty${i}{0%{transform:translateX(0);animation-timing-function:steps(${l.length},end)}${end}%,100%{transform:translateX(${w}px)}}`;
+  }).join("");
+  const typed = lines.map((l, i) => `<g class="ln l${i}"><text x="${TX}" y="${TY}" font-family="${MONO}" font-size="22" fill="${t.text}">${esc(l)}</text><g class="cv"><rect x="${TX}" y="${TY - 24}" width="${f1(l.length * CW + 40)}" height="34" fill="${bg}"/><rect class="cur" x="${TX + 1}" y="${TY - 19}" width="11" height="24" fill="${t.text}" fill-opacity=".8"/></g></g>`).join("");
+
+  const label = (x, y, s, anchor = "start") => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${MONO}" font-size="16" fill="${t.muted}">${s}</text>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="t d">
+<title id="t">Advaita Chandra, w1tneess</title><desc id="d">A wireframe globe spinning above a moving grid. Building small things, keeping the questions open. Websites, little tools and archives, from West Bengal, India.</desc>
+<defs><clipPath id="frame"><rect width="${W}" height="${H}" rx="16"/></clipPath>
+<linearGradient id="fv" x1="0" y1="${HZ}" x2="0" y2="${H}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff"/></linearGradient>
+<linearGradient id="fh" x1="0" x2="${W}" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop offset=".22" stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff"/></linearGradient>
+<mask id="mh"><rect width="${W}" height="${H}" fill="url(#fh)"/></mask>
+<mask id="floor"><rect y="${HZ}" width="${W}" height="${H - HZ}" fill="url(#fv)" mask="url(#mh)"/></mask></defs>
+<style>.ln{opacity:0;animation:show ${total}s infinite}.cv{animation-duration:${total}s;animation-iteration-count:infinite}@keyframes show{0%,${f1(100 / lines.length - 0.5)}%{opacity:1}${f1(100 / lines.length)}%,100%{opacity:0}}${typeCss}.cur{animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}@media (prefers-reduced-motion:reduce){.ln,.cv,.cur{animation:none}.l0{opacity:1}.cv{display:none}}</style>
+<g clip-path="url(#frame)"><rect width="${W}" height="${H}" fill="${bg}"/>
+<g mask="url(#floor)" stroke="${t.text}" stroke-opacity=".32" fill="none"><path d="${rays}"/>${rows}</g>
+<path d="${ring.b}" fill="none" stroke="${t.muted}" stroke-opacity=".35"/>
+<g fill="none" stroke="${t.text}" stroke-opacity=".16">${spin("b")}<path d="${par.map((p) => p.b).join("")}"/></g>
+<circle cx="${G.x}" cy="${G.y}" r="${G.r}" fill="none" stroke="${t.text}" stroke-opacity=".55"/>
+<g fill="none" stroke="${t.text}" stroke-opacity=".8" stroke-width="1.2">${spin("f")}<path d="${par.map((p) => p.f).join("")}"/></g>
+<path d="${ring.f}" fill="none" stroke="${t.muted}" stroke-opacity=".8"/>
+<circle r="4" fill="${t.text}" cx="${f1(dot[0][0])}" cy="${f1(dot[0][1])}">${anim("cx", dot.map((p) => f1(p[0])))}${anim("cy", dot.map((p) => f1(p[1])))}${anim("opacity", dot.map((p) => (p[2] >= 0 ? 1 : 0.2)))}</circle>
+${label(G.x - G.r - 34, G.y - 76, "software", "end")}${label(G.x + G.r + 40, G.y - 40, "philosophy")}${label(G.x + G.r + 22, G.y + 92, "history")}
+<circle cx="${TX + 5}" cy="99" r="4" fill="${t.text}"/>${label(TX + 18, 104, "~/w1tneess")}
+<text x="${TX - 3}" y="176" font-family="${SANS}" font-size="60" font-weight="500" letter-spacing="-1.8" fill="${t.text}">Advaita Chandra</text>
+${typed}
+${label(TX, H - 48, "West Bengal, India  ·  student  ·  builder  ·  explorer")}</g>
+<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="none" stroke="${t.text}" stroke-opacity=".1"/>
+</svg>`;
 }
 
-// ---- hero -----------------------------------------------------------------------------------
-const heroTitle = 'Advaita Chandra — student, developer, explorer. Be, not become.';
-const tagline = 'STUDENT · DEVELOPER · EXPLORER';
-art('hero.svg', 900, 342, heroTitle, T =>
-  text(32, 38, 'W1TNEESS / NOTES FROM A WORK IN PROGRESS', { font: 'pixel', size: 16, color: T.muted }) + pixels('ADVAITA CHANDRA', 32, 64, 7, T.ink) + noise(T, 32, 143, 51, 7, 12, 12) + terminal(T, 699, 137, 1, '> wit_', 24) +
-  text(32, 290, tagline, { font: 'pixel', size: 24, color: T.ink }) + text(32, 320, 'West Bengal, India', { size: 14, color: T.muted }) + text(868, 320, 'be, not become.', { size: 15, color: T.green, anchor: 'end' }));
-art('hero-mobile.svg', 360, 316, heroTitle, T =>
-  text(24, 32, 'W1TNEESS / IN PROGRESS', { font: 'pixel', size: 16, color: T.muted }) + pixels('ADVAITA', 24, 50, 7, T.ink) + pixels('CHANDRA', 24, 112, 7, T.ink) + noise(T, 24, 184, 19, 5, 11, 12) + terminal(T, 250, 180, 0.52, '> wit_', 13) +
-  text(24, 278, tagline, { font: 'pixel', size: fit('pixel', tagline, 16, 312), color: T.ink }) + text(24, 300, 'West Bengal, India', { size: 12.5, color: T.muted }) + text(336, 300, 'be, not become.', { size: 12.5, color: T.green, anchor: 'end' }));
-
-// ---- section strips -------------------------------------------------------------------------
-for (const [name, label, n] of [['about', 'ABOUT / THE HUMAN', 1], ['stack', 'TOOLS / THE WORKBENCH', 2], ['projects', 'BUILD / SELECTED WORK', 3], ['activity', 'ACTIVITY / COMMIT LOG', 4], ['notes', 'READ / FIELD NOTES', 5], ['contact', 'CONNECT / SAY HELLO', 6]]) {
-  art(`section-${name}.svg`, 900, 54, label, T => text(20, 36, label, { font: 'pixel', size: 24, color: T.ink }) + noise(T, 566, 20, 26, 2, 10, n));
-  art(`section-${name}-mobile.svg`, 360, 44, label, T => text(14, 29, label, { font: 'pixel', size: 16, color: T.ink }) + noise(T, 268, 12, 8, 2, 10, n));
+// ---- architecture of advaita-website (structure traced from GitSkins' code diagram) ----
+// Wide layout so it reads at GitHub's ~880px column; solid edges carry a slow moving dash = data flow.
+function arch(t) {
+  const W = 1070, H = 740, NW = 176, NH = 52;
+  const [c1, c2, c3, c4] = [130, 420, 680, 940];
+  const r = [64, 164, 264, 364, 464, 564, 664];
+  const node = (x, y, title, file) => `<rect x="${x - NW / 2 + .5}" y="${y - NH / 2 + .5}" width="${NW - 1}" height="${NH - 1}" rx="10" fill="${t.card}" stroke="${t.text}" stroke-opacity=".14"/>
+<text x="${x}" y="${y - 2}" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="500" fill="${t.text}">${esc(title)}</text><text x="${x}" y="${y + 16}" text-anchor="middle" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(file)}</text>`;
+  const actor = (x, y, label) => `<rect x="${x - 75 + .5}" y="${y - 22 + .5}" width="149" height="43" rx="21.5" fill="${t.bg}" stroke="${t.text}" stroke-opacity=".5"/>
+<circle cx="${x - 44}" cy="${y - 4}" r="4.5" fill="none" stroke="${t.text}" stroke-width="1.5"/><path d="M${x - 52} ${y + 9}a8 7 0 0 1 16 0" fill="none" stroke="${t.text}" stroke-width="1.5"/>
+<text x="${x - 30}" y="${y + 5}" font-family="${SANS}" font-size="15" font-weight="500" fill="${t.text}">${esc(label)}</text>`;
+  const db = (x, y, label) => `<path d="M${x - 85} ${y - 20}v40a85 10 0 0 0 170 0v-40" fill="${t.card}" stroke="${t.text}" stroke-opacity=".5"/><ellipse cx="${x}" cy="${y - 20}" rx="85" ry="10" fill="${t.card}" stroke="${t.text}" stroke-opacity=".5"/>
+<text x="${x}" y="${y + 12}" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="500" fill="${t.text}">${esc(label)}</text>`;
+  const group = (x1, y1, x2, y2, label) => `<rect x="${x1 + .5}" y="${y1 + .5}" width="${x2 - x1}" height="${y2 - y1}" rx="14" fill="${t.text}" fill-opacity=".03" stroke="${t.text}" stroke-opacity=".1"/>
+<text x="${x1 + 2}" y="${y1 - 10}" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(label)}</text>`;
+  // orthogonal route with rounded corners
+  const route = (p, rr = 10) => {
+    let d = `M${p[0][0]} ${p[0][1]}`;
+    for (let i = 1; i < p.length - 1; i++) {
+      const [a, b, c] = [p[i - 1], p[i], p[i + 1]];
+      const u = [Math.sign(b[0] - a[0]), Math.sign(b[1] - a[1])], v = [Math.sign(c[0] - b[0]), Math.sign(c[1] - b[1])];
+      d += `L${b[0] - u[0] * rr} ${b[1] - u[1] * rr}Q${b[0]} ${b[1]} ${b[0] + v[0] * rr} ${b[1] + v[1] * rr}`;
+    }
+    const z = p[p.length - 1];
+    return `${d}L${z[0]} ${z[1]}`;
+  };
+  const lab = (x, y, s, anchor = "start") => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${MONO}" font-size="12" fill="${t.muted}" stroke="${t.bg}" stroke-width="5" stroke-linejoin="round" paint-order="stroke">${esc(s)}</text>`;
+  const mid = (a, b) => (a + b) / 2;
+  const v = (x, y1, y2, s) => [[[x, y1], [x, y2]], lab(x + 12, mid(y1, y2) + 4, s)];
+  const E = [ // [points, label, dashed]
+    [...v(c1, r[0] + 22, r[1] - 26, "requests page")],
+    [...v(c1, r[1] + 26, r[2] - 26, "renders routes")],
+    [...v(c1, r[2] + 26, r[3] - 26, "renders outlet")],
+    [[[c1 + 88, r[3]], [c2 - 88, r[3]]], lab(mid(c1 + 88, c2 - 88), r[3] - 8, "reads content", "middle")],
+    [...v(c2, r[3] + 26, r[4] - 26, "loads document")],
+    [...v(c2, r[4] + 26, r[5] - 26, "falls back to seed"), true],
+    [[[c2 + 88, r[4] + 12], [c3, r[4] + 12], [c3, r[5] - 26]], lab(mid(c2 + 88, c3), r[4] + 30, "fetches remote", "middle")],
+    [...v(c3, r[5] + 26, r[6] - 30, "reads and writes")],
+    [...v(c4, r[0] + 22, r[1] - 26, "signs in")],
+    [...v(c4, r[1] + 26, r[2] - 26, "unlocks")],
+    [[[c4 - 40, r[2] + 26], [c4 - 40, r[4] - 12], [c2 + 88, r[4] - 12]], lab(mid(c3 + 104, c4 - 40), r[4] - 20, "imports data", "middle")],
+    [[[c4 + 40, r[2] + 26], [c4 + 40, r[5]], [c3 + 88, r[5]]], lab(mid(c3 + 88, c4 + 40), r[5] - 8, "checks health", "middle")],
+    [...v(c1, r[6] - 26, r[4] + 26, "reads routes")],
+    [[[c1 + 88, r[6]], [c3 - 86, r[6]]], lab(mid(c1 + 88, c3 - 86), r[6] - 8, "reads public copy", "middle"), true],
+  ];
+  const edges = E.map(([p, , dashed]) => dashed
+    ? `<path d="${route(p)}" fill="none" stroke="${t.text}" stroke-opacity=".45" stroke-dasharray="2 5" stroke-linecap="round" marker-end="url(#ah)"/>`
+    : `<path d="${route(p)}" fill="none" stroke="${t.text}" stroke-opacity=".5" marker-end="url(#ah)"/><path class="flow" d="${route(p)}" fill="none" stroke="${t.text}" stroke-opacity=".85" stroke-width="1.5"/>`).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="at ad">
+<title id="at">How advaita-website works</title><desc id="ad">Visitors hit the App Router, which renders the public layout and pages; pages read content through a provider and store that syncs with Supabase Postgres and falls back to seed JSON. The site owner signs in to an admin studio that imports data and checks sync health. A pre-render script reads the route config and a public copy of the database.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9z" fill="${t.text}" fill-opacity=".7"/></marker></defs>
+<style>.flow{stroke-dasharray:3 13;animation:fl 1.4s linear infinite}@keyframes fl{to{stroke-dashoffset:-16}}@media (prefers-reduced-motion:reduce){.flow{animation:none;opacity:0}}</style>
+<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="${t.bg}" stroke="${t.text}" stroke-opacity=".1"/>
+${group(c1 - 104, r[1] - 44, c1 + 104, r[4] + 42, "public site")}${group(c2 - 104, r[3] - 44, c3 + 104, r[5] + 42, "content data layer")}${group(c4 - 104, r[1] - 44, c4 + 104, r[2] + 42, "admin studio")}
+${edges}${E.map((e) => e[1]).join("")}
+${actor(c1, r[0], "Visitor")}${actor(c4, r[0], "Site owner")}
+${node(c1, r[1], "App Router", "App.jsx")}${node(c1, r[2], "Public Layout", "PublicLayout.jsx")}${node(c1, r[3], "Public Pages", "Blog.jsx")}${node(c1, r[4], "Route Config", "nav.js")}
+${node(c2, r[3], "Content Provider", "content.jsx")}${node(c2, r[4], "Content Store", "store.js")}${node(c2, r[5], "Seed JSON", "seed.js")}${node(c3, r[5], "Supabase Sync", "sync.js")}
+${node(c4, r[1], "Admin Auth", "AdminAuth.jsx")}${node(c4, r[2], "Admin Panel", "DataManager.jsx")}
+${node(c1, r[6], "Pre-render Script", "prerender.js")}${db(c3, r[6], "Supabase Postgres")}
+<g transform="translate(${W - 236} ${H - 64})"><path d="M0 0h28" stroke="${t.text}" stroke-opacity=".85" stroke-width="1.5"/>${lab(38, 4, "data flow")}<path d="M0 24h28" stroke="${t.text}" stroke-opacity=".45" stroke-dasharray="2 5" stroke-linecap="round"/>${lab(38, 28, "fallback / read-only")}</g>
+</svg>`;
 }
 
-// ---- project cards --------------------------------------------------------------------------
-// Desktop cards sit in a 2-column table; below 600px each cell is only ~150px wide, so the
-// mobile tile keeps just the title, kind and stack, in larger type.
-const projects = [
-  { slug: 'osho-documentary', n: '01', title: 'Osho Documentary', kind: 'RESEARCH / INTERACTIVE ARCHIVE', lines: ['Evidence-graded archive on Osho and', 'Rajneeshpuram, with timeline and map.'], tech: 'Next.js · TypeScript', motif: 'archive', m: { title: ['Osho', 'Documentary'], kind: 'Interactive archive', tech: ['Next.js', 'TypeScript'] } },
-  { slug: 'declutter', n: '02', title: 'Declutter', kind: 'UTILITY / WINDOWS APP', lines: ['Sorts a messy folder, finds duplicates.', 'Previews first. Never permanently deletes.'], tech: 'Python', motif: 'sort', m: { title: ['Declutter'], kind: 'Windows app', tech: ['Python'] } },
-  { slug: 'advaita-website', n: '03', title: 'advaitachandra.in', kind: 'WEBSITE / PUBLIC NOTEBOOK', lines: ['Personal site and public notebook:', 'projects, reading notes, photography.'], tech: 'React · Vite · Tailwind · Supabase', motif: 'grid', m: { title: ['advaitachandra.in'], kind: 'Personal site', tech: ['React · Vite', 'Tailwind · Supabase'] } },
-  { slug: 'w1tos-ui', n: '04', title: 'w1tOS', kind: 'WEB UI / CASAOS', lines: ['Minimal, keyboard-first web UI for CasaOS', 'home servers. A fork of CasaOS-UI.'], tech: 'Vue · three themes · no telemetry', motif: 'palette', m: { title: ['w1tOS'], kind: 'Fork of CasaOS-UI', tech: ['Vue'] } },
-  { slug: 'command-deck', n: '05', title: 'Command Deck', kind: 'STUDY / DASHBOARD', lines: ['Class 10 exam and syllabus study', 'dashboard on Cloudflare Workers and D1.'], tech: 'TypeScript · Cloudflare', motif: 'deck', m: { title: ['Command', 'Deck'], kind: 'Study dashboard', tech: ['TypeScript', 'Cloudflare'] } },
-  { slug: 'supportadvaita', n: '06', title: 'Support page', kind: 'WEB / UPI', lines: ['Zero-fee UPI page to support my independent', 'software, research, photography, philosophy.'], tech: 'JavaScript', motif: 'upi', m: { title: ['Support page'], kind: 'UPI page', tech: ['JavaScript'] } },
+// ---- header pills ----
+function pill(label, t, filled) {
+  const w = Math.round(label.length * 9.4 + 44), h = 40;
+  return { w, svg: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}"><defs>${grad("g", t)}</defs>
+<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="20" fill="${filled ? "url(#g)" : "none"}" stroke="${filled ? "none" : t.border}"/>
+<text x="${w / 2}" y="25.5" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="600" fill="${filled ? t.on : t.text}">${esc(label)}</text></svg>` };
+}
+
+// ---- project card: index-card content only; the README table cell is its box ----
+// Signature: catalogue line "● ~/projects/<slug>" (● has a live site, ○ source only).
+function card(c, t) {
+  // Drawn at the size a half-width README cell renders (~400px), so 12-14px text stays 12-14px.
+  const W = 420, H = 144, X = 4;
+  const live = c.kind === "live";
+  const mark = live
+    ? `<circle cx="${X + 4}" cy="12" r="4" fill="${t.text}"/>`
+    : `<circle cx="${X + 4}" cy="12" r="3.5" fill="none" stroke="${t.muted}"/>`;
+  const desc = c.lines.map((l, k) => `<text x="${X}" y="${76 + k * 22}" font-family="${SANS}" font-size="14" fill="${t.muted}">${esc(l)}</text>`).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.title)}. ${esc(c.lines.join(" "))}">
+${mark}<text x="${X + 16}" y="16" font-family="${MONO}" font-size="12" fill="${t.muted}">~/projects/${esc(c.slug)}</text>
+<text x="${W - X}" y="16" text-anchor="end" font-family="${MONO}" font-size="12" fill="${t.muted}">${live ? "live site" : "source only"}</text>
+<text x="${X}" y="48" font-family="${SANS}" font-size="20" font-weight="500" fill="${t.text}">${esc(c.title)}</text>
+${desc}<text x="${X}" y="128" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(c.tags.join("  ·  "))}</text></svg>`;
+}
+
+// ---- buttons: one quiet outline style for every link ----
+function button(label, t) {
+  const w = Math.round(label.length * 8 + 40), h = 44, bh = 36;
+  return { w, svg: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">
+<rect x=".5" y=".5" width="${w - 1}" height="${bh - 1}" rx="8" fill="none" stroke="${t.border}"/>
+<text x="${w / 2}" y="23" text-anchor="middle" font-family="${SANS}" font-size="14" font-weight="500" fill="${t.text}">${esc(label)}</text></svg>` };
+}
+
+// ---- square stack tiles ----
+function stackTiles(items, t) {
+  const TW = 76, TH = 88, GAP = 10, W = items.length * TW + (items.length - 1) * GAP + 8;
+  const tiles = items.map((it, i) => {
+    const x = 4 + i * (TW + GAP);
+    const icon = it.d ? glyph(it.d, x + TW / 2 - 16, 16, 32, t.text) : `<text x="${x + TW / 2}" y="40" text-anchor="middle" font-family="${SANS}" font-size="26" font-weight="800" fill="${t.text}">${esc(it.glyph)}</text>`;
+    return `<rect x="${x + .5}" y="4.5" width="${TW - 1}" height="${TH - 1}" rx="3" fill="none" stroke="${t.border}"/>${icon}<text x="${x + TW / 2}" y="74" text-anchor="middle" font-family="${MONO}" font-size="11" fill="${t.muted}">${esc(it.name)}</text>`;
+  }).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${TH + 8}" viewBox="0 0 ${W} ${TH + 8}" role="img" aria-label="Stack: ${esc(items.map((i) => i.name).join(", "))}">${tiles}</svg>`;
+}
+
+// ---- contact tiles ----
+function contact(c, t) {
+  const W = 580, H = 88;
+  const icon = c.d ? glyph(c.d, 28, 28, 32, t.text) : "";
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.label)}: ${esc(c.value)}"><defs>${grad("g", t)}</defs>
+<rect x=".75" y=".75" width="${W - 1.5}" height="${H - 1.5}" rx="10" fill="none" stroke="${t.border}" stroke-width="1.5"/>
+<rect x="1" y="1" width="88" height="${H - 2}" rx="9" fill="${t.text}" fill-opacity=".05"/><line x1="89" y1="1" x2="89" y2="${H - 1}" stroke="${t.border}"/>
+${icon}<text x="112" y="36" font-family="${MONO}" font-size="12" letter-spacing="2" fill="${t.muted}">${esc(c.label.toUpperCase())}</text>
+<text x="112" y="62" font-family="${SANS}" font-size="19" font-weight="700" fill="${t.text}">${esc(c.value)}</text>
+<text x="${W - 26}" y="52" text-anchor="end" font-family="${SANS}" font-size="22" fill="${t.muted}">↗</text></svg>`;
+}
+
+function divider(t) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="12" viewBox="0 0 1200 12" role="presentation"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="${t.a}" stop-opacity="0"/><stop offset=".5" stop-color="${t.a}"/><stop offset="1" stop-color="${t.b}" stop-opacity="0"/></linearGradient></defs><rect y="5" width="1200" height="2" rx="1" fill="url(#g)"/></svg>`;
+}
+
+// ---- content ----
+const GH = (r) => `https://github.com/${OWNER}/${r}`;
+const CARDS = [
+  { id: "osho", slug: "osho-documentary", title: "Osho Documentary", kind: "live", lines: ["Evidence-graded archive on Osho and", "Rajneeshpuram with timeline and map."], tags: ["Next.js", "TypeScript"], live: "https://oshodocumentary.advaitachandra.in/", repo: GH("osho-documentary") },
+  { id: "declutter", slug: "declutter", title: "Declutter", kind: "live", lines: ["Sorts a messy folder, finds duplicates.", "Previews first, never permanently deletes."], tags: ["Python", "Windows"], live: "https://declutter.advaitachandra.in/", repo: GH("declutter") },
+  { id: "site", slug: "advaita-website", title: "advaitachandra.in", kind: "live", lines: ["Personal site and public notebook:", "projects, reading notes, photography."], tags: ["React", "Vite", "Supabase"], live: "https://www.advaitachandra.in/", repo: GH("advaita-website") },
+  { id: "support", slug: "supportadvaita", title: "Support page", kind: "live", lines: ["Zero-fee UPI page to support independent", "software, research and photography."], tags: ["JavaScript", "UPI"], live: "https://support.advaitachandra.in/", repo: GH("supportadvaita") },
+  { id: "w1tos", slug: "w1tos-ui", title: "w1tOS", kind: "repo", lines: ["Dark, keyboard-first web UI for", "CasaOS home servers."], tags: ["Vue", "CasaOS"], repo: GH("w1tos-ui") },
+  { id: "deck", slug: "command-deck", title: "Command Deck", kind: "repo", lines: ["Exam and syllabus study dashboard on", "Cloudflare Workers + D1."], tags: ["TypeScript", "Cloudflare"], repo: GH("command-deck") },
 ];
-// Motif drawn in a 170x40 box with its origin at (0,0); text inside is positioned by a transform.
-const motif = (T, kind) => ({
-  archive: `<path d="M0 27h170" stroke="${T.line}"/>` + [0, 1, 2, 3, 4].map(i => `<rect x="${i * 40}" y="${3 + (i % 2) * 12}" width="6" height="${24 - (i % 2) * 12}" fill="${i === 3 ? T.green : T.dim}"/>`).join(''),
-  sort: [95, 70, 120].map((w, i) => `<rect x="0" y="${1 + i * 11}" width="${w}" height="6" fill="${i === 1 ? T.green : T.dim}"/>`).join(''),
-  grid: noise(T, 0, 0, 13, 3, 9, 5),
-  // A command-palette bar with a cursor.
-  palette: `<rect x=".5" y="4.5" width="169" height="24" rx="2" stroke="${T.line}"/><rect x="10" y="14" width="6" height="6" fill="${T.green}"/><rect x="24" y="15" width="56" height="4" fill="${T.dim}"/><rect x="86" y="13" width="3" height="8" fill="${T.green}"/>`,
-  // Small cards in a grid, one highlighted.
-  deck: [0, 1, 2, 3].map(i => `<rect x="${i * 44}" y="${i % 2 ? 4 : 0}" width="38" height="${i % 2 ? 30 : 34}" stroke="${i === 2 ? T.green : T.line}" fill="${i === 2 ? T.green : 'none'}" fill-opacity=".25"/>`).join(''),
-  upi: text(0, 28, 'UPI', { font: 'pixel', size: 32, color: T.green, check: false }) + `<path d="M92 18h78" stroke="${T.line}" stroke-dasharray="4 6"/>`,
-})[kind];
-for (const p of projects) {
-  const alt = p.title + '. ' + p.lines.join(' ') + ' ' + p.tech + '.';
-  art(`card-${p.slug}.svg`, 440, 240, alt, T =>
-    text(22, 31, p.kind, { font: 'pixel', size: 16, color: T.muted }) + text(417, 31, p.n, { font: 'monoBold', size: 14, color: T.green, anchor: 'end' }) + `<path d="M22 45h396" stroke="${T.line}"/>` +
-    `<g transform="translate(24 58)">${motif(T, p.motif)}</g>` + text(22, 128, p.title, { font: 'monoBold', size: 26, color: T.ink }) + p.lines.map((line, i) => text(22, 158 + i * 21, line, { size: 14, color: T.muted })).join('') +
-    `<path d="M22 198h396" stroke="${T.line}"/>` + text(22, 222, p.tech, { size: 13, color: T.green }) + arrow(T, 417, 207, 2));
-  art(`card-${p.slug}-mobile.svg`, 170, 200, alt, T => {
-    let y = 94, body = text(12, 24, p.n, { font: 'monoBold', size: 12, color: T.green }) + arrow(T, 158, 12, 2) + `<g transform="translate(12 36) scale(.82)">${motif(T, p.motif)}</g>`;
-    for (const line of p.m.title) { body += text(12, y, line, { font: 'monoBold', size: fit('monoBold', line, 15, 146), color: T.ink }); y += 18; }
-    body += text(12, y + 2, p.m.kind, { size: 11, color: T.muted }) + `<path d="M12 ${y + 14}h146" stroke="${T.line}"/>`; y += 33;
-    for (const line of p.m.tech) { body += text(12, y, line, { size: 11, color: T.green }); y += 16; }
-    return body;
-  });
+const PILLS = [["website", "Website", false, "https://www.advaitachandra.in"], ["x", "X · @w1tneess_", false, "https://x.com/w1tneess_"], ["email", "Email", false, "mailto:hi@advaitachandra.in"], ["support", "Support my work", true, "https://support.advaitachandra.in/"]];
+const STACK = [["TypeScript", "typescript"], ["JavaScript", "javascript"], ["React", "react"], ["Next.js", "nextdotjs"], ["Vite", "vite"], ["Tailwind", "tailwindcss"], ["Node.js", "nodedotjs"], ["Python", "python"], ["C#", "csharp", "C#"], ["HTML", "html5"], ["CSS", "css3"], ["Supabase", "supabase"], ["Cloudflare", "cloudflare"], ["Git", "git"]];
+const stack = await Promise.all(STACK.map(async ([name, slug, glyphText]) => ({ name, d: await iconPath(slug), glyph: glyphText ?? name[0] })));
+const CONTACTS = [
+  { id: "email", label: "Email", value: "hi@advaitachandra.in", href: "mailto:hi@advaitachandra.in", d: await iconPath("gmail") },
+  { id: "x", label: "X / Twitter", value: "@w1tneess_", href: "https://x.com/w1tneess_", d: await iconPath("x") },
+  { id: "github", label: "GitHub", value: "w1tneess", href: `https://github.com/${OWNER}`, d: await iconPath("github") },
+  { id: "web", label: "Website", value: "advaitachandra.in", href: "https://www.advaitachandra.in/", d: GLOBE },
+];
+
+// ---- write assets (clean old generated files first) ----
+mkdirSync("assets", { recursive: true });
+for (const f of readdirSync("assets")) if (f.endsWith(".svg")) unlinkSync(`assets/${f}`);
+const put = (name, svg) => writeFileSync(`assets/${name}.svg`, svg);
+for (const [mode, t] of Object.entries(THEMES)) {
+  put(`hero-${mode}`, hero(t));
+  put(`arch-${mode}`, arch(t));
+  put(`stack-${mode}`, stackTiles(stack, t));
+  put(`divider-${mode}`, divider(t));
+  for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t));
+  put(`btn-live-${mode}`, button("Live site ↗", t).svg);
+  put(`btn-source-${mode}`, button("Source ↗", t).svg);
+  for (const [id, label, filled] of PILLS) put(`pill-${id}-${mode}`, pill(label, t, filled).svg);
+  for (const c of CONTACTS) put(`contact-${c.id}-${mode}`, contact(c, t));
 }
 
-// ---- technology grid ------------------------------------------------------------------------
-const ICONS = [['typescript', 'TypeScript'], ['javascript', 'JavaScript'], ['python', 'Python'], ['html5', 'HTML'], ['css3', 'CSS'], ['react', 'React'], ['nextjs', 'Next.js'], ['vuejs', 'Vue'], ['vitejs', 'Vite'], ['tailwindcss', 'Tailwind CSS'], ['supabase', 'Supabase'], ['nodejs', 'Node.js'], ['cloudflare', 'Cloudflare'], ['git', 'Git']];
-const iconBody = key => readFileSync(new URL(`./icons/${key}.svg`, import.meta.url), 'utf8').replace(/^<svg[^>]*>|<\/svg>\s*$/g, '').replace(/id="([^"]+)"/g, `id="${key}-$1"`).replace(/url\(#([^)]+)\)/g, `url(#${key}-$1)`);
-const stackAlt = 'Tools and technologies: ' + ICONS.map(i => i[1]).join(', ') + '.';
-function stack(name, cols, w, tileW, tileH, gap, pad, label) {
-  const rows = Math.ceil(ICONS.length / cols), h = pad * 2 + rows * tileH + (rows - 1) * gap;
-  art(name, w, h, stackAlt, T => ICONS.map(([key, text_], i) => {
-    const x = pad + (i % cols) * (tileW + gap), y = pad + Math.floor(i / cols) * (tileH + gap), cx = x + tileW / 2;
-    // The Next.js mark is a black disc: give it a light rim so it reads on the dark tile. React's pale cyan is darkened a step on the light tile.
-    const rim = key === 'nextjs' ? `<circle cx="64" cy="64" r="66" fill="${T.ring}"/>` : '';
-    return `<rect x="${x + .5}" y="${y + .5}" width="${tileW - 1}" height="${tileH - 1}" rx="3" fill="${T.panel}" stroke="${T.line}"/><g transform="translate(${cx - 20} ${y + 14}) scale(${40 / 128})">${rim}${T === THEMES.light && key === 'react' ? iconBody(key).replaceAll('#61DAFB', '#1fa8cf') : iconBody(key)}</g>` + text(cx, y + tileH - 15, text_, { size: label, color: T.ink, anchor: 'middle' });
-  }).join(''));
-}
-stack('stack.svg', 7, 877, 111, 96, 12, 14, 13);
-stack('stack-mobile.svg', 3, 360, 104, 88, 10, 14, 12.5);
-
-// ---- activity panel -------------------------------------------------------------------------
-const snapshot = JSON.parse(readFileSync(new URL('../data/activity.json', import.meta.url), 'utf8'));
-const end = new Date(snapshot.asOf + 'T00:00:00Z'), start = new Date(end); start.setUTCDate(end.getUTCDate() - 90);
-const until = new Date(+end + 86400000);
-const counts = {};
-for (const r of snapshot.repositories) for (const c of r.commits) { const d = new Date(c.date); if (d >= start && d < until) counts[c.date.slice(0, 10)] = (counts[c.date.slice(0, 10)] ?? 0) + 1; }
-const total = Object.values(counts).reduce((a, b) => a + b, 0);
-const heat = (T, x0, y0, stepX, w, stepY, h) => {
-  let out = '';
-  for (let i = 0; i < 91; i++) {
-    const d = new Date(start); d.setUTCDate(start.getUTCDate() + i);
-    const v = counts[d.toISOString().slice(0, 10)] ?? 0;
-    out += `<rect x="${x0 + Math.floor(i / 7) * stepX}" y="${y0 + (i % 7) * stepY}" width="${w}" height="${h}" rx="2" fill="${T.heat[v > 9 ? 4 : v > 4 ? 3 : v > 1 ? 2 : v ? 1 : 0]}"/>`;
-  }
-  return out;
+// ---- README (gh-dark/light-mode-only follows GitHub's own theme setting) ----
+const themed = (base, attrs, alt) => `<img src="${base("dark")}#gh-dark-mode-only" ${attrs} alt="${alt}"><img src="${base("light")}#gh-light-mode-only" ${attrs} alt="${alt}">`;
+const local = (name) => (m) => `assets/${name}-${m}.svg`;
+const remote = (name) => (m) => `${RAW}/stats-output/${name}-${m}.svg`;
+const link = (href, inner) => `<a href="${href}">${inner}</a>`;
+const cardCell = (c) => {
+  const btns = [c.live && link(c.live, themed(local("btn-live"), 'height="44"', "Live site")), link(c.repo, themed(local("btn-source"), 'height="44"', "Source code"))].filter(Boolean).join("&nbsp;&nbsp;");
+  return `<td width="50%" valign="top">${link(c.live ?? c.repo, themed(local(`card-${c.id}`), 'width="100%"', esc(c.title)))}<br>${btns}<br><br></td>`;
 };
-const repoCount = `${snapshot.repositories.length} public repositories`;
-const note = `Default-branch history through ${snapshot.asOf} UTC`;
-const activityTitle = `Public repository commit activity. ${total} commits in the last 91 days.`;
-art('activity.svg', 900, 278, activityTitle, T =>
-  text(30, 38, 'PUBLIC WORK / LAST 91 DAYS', { font: 'pixel', size: 16, color: T.ink }) + text(870, 38, `${total} commits`, { font: 'monoBold', size: 16, color: T.green, anchor: 'end' }) + heat(T, 30, 60, 38, 30, 20, 14) +
-  text(565, 100, 'SMALL THINGS.', { font: 'pixel', size: 24, color: T.ink }) + text(565, 134, 'STEADY WORK.', { font: 'pixel', size: 24, color: T.green }) + text(565, 166, repoCount, { size: 14, color: T.muted }) + text(565, 190, 'One commit at a time.', { size: 14, color: T.muted }) +
-  text(30, 232, note, { size: 12.5, color: T.muted }) + text(30, 254, 'Merges included, bots excluded. Not GitHub contribution totals.', { size: 12, color: T.muted }));
-art('activity-mobile.svg', 360, 356, activityTitle, T =>
-  text(12, 30, 'PUBLIC WORK / 91 DAYS', { font: 'pixel', size: fit('pixel', 'PUBLIC WORK / 91 DAYS', 16, 224), color: T.ink }) + text(348, 30, `${total} commits`, { font: 'monoBold', size: 13, color: T.green, anchor: 'end' }) + heat(T, 12, 44, 26, 22, 18, 14) +
-  text(12, 206, 'SMALL THINGS.', { font: 'pixel', size: 24, color: T.ink }) + text(12, 238, 'STEADY WORK.', { font: 'pixel', size: 24, color: T.green }) + text(12, 264, repoCount, { size: 13, color: T.muted }) + text(12, 284, 'One commit at a time.', { size: 13, color: T.muted }) +
-  text(12, 312, note, { size: fit('mono', note, 12, 336), color: T.muted }) + text(12, 330, 'Merges included, bots excluded.', { size: 12, color: T.muted }) + text(12, 346, 'Not GitHub contribution totals.', { size: 12, color: T.muted }));
+const rows = [0, 2, 4].map((i) => `<tr>\n${cardCell(CARDS[i])}\n${cardCell(CARDS[i + 1])}\n</tr>`).join("\n");
+const contactCell = (c) => `<td width="50%">${link(c.href, themed(local(`contact-${c.id}`), 'width="100%"', `${c.label}: ${c.value}`))}</td>`;
+const pills = PILLS.map(([id, label, , href]) => link(href, themed(local(`pill-${id}`), 'height="40"', label))).join("\n");
 
-// ---- footer ---------------------------------------------------------------------------------
-art('footer.svg', 900, 80, 'Be, not become.', T => noise(T, 24, 28, 8, 2, 10, 8) + text(450, 47, 'be, not become.', { font: 'monoBold', size: 22, color: T.green, anchor: 'middle' }) + text(874, 46, '/ WIT', { font: 'pixel', size: 16, color: T.muted, anchor: 'end' }));
-art('footer-mobile.svg', 360, 64, 'Be, not become.', T => noise(T, 14, 22, 6, 2, 10, 8) + text(190, 39, 'be, not become.', { font: 'monoBold', size: 16, color: T.green, anchor: 'middle' }) + text(346, 38, '/ WIT', { font: 'pixel', size: 16, color: T.muted, anchor: 'end' }));
-console.log('Built dark + light pixel banner, strips, cards, technology grid, activity panel and footer (desktop + mobile).');
+if (process.argv.includes("--readme")) writeFileSync("README.md", `<div align="center">
+
+${themed(local("hero"), 'width="100%"', "Advaita Chandra, w1tneess. Student, builder, explorer.")}
+
+<br>
+
+${pills}
+
+</div>
+
+${themed(local("divider"), 'width="100%"', "")}
+
+## About
+
+Student and developer from India, somewhere between software, philosophy and history. I build websites, useful little tools and interactive archives, and keep a public notebook of what I am reading.
+
+## Stack
+
+${themed(local("stack"), 'width="100%"', "Stack: " + STACK.map((s) => s[0]).join(", "))}
+
+## Selected work
+
+<table width="100%">
+${rows}
+</table>
+
+## GitHub
+
+<table width="100%">
+<tr>
+<td width="50%" valign="top">${themed(remote("stats"), 'width="100%"', "GitHub stats")}</td>
+<td width="50%" valign="top">${themed(remote("languages"), 'width="100%"', "Top languages")}</td>
+</tr>
+</table>
+
+<img src="${RAW}/snake-output/snake-dark.svg#gh-dark-mode-only" width="100%" alt="Contribution snake"><img src="${RAW}/snake-output/snake.svg#gh-light-mode-only" width="100%" alt="Contribution snake">
+
+## Contact
+
+<table width="100%">
+<tr>
+${contactCell(CONTACTS[0])}
+${contactCell(CONTACTS[1])}
+</tr>
+<tr>
+${contactCell(CONTACTS[2])}
+${contactCell(CONTACTS[3])}
+</tr>
+</table>
+
+<div align="center">
+
+${link("https://support.advaitachandra.in/", themed(local("pill-support"), 'height="40"', "Support my work"))}
+
+<sub>Questions welcome. Ideas better.</sub>
+
+</div>
+`);
+console.log("assets + README written");
