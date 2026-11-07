@@ -11,8 +11,8 @@ const RAW = `https://raw.githubusercontent.com/${OWNER}/${OWNER}`;
 
 // "Cyberminimalism" palette: #000000 #0A0A0A #141414 #383838 #F0F0F0
 const THEMES = {
-  dark: { text: "#f0f0f0", muted: "#8f8f8f", border: "#383838", a: "#f0f0f0", b: "#8f8f8f", on: "#0a0a0a", dot: "#ffffff0f", glow: 0.1 },
-  light: { text: "#0a0a0a", muted: "#5c5c5c", border: "#c9c9c9", a: "#0a0a0a", b: "#5c5c5c", on: "#f0f0f0", dot: "#0000000f", glow: 0.08 },
+  dark: { text: "#f0f0f0", muted: "#8f8f8f", border: "#383838", bg: "#0a0a0a", a: "#f0f0f0", b: "#8f8f8f", on: "#0a0a0a", dot: "#ffffff0f", glow: 0.1 },
+  light: { text: "#0a0a0a", muted: "#5c5c5c", border: "#c9c9c9", bg: "#fafafa", a: "#0a0a0a", b: "#5c5c5c", on: "#f0f0f0", dot: "#0000000f", glow: 0.08 },
 };
 const grad = (id, t) => `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.a}"/><stop offset="1" stop-color="${t.b}"/></linearGradient>`;
 
@@ -26,27 +26,93 @@ const iconPath = async (slug) => {
 const GLOBE = "M12 2a10 10 0 100 20 10 10 0 000-20zm0 2c.9 1.1 1.7 2.8 2.1 5H9.9C10.3 6.8 11.1 5.1 12 4zM4.3 11a8 8 0 015.1-6.6C8.8 5.7 8.2 8 8 11H4.3zm0 2H8c.2 3 .8 5.3 1.4 6.6A8 8 0 014.3 13zM12 20c-.9-1.1-1.7-2.8-2.1-5h4.2c-.4 2.2-1.2 3.9-2.1 5zm2.1-7H9.9a17 17 0 010-2h4.2a17 17 0 010 2zm.5 6.6c.6-1.3 1.2-3.6 1.4-6.6h3.7a8 8 0 01-5.1 6.6zM16 11c-.2-3-.8-5.3-1.4-6.6A8 8 0 0119.7 11H16z";
 const glyph = (d, x, y, size, fill) => `<g transform="translate(${x} ${y}) scale(${size / 24})"><path d="${d}" fill="${fill}"/></g>`;
 
-// ---- hero ----
+// ---- hero: a slowly spinning wireframe globe with an orbit, over a floor that flows toward you ----
+// Pure SVG animation (SMIL + CSS) because GitHub shows READMEs' SVGs as <img>: no scripts, no hover.
+const f1 = (n) => n.toFixed(1);
+const rad = (d) => (d * Math.PI) / 180;
+const range = (a, b, n) => Array.from({ length: n }, (_, i) => a + ((b - a) * i) / (n - 1));
+
 function hero(t) {
-  const W = 1200, H = 320;
-  const lines = ["Building small things.", "Keeping the questions open.", "Web apps · Windows tools · archives"];
-  const tag = lines.map((l, i) => `<text class="tag" style="animation-delay:${i * 3}s" x="64" y="236" font-family="${SERIF}" font-style="italic" letter-spacing="1" font-size="24" fill="${t.text}">${esc(l)}</text>`).join("");
+  const W = 1200, H = 400, HZ = 272, bg = t.bg;
+  const G = { x: 880, y: 164, r: 100, tilt: rad(22) };
+  // sphere (lat, lon) -> [screenX, screenY, depth]; tilted so the north pole leans toward the viewer
+  const sp = (lat, lon) => {
+    const x = Math.cos(lat) * Math.sin(lon), y = Math.sin(lat), z = Math.cos(lat) * Math.cos(lon);
+    const y2 = y * Math.cos(G.tilt) - z * Math.sin(G.tilt), z2 = y * Math.sin(G.tilt) + z * Math.cos(G.tilt);
+    return [G.x + G.r * x, G.y - G.r * y2, z2];
+  };
+  const poly = (pts) => pts.map((p, i) => `${i ? "L" : "M"}${f1(p[0])} ${f1(p[1])}`).join("");
+  const split = (pts) => { // static curves: front and back runs
+    const o = { f: "", b: "" }; let prev = null;
+    for (const p of pts) { const k = p[2] >= 0 ? "f" : "b"; if (prev && prev !== k) o[prev] += `L${f1(p[0])} ${f1(p[1])}`; o[k] += `${prev === k ? "L" : "M"}${f1(p[0])} ${f1(p[1])}`; prev = k; }
+    return o;
+  };
+
+  // Meridians: with the tilt, every pole-to-pole half meridian crosses from back to front exactly once,
+  // so each frame has the same command structure and SMIL can interpolate the paths smoothly.
+  const STEP = 20, FRAMES = 10, N = 14;
+  const meridians = (theta) => {
+    const o = { f: "", b: "" };
+    for (let k = 0; k < 360 / STEP; k++) {
+      const lon = rad(k * STEP + theta);
+      const c = Math.atan(-Math.cos(lon) * Math.cos(G.tilt) / Math.sin(G.tilt)); // latitude where depth = 0
+      o.f += poly(range(c, Math.PI / 2, N).map((lat) => sp(lat, lon)));
+      o.b += poly(range(-Math.PI / 2, c, N).map((lat) => sp(lat, lon)));
+    }
+    return o;
+  };
+  const frames = range(0, STEP, FRAMES + 1).map(meridians);
+  const spin = (side) => `<path d="${frames[0][side]}"><animate attributeName="d" dur="2.4s" repeatCount="indefinite" values="${frames.map((f) => f[side]).join(";")}"/></path>`;
+  const par = [-60, -30, 0, 30, 60].map((d) => split(range(0, 360, 73).map((l) => sp(rad(d), rad(l)))));
+
+  // Orbit ring, nearly edge-on, with a dot that dims while it passes behind the globe
+  const R = 164, beta = rad(12), gam = rad(-14);
+  const orb = (a) => {
+    const x = R * Math.cos(a), y = -R * Math.sin(a) * Math.sin(beta), z = R * Math.sin(a) * Math.cos(beta);
+    return [G.x + x * Math.cos(gam) - y * Math.sin(gam), G.y - (x * Math.sin(gam) + y * Math.cos(gam)), z];
+  };
+  const ring = split(range(0, 2 * Math.PI, 97).map(orb));
+  const dot = range(0, 2 * Math.PI, 73).map(orb);
+  const anim = (attr, vals) => `<animate attributeName="${attr}" dur="9s" repeatCount="indefinite" values="${vals.join(";")}"/>`;
+
+  // Floor: lines to a vanishing point under the globe, plus rows that travel toward the viewer
+  const rays = range(-1200, 2400, 46).map((xb) => `M${G.x} ${HZ}L${f1(xb)} ${H}`).join("");
+  const ROWS = 9, DUR = 4.5, ys = range(0, 1, 13).map((s) => f1(HZ + (H + 20 - HZ) * s ** 2.2));
+  const rows = range(0, ROWS - 1, ROWS).map((i) => `<line x1="0" x2="${W}" y1="${HZ}" y2="${HZ}"><animate attributeName="y1" dur="${DUR}s" begin="-${f1((i * DUR) / ROWS)}s" repeatCount="indefinite" values="${ys.join(";")}"/><animate attributeName="y2" dur="${DUR}s" begin="-${f1((i * DUR) / ROWS)}s" repeatCount="indefinite" values="${ys.join(";")}"/></line>`).join("");
+
+  // Typewriter tagline: a background-coloured cover with the cursor on its edge steps right one character at a time
+  const TX = 64, TY = 236, CW = 13.2, SLOT = 4.5;
+  const lines = ["> building small things", "> keeping the questions open", "> websites · little tools · archives"];
+  const total = SLOT * lines.length;
+  const typeCss = lines.map((l, i) => {
+    const w = f1(l.length * CW), end = f1(((l.length * 0.06) / total) * 100);
+    return `.l${i},.l${i} .cv{animation-delay:${i * SLOT}s}.l${i} .cv{animation-name:ty${i}}@keyframes ty${i}{0%{transform:translateX(0);animation-timing-function:steps(${l.length},end)}${end}%,100%{transform:translateX(${w}px)}}`;
+  }).join("");
+  const typed = lines.map((l, i) => `<g class="ln l${i}"><text x="${TX}" y="${TY}" font-family="${MONO}" font-size="22" fill="${t.text}">${esc(l)}</text><g class="cv"><rect x="${TX}" y="${TY - 24}" width="${f1(l.length * CW + 40)}" height="34" fill="${bg}"/><rect class="cur" x="${TX + 1}" y="${TY - 19}" width="11" height="24" fill="${t.text}" fill-opacity=".8"/></g></g>`).join("");
+
+  const label = (x, y, s, anchor = "start") => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${MONO}" font-size="16" fill="${t.muted}">${s}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="t d">
-<title id="t">Advaita Chandra, w1tneess</title><desc id="d">Student, builder, explorer. Building small things. Keeping the questions open.</desc>
-<defs>${grad("g", t)}
-<radialGradient id="r1"><stop offset="0" stop-color="${t.a}" stop-opacity="${t.glow}"/><stop offset="1" stop-color="${t.a}" stop-opacity="0"/></radialGradient>
-<radialGradient id="r2"><stop offset="0" stop-color="${t.b}" stop-opacity="${t.glow}"/><stop offset="1" stop-color="${t.b}" stop-opacity="0"/></radialGradient>
-<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1.2" fill="${t.dot}"/></pattern>
-<clipPath id="c"><rect width="${W}" height="${H}" rx="24"/></clipPath></defs>
-<style>.tag{opacity:0;animation:cy 9s infinite}@keyframes cy{0%{opacity:0}6%,28%{opacity:1}34%,100%{opacity:0}}.cur{animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}@media (prefers-reduced-motion:reduce){.tag,.cur{animation:none}.tag:first-of-type{opacity:1}}</style>
-<g clip-path="url(#c)"><rect width="${W}" height="${H}" fill="url(#dots)"/>
-<circle cx="1040" cy="40" r="260" fill="url(#r1)"/><circle cx="180" cy="330" r="240" fill="url(#r2)"/></g>
-<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="24" fill="none" stroke="${t.border}"/>
-<text x="64" y="70" font-family="${MONO}" font-size="16" fill="${t.muted}"><tspan fill="url(#g)">●</tspan>  ~/w1tneess</text>
-<text x="64" y="150" font-family="${SANS}" font-size="68" font-weight="800" letter-spacing="-1.5" fill="url(#g)">Advaita Chandra</text>
-<text x="64" y="192" font-family="${SANS}" font-size="15" font-weight="600" letter-spacing="5" fill="${t.muted}">W1TNEESS  ·  STUDENT  ·  BUILDER  ·  EXPLORER</text>
-${tag}<rect class="cur" x="64" y="268" width="12" height="3" fill="${t.b}"/>
-<text x="${W - 64}" y="${H - 36}" text-anchor="end" font-family="${MONO}" font-size="15" fill="${t.muted}">West Bengal, India</text>
+<title id="t">Advaita Chandra, w1tneess</title><desc id="d">A wireframe globe spinning above a moving grid. Building small things, keeping the questions open. Websites, little tools and archives, from West Bengal, India.</desc>
+<defs><clipPath id="frame"><rect width="${W}" height="${H}" rx="16"/></clipPath>
+<linearGradient id="fv" x1="0" y1="${HZ}" x2="0" y2="${H}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff"/></linearGradient>
+<linearGradient id="fh" x1="0" x2="${W}" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop offset=".22" stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff"/></linearGradient>
+<mask id="mh"><rect width="${W}" height="${H}" fill="url(#fh)"/></mask>
+<mask id="floor"><rect y="${HZ}" width="${W}" height="${H - HZ}" fill="url(#fv)" mask="url(#mh)"/></mask></defs>
+<style>.ln{opacity:0;animation:show ${total}s infinite}.cv{animation-duration:${total}s;animation-iteration-count:infinite}@keyframes show{0%,${f1(100 / lines.length - 0.5)}%{opacity:1}${f1(100 / lines.length)}%,100%{opacity:0}}${typeCss}.cur{animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}@media (prefers-reduced-motion:reduce){.ln,.cv,.cur{animation:none}.l0{opacity:1}.cv{display:none}}</style>
+<g clip-path="url(#frame)"><rect width="${W}" height="${H}" fill="${bg}"/>
+<g mask="url(#floor)" stroke="${t.text}" stroke-opacity=".32" fill="none"><path d="${rays}"/>${rows}</g>
+<path d="${ring.b}" fill="none" stroke="${t.muted}" stroke-opacity=".35"/>
+<g fill="none" stroke="${t.text}" stroke-opacity=".16">${spin("b")}<path d="${par.map((p) => p.b).join("")}"/></g>
+<circle cx="${G.x}" cy="${G.y}" r="${G.r}" fill="none" stroke="${t.text}" stroke-opacity=".55"/>
+<g fill="none" stroke="${t.text}" stroke-opacity=".8" stroke-width="1.2">${spin("f")}<path d="${par.map((p) => p.f).join("")}"/></g>
+<path d="${ring.f}" fill="none" stroke="${t.muted}" stroke-opacity=".8"/>
+<circle r="4" fill="${t.text}" cx="${f1(dot[0][0])}" cy="${f1(dot[0][1])}">${anim("cx", dot.map((p) => f1(p[0])))}${anim("cy", dot.map((p) => f1(p[1])))}${anim("opacity", dot.map((p) => (p[2] >= 0 ? 1 : 0.2)))}</circle>
+${label(G.x - G.r - 34, G.y - 76, "software", "end")}${label(G.x + G.r + 40, G.y - 40, "philosophy")}${label(G.x + G.r + 22, G.y + 92, "history")}
+<circle cx="${TX + 5}" cy="99" r="4" fill="${t.text}"/>${label(TX + 18, 104, "~/w1tneess")}
+<text x="${TX - 3}" y="176" font-family="${SANS}" font-size="60" font-weight="500" letter-spacing="-1.8" fill="${t.text}">Advaita Chandra</text>
+${typed}
+${label(TX, H - 48, "West Bengal, India  ·  student  ·  builder  ·  explorer")}</g>
+<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="none" stroke="${t.text}" stroke-opacity=".1"/>
 </svg>`;
 }
 
@@ -58,37 +124,29 @@ function pill(label, t, filled) {
 <text x="${w / 2}" y="25.5" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="600" fill="${filled ? t.on : t.text}">${esc(label)}</text></svg>` };
 }
 
-// ---- project card: boxy "window" panel ----
-function card(c, i, t) {
-  const W = 580, H = 206;
-  let x = 28;
-  const chips = c.tags.map((tag) => {
-    const w = Math.round(tag.length * 7.4 + 24);
-    const s = `<rect x="${x + .5}" y="156.5" width="${w}" height="26" rx="4" fill="none" stroke="${t.border}"/><text x="${x + w / 2 + .5}" y="173.5" text-anchor="middle" font-family="${MONO}" font-size="12.5" fill="${t.muted}">${esc(tag)}</text>`;
-    x += w + 8;
-    return s;
-  }).join("");
-  const desc = c.lines.map((l, k) => `<text x="28" y="${112 + k * 22}" font-family="${SANS}" font-size="15" fill="${t.muted}">${esc(l)}</text>`).join("");
-  const kw = c.kind.length * 8 + 18;
+// ---- project card: index-card content only; the README table cell is its box ----
+// Signature: catalogue line "● ~/projects/<slug>" (● has a live site, ○ source only).
+function card(c, t) {
+  // Drawn at the size a half-width README cell renders (~400px), so 12-14px text stays 12-14px.
+  const W = 420, H = 144, X = 4;
+  const live = c.kind === "live";
+  const mark = live
+    ? `<circle cx="${X + 4}" cy="12" r="4" fill="${t.text}"/>`
+    : `<circle cx="${X + 4}" cy="12" r="3.5" fill="none" stroke="${t.muted}"/>`;
+  const desc = c.lines.map((l, k) => `<text x="${X}" y="${76 + k * 22}" font-family="${SANS}" font-size="14" fill="${t.muted}">${esc(l)}</text>`).join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.title)}. ${esc(c.lines.join(" "))}">
-<defs>${grad("g", t)}<clipPath id="c"><rect x="1" y="1" width="${W - 2}" height="${H - 2}" rx="9"/></clipPath></defs>
-<g clip-path="url(#c)"><rect x="1" y="1" width="${W - 2}" height="38" fill="${t.text}" fill-opacity=".05"/><rect x="1" y="1" width="3" height="${H - 2}" fill="url(#g)"/></g>
-<rect x=".75" y=".75" width="${W - 1.5}" height="${H - 1.5}" rx="10" fill="none" stroke="${t.border}" stroke-width="1.5"/>
-<line x1="1" y1="39" x2="${W - 1}" y2="39" stroke="${t.border}"/>
-<circle cx="24" cy="20" r="4.5" fill="${t.muted}" fill-opacity=".55"/><circle cx="41" cy="20" r="4.5" fill="${t.muted}" fill-opacity=".35"/><circle cx="58" cy="20" r="4.5" fill="${t.muted}" fill-opacity=".2"/>
-<text x="80" y="24.5" font-family="${MONO}" font-size="12" fill="${t.muted}">~/projects/${esc(c.slug)}</text>
-<text x="${W - 22}" y="24.5" text-anchor="end" font-family="${MONO}" font-size="12" fill="${t.muted}">${String(i + 1).padStart(2, "0")}</text>
-<text x="28" y="76" font-family="${SANS}" font-size="23" font-weight="700" fill="${t.text}">${esc(c.title)}</text>
-<rect x="${W - 28 - kw + .5}" y="58.5" width="${kw}" height="22" rx="4" fill="none" stroke="${t.a}" stroke-opacity=".6"/><text x="${W - 28 - kw / 2 + .5}" y="73.5" text-anchor="middle" font-family="${MONO}" font-size="11" letter-spacing="1.5" fill="${t.text}">${esc(c.kind.toUpperCase())}</text>
-${desc}${chips}</svg>`;
+${mark}<text x="${X + 16}" y="16" font-family="${MONO}" font-size="12" fill="${t.muted}">~/projects/${esc(c.slug)}</text>
+<text x="${W - X}" y="16" text-anchor="end" font-family="${MONO}" font-size="12" fill="${t.muted}">${live ? "live site" : "source only"}</text>
+<text x="${X}" y="48" font-family="${SANS}" font-size="20" font-weight="500" fill="${t.text}">${esc(c.title)}</text>
+${desc}<text x="${X}" y="128" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(c.tags.join("  ·  "))}</text></svg>`;
 }
 
-// ---- real buttons ----
-function button(label, t, primary) {
-  const w = Math.round(label.length * 8.6 + 42), h = 40;
+// ---- buttons: one quiet outline style for every link ----
+function button(label, t) {
+  const w = Math.round(label.length * 8 + 40), h = 44, bh = 36;
   return { w, svg: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">
-<rect x=".5" y=".5" width="${w - 1}" height="${h - 1}" rx="8" fill="${primary ? t.text : "none"}" stroke="${primary ? t.text : t.border}"/>
-<text x="${w / 2}" y="25.5" text-anchor="middle" font-family="${SANS}" font-size="14.5" font-weight="600" fill="${primary ? t.on : t.text}">${esc(label)}</text></svg>` };
+<rect x=".5" y=".5" width="${w - 1}" height="${bh - 1}" rx="8" fill="none" stroke="${t.border}"/>
+<text x="${w / 2}" y="23" text-anchor="middle" font-family="${SANS}" font-size="14" font-weight="500" fill="${t.text}">${esc(label)}</text></svg>` };
 }
 
 // ---- square stack tiles ----
@@ -146,12 +204,9 @@ for (const [mode, t] of Object.entries(THEMES)) {
   put(`hero-${mode}`, hero(t));
   put(`stack-${mode}`, stackTiles(stack, t));
   put(`divider-${mode}`, divider(t));
-  CARDS.forEach((c, i) => {
-    put(`card-${c.id}-${mode}`, card(c, i, t));
-    if (c.live) put(`btn-live-${mode}`, button("Live site ↗", t, true).svg);
-    put(`btn-source-${mode}`, button("Source ↗", t, false).svg);
-    put(`btn-source-primary-${mode}`, button("Source ↗", t, true).svg);
-  });
+  for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t));
+  put(`btn-live-${mode}`, button("Live site ↗", t).svg);
+  put(`btn-source-${mode}`, button("Source ↗", t).svg);
   for (const [id, label, filled] of PILLS) put(`pill-${id}-${mode}`, pill(label, t, filled).svg);
   for (const c of CONTACTS) put(`contact-${c.id}-${mode}`, contact(c, t));
 }
@@ -162,7 +217,7 @@ const local = (name) => (m) => `assets/${name}-${m}.svg`;
 const remote = (name) => (m) => `${RAW}/stats-output/${name}-${m}.svg`;
 const link = (href, inner) => `<a href="${href}">${inner}</a>`;
 const cardCell = (c) => {
-  const btns = [c.live && link(c.live, themed(local("btn-live"), 'height="40"', "Live site")), link(c.repo, themed(local(c.live ? "btn-source" : "btn-source-primary"), 'height="40"', "Source code"))].filter(Boolean).join("&nbsp;&nbsp;");
+  const btns = [c.live && link(c.live, themed(local("btn-live"), 'height="44"', "Live site")), link(c.repo, themed(local("btn-source"), 'height="44"', "Source code"))].filter(Boolean).join("&nbsp;&nbsp;");
   return `<td width="50%" valign="top">${link(c.live ?? c.repo, themed(local(`card-${c.id}`), 'width="100%"', esc(c.title)))}<br>${btns}<br><br></td>`;
 };
 const rows = [0, 2, 4].map((i) => `<tr>\n${cardCell(CARDS[i])}\n${cardCell(CARDS[i + 1])}\n</tr>`).join("\n");

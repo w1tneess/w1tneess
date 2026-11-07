@@ -6,9 +6,10 @@ const OUT = process.argv[2] || "out";
 const USER = process.argv[3] || process.env.GITHUB_REPOSITORY_OWNER || "w1tneess";
 const SANS = "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif";
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace";
-// One neutral, transparent theme that reads on both light and dark GitHub pages.
+// Dark and light panels matching the README hero and skyline (#0a0a0a / #fafafa, hairline border).
 const THEMES = {
-  neutral: { text: "#8a8a8a", muted: "#767676", border: "#7a7a7a66", a: "#8a8a8a", b: "#767676" },
+  dark: { text: "#f0f0f0", muted: "#8f8f8f", border: "#f0f0f01a", bg: "#0a0a0a" },
+  light: { text: "#0a0a0a", muted: "#5c5c5c", border: "#0a0a0a1a", bg: "#fafafa" },
 };
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 const W = 580, H = 220;
@@ -41,17 +42,15 @@ async function collect() {
 }
 
 const frame = (t, title, body) => `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.a}"/><stop offset="1" stop-color="${t.b}"/></linearGradient></defs>
-<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="18" fill="none" stroke="${t.border}"/>
-<rect x="28" y="26" width="36" height="4" rx="2" fill="url(#g)"/>
-<text x="28" y="62" font-family="${SANS}" font-size="22" font-weight="700" fill="${t.text}">${esc(title)}</text>${body}</svg>`;
+<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="${t.bg}" stroke="${t.border}"/>
+<text x="28" y="56" font-family="${SANS}" font-size="20" font-weight="500" fill="${t.text}">${esc(title)}</text>${body}</svg>`;
 
 function statsCard(t, { metrics }) {
   const body = metrics.map(([label, v], i) => {
     const x = 28 + (i % 3) * 180, y = 112 + Math.floor(i / 3) * 62;
-    return `<text x="${x}" y="${y}" font-family="${SANS}" font-size="28" font-weight="700" fill="${t.text}">${Number(v).toLocaleString("en-US")}</text><text x="${x}" y="${y + 20}" font-family="${MONO}" font-size="12" letter-spacing="1" fill="${t.muted}">${esc(label.toUpperCase())}</text>`;
+    return `<text x="${x}" y="${y}" font-family="${SANS}" font-size="28" font-weight="500" style="font-variant-numeric:tabular-nums" fill="${t.text}">${Number(v).toLocaleString("en-US")}</text><text x="${x}" y="${y + 20}" font-family="${SANS}" font-size="15" fill="${t.muted}">${esc(label)}</text>`;
   }).join("");
-  return frame(t, "GitHub stats", `<text x="${W - 28}" y="62" text-anchor="end" font-family="${MONO}" font-size="13" fill="${t.muted}">public</text>${body}`);
+  return frame(t, "GitHub stats", `<text x="${W - 28}" y="56" text-anchor="end" font-family="${MONO}" font-size="14" fill="${t.muted}">public</text>${body}`);
 }
 
 function langsCard(t, { langs }) {
@@ -65,15 +64,15 @@ function langsCard(t, { langs }) {
   });
   const legend = top.map(([l, n], i) => {
     const cx = 28 + (i % 2) * 260, cy = 130 + Math.floor(i / 2) * 30;
-    return `<rect x="${cx}" y="${cy - 10}" width="10" height="10" rx="2" fill="${t.text}" fill-opacity="${opac[i]}"/><text x="${cx + 18}" y="${cy}" font-family="${SANS}" font-size="14" fill="${t.text}">${esc(l)}</text><text x="${cx + 230}" y="${cy}" text-anchor="end" font-family="${MONO}" font-size="13" fill="${t.muted}">${((n / total) * 100).toFixed(1)}%</text>`;
+    return `<rect x="${cx}" y="${cy - 10}" width="10" height="10" rx="2" fill="${t.text}" fill-opacity="${opac[i]}"/><text x="${cx + 18}" y="${cy}" font-family="${SANS}" font-size="16" fill="${t.text}">${esc(l)}</text><text x="${cx + 230}" y="${cy}" text-anchor="end" font-family="${MONO}" font-size="14" fill="${t.muted}">${((n / total) * 100).toFixed(1)}%</text>`;
   }).join("");
   return frame(t, "Top languages", `<clipPath id="c"><rect x="28" y="84" width="${W - 56}" height="10" rx="5"/></clipPath><g clip-path="url(#c)">${bar}</g>${legend}`);
 }
 
 const data = await collect();
 mkdirSync(OUT, { recursive: true });
-for (const t of Object.values(THEMES)) {
-  writeFileSync(`${OUT}/stats.svg`, statsCard(t, data));
-  writeFileSync(`${OUT}/languages.svg`, langsCard(t, data));
+for (const [mode, t] of Object.entries(THEMES)) {
+  writeFileSync(`${OUT}/stats-${mode}.svg`, statsCard(t, data));
+  writeFileSync(`${OUT}/languages-${mode}.svg`, langsCard(t, data));
 }
 console.log(JSON.stringify(data.metrics), data.langs.slice(0, 5).map(([l]) => l).join(","));
