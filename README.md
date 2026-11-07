@@ -95,10 +95,7 @@ const advaita = {
 <h2 data-importer="text" align="left">GitHub</h2>
 
 <p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/skyline-output/skyline-dark.svg" />
-    <img src="https://raw.githubusercontent.com/w1tneess/w1tneess/skyline-output/skyline-light.svg" width="100%" alt="A year of contributions as a 3D isometric skyline" />
-  </picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/activity-dark.svg" /><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/activity-light.svg" width="100%" alt="Contributions in the last year as a 3D city of days, with current streak, longest streak and busiest day" /></picture>
 </p>
 
 <p data-importer="stats" align="center">
@@ -106,12 +103,6 @@ const advaita = {
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-dark.svg" /><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-light.svg" width="49%" alt="Top languages" /></picture>
 </p>
 
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com/?user=w1tneess&background=0a0a0a&border=232323&border_radius=16&ring=8f8f8f&fire=8f8f8f&currStreakNum=f0f0f0&sideNums=f0f0f0&currStreakLabel=f0f0f0&sideLabels=f0f0f0&dates=8f8f8f&stroke=2a2a2a" />
-    <img src="https://streak-stats.demolab.com/?user=w1tneess&background=fafafa&border=e2e2e2&border_radius=16&ring=0a0a0a&fire=0a0a0a&currStreakNum=0a0a0a&sideNums=0a0a0a&currStreakLabel=0a0a0a&sideLabels=0a0a0a&dates=5c5c5c&stroke=dcdcdc" width="49%" alt="Contribution streak" />
-  </picture>
-</p>
 
 <h3 align="left">How <a href="https://github.com/w1tneess/advaita-website">advaita-website</a> works</h3>
 
