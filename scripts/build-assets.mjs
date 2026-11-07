@@ -11,8 +11,8 @@ const RAW = `https://raw.githubusercontent.com/${OWNER}/${OWNER}`;
 
 // "Cyberminimalism" palette: #000000 #0A0A0A #141414 #383838 #F0F0F0
 const THEMES = {
-  dark: { text: "#f0f0f0", muted: "#8f8f8f", border: "#383838", bg: "#0a0a0a", a: "#f0f0f0", b: "#8f8f8f", on: "#0a0a0a", dot: "#ffffff0f", glow: 0.1 },
-  light: { text: "#0a0a0a", muted: "#5c5c5c", border: "#c9c9c9", bg: "#fafafa", a: "#0a0a0a", b: "#5c5c5c", on: "#f0f0f0", dot: "#0000000f", glow: 0.08 },
+  dark: { text: "#f0f0f0", muted: "#8f8f8f", border: "#383838", bg: "#0a0a0a", card: "#141414", a: "#f0f0f0", b: "#8f8f8f", on: "#0a0a0a", dot: "#ffffff0f", glow: 0.1 },
+  light: { text: "#0a0a0a", muted: "#5c5c5c", border: "#c9c9c9", bg: "#fafafa", card: "#ffffff", a: "#0a0a0a", b: "#5c5c5c", on: "#f0f0f0", dot: "#0000000f", glow: 0.08 },
 };
 const grad = (id, t) => `<linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${t.a}"/><stop offset="1" stop-color="${t.b}"/></linearGradient>`;
 
@@ -116,6 +116,70 @@ ${label(TX, H - 48, "West Bengal, India  ·  student  ·  builder  ·  explorer"
 </svg>`;
 }
 
+// ---- architecture of advaita-website (structure traced from GitSkins' code diagram) ----
+// Wide layout so it reads at GitHub's ~880px column; solid edges carry a slow moving dash = data flow.
+function arch(t) {
+  const W = 1070, H = 740, NW = 176, NH = 52;
+  const [c1, c2, c3, c4] = [130, 420, 680, 940];
+  const r = [64, 164, 264, 364, 464, 564, 664];
+  const node = (x, y, title, file) => `<rect x="${x - NW / 2 + .5}" y="${y - NH / 2 + .5}" width="${NW - 1}" height="${NH - 1}" rx="10" fill="${t.card}" stroke="${t.text}" stroke-opacity=".14"/>
+<text x="${x}" y="${y - 2}" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="500" fill="${t.text}">${esc(title)}</text><text x="${x}" y="${y + 16}" text-anchor="middle" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(file)}</text>`;
+  const actor = (x, y, label) => `<rect x="${x - 75 + .5}" y="${y - 22 + .5}" width="149" height="43" rx="21.5" fill="${t.bg}" stroke="${t.text}" stroke-opacity=".5"/>
+<circle cx="${x - 44}" cy="${y - 4}" r="4.5" fill="none" stroke="${t.text}" stroke-width="1.5"/><path d="M${x - 52} ${y + 9}a8 7 0 0 1 16 0" fill="none" stroke="${t.text}" stroke-width="1.5"/>
+<text x="${x - 30}" y="${y + 5}" font-family="${SANS}" font-size="15" font-weight="500" fill="${t.text}">${esc(label)}</text>`;
+  const db = (x, y, label) => `<path d="M${x - 85} ${y - 20}v40a85 10 0 0 0 170 0v-40" fill="${t.card}" stroke="${t.text}" stroke-opacity=".5"/><ellipse cx="${x}" cy="${y - 20}" rx="85" ry="10" fill="${t.card}" stroke="${t.text}" stroke-opacity=".5"/>
+<text x="${x}" y="${y + 12}" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="500" fill="${t.text}">${esc(label)}</text>`;
+  const group = (x1, y1, x2, y2, label) => `<rect x="${x1 + .5}" y="${y1 + .5}" width="${x2 - x1}" height="${y2 - y1}" rx="14" fill="${t.text}" fill-opacity=".03" stroke="${t.text}" stroke-opacity=".1"/>
+<text x="${x1 + 2}" y="${y1 - 10}" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(label)}</text>`;
+  // orthogonal route with rounded corners
+  const route = (p, rr = 10) => {
+    let d = `M${p[0][0]} ${p[0][1]}`;
+    for (let i = 1; i < p.length - 1; i++) {
+      const [a, b, c] = [p[i - 1], p[i], p[i + 1]];
+      const u = [Math.sign(b[0] - a[0]), Math.sign(b[1] - a[1])], v = [Math.sign(c[0] - b[0]), Math.sign(c[1] - b[1])];
+      d += `L${b[0] - u[0] * rr} ${b[1] - u[1] * rr}Q${b[0]} ${b[1]} ${b[0] + v[0] * rr} ${b[1] + v[1] * rr}`;
+    }
+    const z = p[p.length - 1];
+    return `${d}L${z[0]} ${z[1]}`;
+  };
+  const lab = (x, y, s, anchor = "start") => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${MONO}" font-size="12" fill="${t.muted}" stroke="${t.bg}" stroke-width="5" stroke-linejoin="round" paint-order="stroke">${esc(s)}</text>`;
+  const mid = (a, b) => (a + b) / 2;
+  const v = (x, y1, y2, s) => [[[x, y1], [x, y2]], lab(x + 12, mid(y1, y2) + 4, s)];
+  const E = [ // [points, label, dashed]
+    [...v(c1, r[0] + 22, r[1] - 26, "requests page")],
+    [...v(c1, r[1] + 26, r[2] - 26, "renders routes")],
+    [...v(c1, r[2] + 26, r[3] - 26, "renders outlet")],
+    [[[c1 + 88, r[3]], [c2 - 88, r[3]]], lab(mid(c1 + 88, c2 - 88), r[3] - 8, "reads content", "middle")],
+    [...v(c2, r[3] + 26, r[4] - 26, "loads document")],
+    [...v(c2, r[4] + 26, r[5] - 26, "falls back to seed"), true],
+    [[[c2 + 88, r[4] + 12], [c3, r[4] + 12], [c3, r[5] - 26]], lab(mid(c2 + 88, c3), r[4] + 30, "fetches remote", "middle")],
+    [...v(c3, r[5] + 26, r[6] - 30, "reads and writes")],
+    [...v(c4, r[0] + 22, r[1] - 26, "signs in")],
+    [...v(c4, r[1] + 26, r[2] - 26, "unlocks")],
+    [[[c4 - 40, r[2] + 26], [c4 - 40, r[4] - 12], [c2 + 88, r[4] - 12]], lab(mid(c3 + 104, c4 - 40), r[4] - 20, "imports data", "middle")],
+    [[[c4 + 40, r[2] + 26], [c4 + 40, r[5]], [c3 + 88, r[5]]], lab(mid(c3 + 88, c4 + 40), r[5] - 8, "checks health", "middle")],
+    [...v(c1, r[6] - 26, r[4] + 26, "reads routes")],
+    [[[c1 + 88, r[6]], [c3 - 86, r[6]]], lab(mid(c1 + 88, c3 - 86), r[6] - 8, "reads public copy", "middle"), true],
+  ];
+  const edges = E.map(([p, , dashed]) => dashed
+    ? `<path d="${route(p)}" fill="none" stroke="${t.text}" stroke-opacity=".45" stroke-dasharray="2 5" stroke-linecap="round" marker-end="url(#ah)"/>`
+    : `<path d="${route(p)}" fill="none" stroke="${t.text}" stroke-opacity=".5" marker-end="url(#ah)"/><path class="flow" d="${route(p)}" fill="none" stroke="${t.text}" stroke-opacity=".85" stroke-width="1.5"/>`).join("");
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="at ad">
+<title id="at">How advaita-website works</title><desc id="ad">Visitors hit the App Router, which renders the public layout and pages; pages read content through a provider and store that syncs with Supabase Postgres and falls back to seed JSON. The site owner signs in to an admin studio that imports data and checks sync health. A pre-render script reads the route config and a public copy of the database.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9z" fill="${t.text}" fill-opacity=".7"/></marker></defs>
+<style>.flow{stroke-dasharray:3 13;animation:fl 1.4s linear infinite}@keyframes fl{to{stroke-dashoffset:-16}}@media (prefers-reduced-motion:reduce){.flow{animation:none;opacity:0}}</style>
+<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="${t.bg}" stroke="${t.text}" stroke-opacity=".1"/>
+${group(c1 - 104, r[1] - 44, c1 + 104, r[4] + 42, "public site")}${group(c2 - 104, r[3] - 44, c3 + 104, r[5] + 42, "content data layer")}${group(c4 - 104, r[1] - 44, c4 + 104, r[2] + 42, "admin studio")}
+${edges}${E.map((e) => e[1]).join("")}
+${actor(c1, r[0], "Visitor")}${actor(c4, r[0], "Site owner")}
+${node(c1, r[1], "App Router", "App.jsx")}${node(c1, r[2], "Public Layout", "PublicLayout.jsx")}${node(c1, r[3], "Public Pages", "Blog.jsx")}${node(c1, r[4], "Route Config", "nav.js")}
+${node(c2, r[3], "Content Provider", "content.jsx")}${node(c2, r[4], "Content Store", "store.js")}${node(c2, r[5], "Seed JSON", "seed.js")}${node(c3, r[5], "Supabase Sync", "sync.js")}
+${node(c4, r[1], "Admin Auth", "AdminAuth.jsx")}${node(c4, r[2], "Admin Panel", "DataManager.jsx")}
+${node(c1, r[6], "Pre-render Script", "prerender.js")}${db(c3, r[6], "Supabase Postgres")}
+<g transform="translate(${W - 236} ${H - 64})"><path d="M0 0h28" stroke="${t.text}" stroke-opacity=".85" stroke-width="1.5"/>${lab(38, 4, "data flow")}<path d="M0 24h28" stroke="${t.text}" stroke-opacity=".45" stroke-dasharray="2 5" stroke-linecap="round"/>${lab(38, 28, "fallback / read-only")}</g>
+</svg>`;
+}
+
 // ---- header pills ----
 function pill(label, t, filled) {
   const w = Math.round(label.length * 9.4 + 44), h = 40;
@@ -202,6 +266,7 @@ for (const f of readdirSync("assets")) if (f.endsWith(".svg")) unlinkSync(`asset
 const put = (name, svg) => writeFileSync(`assets/${name}.svg`, svg);
 for (const [mode, t] of Object.entries(THEMES)) {
   put(`hero-${mode}`, hero(t));
+  put(`arch-${mode}`, arch(t));
   put(`stack-${mode}`, stackTiles(stack, t));
   put(`divider-${mode}`, divider(t));
   for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t));

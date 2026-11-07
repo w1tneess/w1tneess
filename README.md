@@ -115,18 +115,13 @@ const advaita = {
 
 <img data-importer="snake" src="https://raw.githubusercontent.com/w1tneess/w1tneess/snake-output/snake.svg" alt="Contribution graph eaten by a snake" />
 
-<!-- gitskins:architecture -->
-### How [advaita-website](https://github.com/w1tneess/advaita-website) works
+<h3 align="left">How <a href="https://github.com/w1tneess/advaita-website">advaita-website</a> works</h3>
 
-This is a personal portfolio and public notebook built with React 19 and Vite.
+<p>A personal portfolio and public notebook built with React 19 and Vite. Pages read through a content store that syncs with Supabase and falls back to seed data; an admin studio edits it.</p>
 
-<div align="center"><a href="https://github.com/w1tneess/advaita-website"><picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://www.gitskins.com/api/repo-diagram/image?owner=w1tneess&amp;repo=advaita-website&amp;theme=dark&amp;v=1794075728035">
-  <img alt="Architecture diagram of w1tneess/advaita-website" src="https://www.gitskins.com/api/repo-diagram/image?owner=w1tneess&amp;repo=advaita-website&amp;theme=light&amp;v=1794075728035">
-</picture></a></div>
+<a href="https://github.com/w1tneess/advaita-website"><img src="assets/arch-dark.svg#gh-dark-mode-only" width="100%" alt="Architecture of advaita-website: visitor to App Router, Public Layout and Public Pages; pages read a Content Provider and Content Store that syncs with Supabase Postgres and falls back to seed JSON; the site owner signs in to Admin Auth and Admin Panel, which imports data and checks sync health; a pre-render script reads the route config and a public copy of the database."><img src="assets/arch-light.svg#gh-light-mode-only" width="100%" alt="Architecture of advaita-website: visitor to App Router, Public Layout and Public Pages; pages read a Content Provider and Content Store that syncs with Supabase Postgres and falls back to seed JSON; the site owner signs in to Admin Auth and Admin Panel, which imports data and checks sync health; a pre-render script reads the route config and a public copy of the database."></a>
 
-<sub>Drawn from the code by <a href="https://www.gitskins.com">GitSkins</a></sub>
-<!-- /gitskins:architecture -->
+<sub>Structure traced from the code by <a href="https://www.gitskins.com">GitSkins</a></sub>
 
 <h2 data-importer="text" align="left">Let's connect</h2>
 
