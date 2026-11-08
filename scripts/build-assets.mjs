@@ -180,24 +180,26 @@ function pill(label, t, filled) {
 <text x="${w / 2}" y="25.5" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="600" fill="${filled ? t.on : t.text}">${esc(label)}</text></svg>` };
 }
 
-// ---- project card: self-contained framed tile (the README lays them out in a 2-up grid) ----
-// Signature: catalogue line "● ~/projects/<slug>" (● has a live site, ○ source only).
-function card(c, t) {
-  // Drawn at the size a half-width README cell renders (~400px), so 12-14px text stays 12-14px.
-  const W = 420, H = 164, X = 20;
+// ---- project card: self-contained framed tile (the README lays them out in a grid) ----
+// Signature: catalogue line "● ~/projects/<slug>" (● has a live site, ○ source only). Wide = full-row featured card.
+function card(c, t, wide = false) {
+  // Drawn at the size it renders in the README (~400px half width, ~830px full width), so 12-14px text stays 12-14px.
+  const W = wide ? 840 : 420, H = 164, X = 20;
   const live = c.kind === "live";
   const mark = live
     ? `<circle cx="${X + 4}" cy="30" r="4" fill="${t.text}"/>`
     : `<circle cx="${X + 4}" cy="30" r="3.5" fill="none" stroke="${t.muted}"/>`;
   const desc = c.lines.map((l, k) => `<text x="${X}" y="${94 + k * 20}" font-family="${SANS}" font-size="14" fill="${t.muted}">${esc(l)}</text>`).join("");
-  const word = live ? "LIVE ↗" : "SOURCE ↗", cw = Math.round(word.length * 7.2 + 20);
-  const chip = `<rect x="${W - X - cw}" y="130" width="${cw}" height="22" rx="4" fill="${t.text}"/><text x="${W - X - cw / 2}" y="145" text-anchor="middle" font-family="${MONO}" font-size="11" font-weight="700" letter-spacing=".6" fill="${t.on}">${word}</text>`;
+  // faint dot grid fading out from the top-right corner
+  const dots = []; for (let i = 0; i < 8; i++) for (let j = 0; j < 4; j++) dots.push(`<circle cx="${W - 24 - i * 12}" cy="${20 + j * 12}" r="1.4" fill="${t.text}" fill-opacity="${f1(0.26 * (1 - i / 8) * (1 - j / 5))}"/>`);
+  let px = X; const pills = c.tags.map((g) => { const w = Math.round(g.length * 6.8 + 18), o = `<rect x="${px + .5}" y="124.5" width="${w - 1}" height="21" rx="10.5" fill="none" stroke="${t.border}"/><text x="${px + w / 2}" y="139" text-anchor="middle" font-family="${MONO}" font-size="11" fill="${t.muted}">${esc(g)}</text>`; px += w + 6; return o; }).join("");
+  const cx = W - X - 15;
+  const go = `<circle cx="${cx}" cy="135" r="15" fill="${live ? t.text : "none"}" stroke="${t.text}"/><text x="${cx}" y="140.5" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="600" fill="${live ? t.on : t.text}">↗</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.title)}. ${esc(c.lines.join(" "))}">
-<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="12" fill="${t.card}" stroke="${t.border}"/>
+<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="14" fill="${t.card}" stroke="${t.border}"/>${dots.join("")}
 ${mark}<text x="${X + 16}" y="34" font-family="${MONO}" font-size="12" fill="${t.muted}">~/projects/${esc(c.slug)}</text>
-<text x="${X}" y="66" font-family="${SANS}" font-size="20" font-weight="600" fill="${t.text}">${esc(c.title)}</text>
-${desc}<text x="${X}" y="145" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(c.tags.join("  ·  "))}</text>
-${chip}</svg>`;
+<text x="${X}" y="66" font-family="${SANS}" font-size="21" font-weight="600" letter-spacing="-.3" fill="${t.text}">${esc(c.title)}</text>
+${desc}${pills}${go}</svg>`;
 }
 
 // ---- buttons: one quiet outline style for every link ----
@@ -298,7 +300,7 @@ for (const [mode, t] of Object.entries(THEMES)) {
   put(`arch-${mode}`, arch(t));
   put(`stack-${mode}`, stackTiles(stack, t));
   put(`divider-${mode}`, divider(t));
-  for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t));
+  for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t, c.id === "aperture"));
   put(`btn-live-${mode}`, button("Live site ↗", t).svg);
   put(`btn-source-${mode}`, button("Source ↗", t).svg);
   for (const [id, title, slug] of HEADINGS) put(`heading-${id}-${mode}`, heading(title, slug, t));
