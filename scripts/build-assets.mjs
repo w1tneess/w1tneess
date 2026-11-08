@@ -206,11 +206,13 @@ ${desc}<text x="${X}" y="128" font-family="${MONO}" font-size="12" fill="${t.mut
 }
 
 // ---- buttons: one quiet outline style for every link ----
-function button(label, t) {
-  const w = Math.round(label.length * 8 + 40), h = 44, bh = 36;
+// Optional 16px brand/line icon on the left (same muted ink as the text roles allow, never its own colour).
+function button(label, t, d) {
+  const pad = d ? 24 : 0, w = Math.round(label.length * 8 + 40 + pad), h = 44, bh = 36;
+  const icon = d ? glyph(d, 14, 10, 16, t.muted) : "";
   return { w, svg: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">
-<rect x=".5" y=".5" width="${w - 1}" height="${bh - 1}" rx="8" fill="none" stroke="${t.border}"/>
-<text x="${w / 2}" y="23" text-anchor="middle" font-family="${SANS}" font-size="14" font-weight="500" fill="${t.text}">${esc(label)}</text></svg>` };
+<rect x=".5" y=".5" width="${w - 1}" height="${bh - 1}" rx="8" fill="none" stroke="${t.border}"/>${icon}
+<text x="${(w + pad) / 2}" y="23" text-anchor="middle" font-family="${SANS}" font-size="14" font-weight="500" fill="${t.text}">${esc(label)}</text></svg>` };
 }
 
 // ---- square stack tiles ----
@@ -260,6 +262,15 @@ const CONTACTS = [
   { id: "web", label: "Website", value: "advaitachandra.in", href: "https://www.advaitachandra.in/", d: GLOBE },
 ];
 
+// Contact buttons used in the README header and "Let's connect"
+const SOCIALS = [
+  ["website", "advaitachandra.in", GLOBE],
+  ["x", "@w1tneess_", await iconPath("x")],
+  ["instagram", "@adva1ta_", await iconPath("instagram")],
+  ["email", "hi@advaitachandra.in", await iconPath("gmail")],
+  ["support", "Support", await iconPath("githubsponsors")],
+];
+
 // ---- write assets (clean old generated files first) ----
 mkdirSync("assets", { recursive: true });
 for (const f of readdirSync("assets")) if (f.endsWith(".svg")) unlinkSync(`assets/${f}`);
@@ -272,6 +283,7 @@ for (const [mode, t] of Object.entries(THEMES)) {
   for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t));
   put(`btn-live-${mode}`, button("Live site ↗", t).svg);
   put(`btn-source-${mode}`, button("Source ↗", t).svg);
+  for (const [id, label, d] of SOCIALS) put(`btn-${id}-${mode}`, button(label, t, d).svg);
   for (const [id, label, filled] of PILLS) put(`pill-${id}-${mode}`, pill(label, t, filled).svg);
   for (const c of CONTACTS) put(`contact-${c.id}-${mode}`, contact(c, t));
 }

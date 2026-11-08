@@ -1,11 +1,6 @@
 <a href="https://www.advaitachandra.in"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg"><img src="assets/hero-light.svg" width="100%" alt="Advaita Chandra (w1tneess): a wireframe globe spinning above a moving grid. Building small things, keeping the questions open."></picture></a>
 
-<p data-importer="socials" align="center">
-  <a href="https://www.advaitachandra.in">advaitachandra.in</a> ·
-  <a href="https://x.com/w1tneess_">X</a> ·
-  <a href="mailto:hi@advaitachandra.in">Email</a> ·
-  <a href="https://support.advaitachandra.in/">Support</a>
-</p>
+<p data-importer="socials" align="center"><a href="https://www.advaitachandra.in"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-website-dark.svg"><img src="assets/btn-website-light.svg" height="44" alt="Website: advaitachandra.in"></picture></a>&nbsp;<a href="https://x.com/w1tneess_"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-x-dark.svg"><img src="assets/btn-x-light.svg" height="44" alt="X: @w1tneess_"></picture></a>&nbsp;<a href="https://www.instagram.com/adva1ta_/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-instagram-dark.svg"><img src="assets/btn-instagram-light.svg" height="44" alt="Instagram: @adva1ta_"></picture></a>&nbsp;<a href="mailto:hi@advaitachandra.in"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-email-dark.svg"><img src="assets/btn-email-light.svg" height="44" alt="Email: hi@advaitachandra.in"></picture></a>&nbsp;<a href="https://support.advaitachandra.in/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-support-dark.svg"><img src="assets/btn-support-light.svg" height="44" alt="Support my work"></picture></a></p>
 
 <p align="center">Student and developer from India, somewhere between software, philosophy and history.<br>I build websites, useful little tools and interactive archives, and keep a public notebook of what I am reading.</p>
 
@@ -62,4 +57,6 @@
 
 <h2 data-importer="text" align="left">Let's connect</h2>
 
-<p>Reading notes, projects and photography live at <a href="https://www.advaitachandra.in">advaitachandra.in</a>.<br>Say hi at <a href="mailto:hi@advaitachandra.in">hi@advaitachandra.in</a> or on <a href="https://x.com/w1tneess_">X</a>. If something here helped you, the <a href="https://support.advaitachandra.in/">support page</a> keeps it independent.</p>
+<p>Reading notes, projects and photography live at <a href="https://www.advaitachandra.in">advaitachandra.in</a>. If something here helped you, the support page keeps it independent.</p>
+
+<p><a href="https://www.advaitachandra.in"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-website-dark.svg"><img src="assets/btn-website-light.svg" height="44" alt="Website: advaitachandra.in"></picture></a>&nbsp;<a href="https://x.com/w1tneess_"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-x-dark.svg"><img src="assets/btn-x-light.svg" height="44" alt="X: @w1tneess_"></picture></a>&nbsp;<a href="https://www.instagram.com/adva1ta_/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-instagram-dark.svg"><img src="assets/btn-instagram-light.svg" height="44" alt="Instagram: @adva1ta_"></picture></a>&nbsp;<a href="mailto:hi@advaitachandra.in"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-email-dark.svg"><img src="assets/btn-email-light.svg" height="44" alt="Email: hi@advaitachandra.in"></picture></a>&nbsp;<a href="https://support.advaitachandra.in/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/btn-support-dark.svg"><img src="assets/btn-support-light.svg" height="44" alt="Support my work"></picture></a></p>
