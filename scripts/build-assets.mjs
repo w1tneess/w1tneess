@@ -211,6 +211,15 @@ function button(label, t, d, filled = false) {
 <text x="${PX + IW + GAP}" y="23" font-family="${SANS}" font-size="14" font-weight="500" fill="${ink}">${esc(label)}</text></svg>` };
 }
 
+// ---- badge: flat brand-coloured tile, uppercase label with icon (shields.io "for-the-badge" look) ----
+function badge(label, d, bg) {
+  const PX = 14, IW = 14, GAP = 8, up = label.toUpperCase(), tw = Math.round(up.length * 8.6);
+  const w = PX * 2 + IW + GAP + tw, h = 44, bh = 32;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">
+<rect x=".5" y=".5" width="${w - 1}" height="${bh - 1}" rx="4" fill="${bg}" stroke="#fff" stroke-opacity=".22"/>${glyph(d, PX, (bh - IW) / 2, IW, "#fff")}
+<text x="${PX + IW + GAP}" y="20.5" font-family="${SANS}" font-size="12" font-weight="700" letter-spacing="1" fill="#fff">${esc(up)}</text></svg>`;
+}
+
 // ---- square stack tiles ----
 function stackTiles(items, t) {
   const TW = 76, TH = 88, GAP = 10, W = items.length * TW + (items.length - 1) * GAP + 8;
@@ -261,11 +270,11 @@ const CONTACTS = [
 
 // Contact buttons used in the README header and "Let's connect"
 const SOCIALS = [
-  ["website", "advaitachandra.in", GLOBE],
-  ["x", "@w1tneess_", await iconPath("x")],
-  ["instagram", "@adva1ta_", await iconPath("instagram")],
-  ["email", "hi@advaitachandra.in", await iconPath("gmail")],
-  ["support", "Support", await iconPath("githubsponsors")],
+  ["website", "advaitachandra.in", GLOBE, "#2563EB"],
+  ["x", "@w1tneess_", await iconPath("x"), "#000000"],
+  ["instagram", "@adva1ta_", await iconPath("instagram"), "#E4405F"],
+  ["email", "hi@advaitachandra.in", await iconPath("gmail"), "#EA4335"],
+  ["support", "Support", await iconPath("githubsponsors"), "#DB61A2"],
 ];
 
 // ---- write assets (clean old generated files first) ----
@@ -280,7 +289,7 @@ for (const [mode, t] of Object.entries(THEMES)) {
   for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t));
   put(`btn-live-${mode}`, button("Live site ↗", t).svg);
   put(`btn-source-${mode}`, button("Source ↗", t).svg);
-  for (const [id, label, d] of SOCIALS) put(`btn-${id}-${mode}`, button(label, t, d, id === "support").svg);
+  for (const [id, label, d, bg] of SOCIALS) put(`btn-${id}-${mode}`, badge(label, d, bg));
   for (const [id, label, filled] of PILLS) put(`pill-${id}-${mode}`, pill(label, t, filled).svg);
   for (const c of CONTACTS) put(`contact-${c.id}-${mode}`, contact(c, t));
 }
