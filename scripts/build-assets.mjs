@@ -1,6 +1,7 @@
 // Generates the README artwork (light + dark) into assets/ and writes README.md.
 // Run: node scripts/build-assets.mjs [--readme]  (README is now hand-kept in profile-readme-generator format)   (needs network once, for brand icon paths)
-import { mkdirSync, writeFileSync, readdirSync, unlinkSync } from "node:fs";
+import { mkdirSync, writeFileSync, readdirSync, unlinkSync, readFileSync } from "node:fs";
+const ART = readFileSync(new URL("./hero-art.gif", import.meta.url)).toString("base64"); // pixel-art desk, animated
 
 const SANS = "-apple-system,'Segoe UI',Helvetica,Arial,sans-serif";
 const MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,monospace";
@@ -92,25 +93,16 @@ function hero(t) {
 
   const label = (x, y, s, anchor = "start") => `<text x="${x}" y="${y}" text-anchor="${anchor}" font-family="${MONO}" font-size="16" fill="${t.muted}">${s}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-labelledby="t d">
-<title id="t">Advaita Chandra, w1tneess</title><desc id="d">A wireframe globe spinning above a moving grid. Building small things, keeping the questions open. Websites, little tools and archives, from West Bengal, India.</desc>
+<title id="t">Advaita Chandra, w1tneess</title><desc id="d">A pixel-art desk with a glowing monitor. Building small things, keeping the questions open. Websites, little tools and archives, from West Bengal, India.</desc>
 <defs><clipPath id="frame"><rect width="${W}" height="${H}" rx="16"/></clipPath>
-<linearGradient id="fv" x1="0" y1="${HZ}" x2="0" y2="${H}" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff"/></linearGradient>
-<linearGradient id="fh" x1="0" x2="${W}" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop offset=".22" stop-color="#fff" stop-opacity="0"/><stop offset=".55" stop-color="#fff"/></linearGradient>
-<mask id="mh"><rect width="${W}" height="${H}" fill="url(#fh)"/></mask>
-<mask id="floor"><rect y="${HZ}" width="${W}" height="${H - HZ}" fill="url(#fv)" mask="url(#mh)"/></mask></defs>
+<linearGradient id="af" x1="${W * 0.46}" x2="${W * 0.72}" y1="0" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff"/></linearGradient>
+<mask id="am"><rect width="${W}" height="${H}" fill="url(#af)"/></mask></defs>
 <style>.ln{opacity:0;animation:show ${total}s infinite}.cv{animation-duration:${total}s;animation-iteration-count:infinite}@keyframes show{0%,${f1(100 / lines.length - 0.5)}%{opacity:1}${f1(100 / lines.length)}%,100%{opacity:0}}${typeCss}.cur{animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}@media (prefers-reduced-motion:reduce){.ln,.cv,.cur{animation:none}.l0{opacity:1}.cv{display:none}}</style>
 <g clip-path="url(#frame)"><rect width="${W}" height="${H}" fill="${bg}"/>
-<g mask="url(#floor)" stroke="${t.text}" stroke-opacity=".32" fill="none"><path d="${rays}"/>${rows}</g>
-<path d="${ring.b}" fill="none" stroke="${t.muted}" stroke-opacity=".35"/>
-<g fill="none" stroke="${t.text}" stroke-opacity=".16">${spin("b")}<path d="${par.map((p) => p.b).join("")}"/></g>
-<circle cx="${G.x}" cy="${G.y}" r="${G.r}" fill="none" stroke="${t.text}" stroke-opacity=".55"/>
-<g fill="none" stroke="${t.text}" stroke-opacity=".8" stroke-width="1.2">${spin("f")}<path d="${par.map((p) => p.f).join("")}"/></g>
-<path d="${ring.f}" fill="none" stroke="${t.muted}" stroke-opacity=".8"/>
-<circle r="4" fill="${t.text}" cx="${f1(dot[0][0])}" cy="${f1(dot[0][1])}">${anim("cx", dot.map((p) => f1(p[0])))}${anim("cy", dot.map((p) => f1(p[1])))}${anim("opacity", dot.map((p) => (p[2] >= 0 ? 1 : 0.2)))}</circle>
-${label(G.x - G.r - 34, G.y - 76, "software", "end")}${label(G.x + G.r + 40, G.y - 40, "philosophy")}${label(G.x + G.r + 22, G.y + 92, "history")}
 <circle cx="${TX + 5}" cy="99" r="4" fill="${t.text}"/>${label(TX + 18, 104, "~/w1tneess")}
 <text x="${TX - 3}" y="176" font-family="${SANS}" font-size="60" font-weight="500" letter-spacing="-1.8" fill="${t.text}">Advaita Chandra</text>
 ${typed}
+<g mask="url(#am)"><image href="data:image/gif;base64,${ART}" x="${W * 0.4}" y="0" width="${W * 0.6}" height="${H}" preserveAspectRatio="xMidYMid slice" style="image-rendering:pixelated"/><rect x="${W * 0.4}" width="${W * 0.6}" height="${H}" fill="${bg}" fill-opacity=".18"/></g>
 ${label(TX, H - 48, "West Bengal, India  ·  student  ·  builder  ·  explorer")}</g>
 <rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="16" fill="none" stroke="${t.text}" stroke-opacity=".1"/>
 </svg>`;
