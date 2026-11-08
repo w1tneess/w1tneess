@@ -18,7 +18,7 @@
 </div>
 <sub>TypeScript, JavaScript, Python, C#, HTML, CSS &nbsp;·&nbsp; React, Vue, Vite, Tailwind CSS &nbsp;·&nbsp; Node.js, Supabase, Cloudflare &nbsp;·&nbsp; Git</sub>
 
-<h2 data-importer="text" align="left">Selected work</h2>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="assets/heading-selected-dark.svg"><img src="assets/heading-selected-light.svg" width="100%" alt="Selected work"></picture></p>
 
 <p align="center">
   <a href="https://aperture.advaitachandra.in/"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-aperture-dark.svg"><img src="assets/card-aperture-light.svg" width="49%" alt="Aperture: paste a link, keep the post. Saves reels, photos and carousels from Instagram, X, Facebook and Pinterest"></picture></a>
@@ -39,7 +39,7 @@
   <a href="https://github.com/w1tneess/command-deck"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-deck-dark.svg"><img src="assets/card-deck-light.svg" width="49%" alt="Command Deck: exam and syllabus study dashboard on Cloudflare Workers and D1"></picture></a>
 </p>
 
-<h2 data-importer="text" align="left">GitHub</h2>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="assets/heading-github-dark.svg"><img src="assets/heading-github-light.svg" width="100%" alt="GitHub"></picture></p>
 
 <p align="center">
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/activity-dark.svg" /><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/activity-light.svg" width="100%" alt="Contributions in the last year as a 3D city of days, with current streak, longest streak and busiest day" /></picture>
@@ -50,7 +50,7 @@
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-dark.svg" /><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-light.svg" width="49%" alt="Top languages" /></picture>
 </p>
 
-<h2 align="left">How <a href="https://github.com/w1tneess/advaita-website">advaita-website</a> works</h2>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="assets/heading-how-dark.svg"><img src="assets/heading-how-light.svg" width="100%" alt="How advaita-website works"></picture></p>
 
 <p>A personal portfolio and public notebook built with React 19 and Vite. Pages read through a content store that syncs with Supabase and falls back to seed data; an admin studio edits it.</p>
 
@@ -58,6 +58,6 @@
 
 <sub>Structure traced from the code by <a href="https://www.gitskins.com">GitSkins</a></sub>
 
-<h2 data-importer="text" align="left">Let's connect</h2>
+<p><picture><source media="(prefers-color-scheme: dark)" srcset="assets/heading-connect-dark.svg"><img src="assets/heading-connect-light.svg" width="100%" alt="Let's connect"></picture></p>
 
 <p>Reading notes, projects and photography live at <a href="https://www.advaitachandra.in">advaitachandra.in</a>. Say hi at <a href="mailto:hi@advaitachandra.in">hi@advaitachandra.in</a>, and if something here helped you, the <a href="https://support.advaitachandra.in/">support page</a> keeps it independent.</p>

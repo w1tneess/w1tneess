@@ -190,12 +190,14 @@ function card(c, t) {
     ? `<circle cx="${X + 4}" cy="30" r="4" fill="${t.text}"/>`
     : `<circle cx="${X + 4}" cy="30" r="3.5" fill="none" stroke="${t.muted}"/>`;
   const desc = c.lines.map((l, k) => `<text x="${X}" y="${94 + k * 20}" font-family="${SANS}" font-size="14" fill="${t.muted}">${esc(l)}</text>`).join("");
+  const word = live ? "LIVE ↗" : "SOURCE ↗", cw = Math.round(word.length * 7.2 + 20);
+  const chip = `<rect x="${W - X - cw}" y="130" width="${cw}" height="22" rx="4" fill="${t.text}"/><text x="${W - X - cw / 2}" y="145" text-anchor="middle" font-family="${MONO}" font-size="11" font-weight="700" letter-spacing=".6" fill="${t.on}">${word}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.title)}. ${esc(c.lines.join(" "))}">
 <rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="12" fill="${t.card}" stroke="${t.border}"/>
 ${mark}<text x="${X + 16}" y="34" font-family="${MONO}" font-size="12" fill="${t.muted}">~/projects/${esc(c.slug)}</text>
 <text x="${X}" y="66" font-family="${SANS}" font-size="20" font-weight="600" fill="${t.text}">${esc(c.title)}</text>
-${desc}<text x="${X}" y="144" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(c.tags.join("  ·  "))}</text>
-<text x="${W - X}" y="144" text-anchor="end" font-family="${MONO}" font-size="12" fill="${t.text}">${live ? "live site ↗" : "source ↗"}</text></svg>`;
+${desc}<text x="${X}" y="145" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(c.tags.join("  ·  "))}</text>
+${chip}</svg>`;
 }
 
 // ---- buttons: one quiet outline style for every link ----
@@ -210,6 +212,16 @@ function button(label, t, d, filled = false) {
 <rect x=".5" y=".5" width="${w - 1}" height="${bh - 1}" rx="${bh / 2}" fill="${filled ? t.text : t.card}" stroke="${filled ? t.text : t.border}"/>${icon}
 <text x="${PX + IW + GAP}" y="23" font-family="${SANS}" font-size="14" font-weight="500" fill="${ink}">${esc(label)}</text></svg>` };
 }
+
+// ---- section heading: title on the left, mono path on the right, hairline underneath ----
+function heading(title, slug, t) {
+  const W = 840, H = 52;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(title)}">
+<circle cx="5" cy="25" r="4" fill="${t.text}"/><text x="20" y="32" font-family="${SANS}" font-size="24" font-weight="600" letter-spacing="-.4" fill="${t.text}">${esc(title)}</text>
+<text x="${W}" y="31" text-anchor="end" font-family="${MONO}" font-size="12" fill="${t.muted}">~/${slug}</text>
+<rect y="${H - 2}" width="${W}" height="1" fill="${t.border}"/></svg>`;
+}
+const HEADINGS = [["selected", "Selected work", "selected-work"], ["github", "GitHub", "github"], ["how", "How advaita-website works", "architecture"], ["connect", "Let's connect", "connect"]];
 
 // ---- badge: flat brand-coloured tile, uppercase label with icon (shields.io "for-the-badge" look) ----
 function badge(label, d, bg) {
@@ -289,6 +301,7 @@ for (const [mode, t] of Object.entries(THEMES)) {
   for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t));
   put(`btn-live-${mode}`, button("Live site ↗", t).svg);
   put(`btn-source-${mode}`, button("Source ↗", t).svg);
+  for (const [id, title, slug] of HEADINGS) put(`heading-${id}-${mode}`, heading(title, slug, t));
   for (const [id, label, d, bg] of SOCIALS) put(`btn-${id}-${mode}`, badge(label, d, bg));
   for (const [id, label, filled] of PILLS) put(`pill-${id}-${mode}`, pill(label, t, filled).svg);
   for (const c of CONTACTS) put(`contact-${c.id}-${mode}`, contact(c, t));
