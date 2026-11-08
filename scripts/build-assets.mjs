@@ -188,21 +188,22 @@ function pill(label, t, filled) {
 <text x="${w / 2}" y="25.5" text-anchor="middle" font-family="${SANS}" font-size="15" font-weight="600" fill="${filled ? t.on : t.text}">${esc(label)}</text></svg>` };
 }
 
-// ---- project card: index-card content only; the README table cell is its box ----
+// ---- project card: self-contained framed tile (the README lays them out in a 2-up grid) ----
 // Signature: catalogue line "● ~/projects/<slug>" (● has a live site, ○ source only).
 function card(c, t) {
   // Drawn at the size a half-width README cell renders (~400px), so 12-14px text stays 12-14px.
-  const W = 420, H = 144, X = 4;
+  const W = 420, H = 164, X = 20;
   const live = c.kind === "live";
   const mark = live
-    ? `<circle cx="${X + 4}" cy="12" r="4" fill="${t.text}"/>`
-    : `<circle cx="${X + 4}" cy="12" r="3.5" fill="none" stroke="${t.muted}"/>`;
-  const desc = c.lines.map((l, k) => `<text x="${X}" y="${76 + k * 22}" font-family="${SANS}" font-size="14" fill="${t.muted}">${esc(l)}</text>`).join("");
+    ? `<circle cx="${X + 4}" cy="30" r="4" fill="${t.text}"/>`
+    : `<circle cx="${X + 4}" cy="30" r="3.5" fill="none" stroke="${t.muted}"/>`;
+  const desc = c.lines.map((l, k) => `<text x="${X}" y="${94 + k * 20}" font-family="${SANS}" font-size="14" fill="${t.muted}">${esc(l)}</text>`).join("");
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(c.title)}. ${esc(c.lines.join(" "))}">
-${mark}<text x="${X + 16}" y="16" font-family="${MONO}" font-size="12" fill="${t.muted}">~/projects/${esc(c.slug)}</text>
-<text x="${W - X}" y="16" text-anchor="end" font-family="${MONO}" font-size="12" fill="${t.muted}">${live ? "live site" : "source only"}</text>
-<text x="${X}" y="48" font-family="${SANS}" font-size="20" font-weight="500" fill="${t.text}">${esc(c.title)}</text>
-${desc}<text x="${X}" y="128" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(c.tags.join("  ·  "))}</text></svg>`;
+<rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="12" fill="${t.card}" stroke="${t.border}"/>
+${mark}<text x="${X + 16}" y="34" font-family="${MONO}" font-size="12" fill="${t.muted}">~/projects/${esc(c.slug)}</text>
+<text x="${X}" y="66" font-family="${SANS}" font-size="20" font-weight="600" fill="${t.text}">${esc(c.title)}</text>
+${desc}<text x="${X}" y="144" font-family="${MONO}" font-size="12" fill="${t.muted}">${esc(c.tags.join("  ·  "))}</text>
+<text x="${W - X}" y="144" text-anchor="end" font-family="${MONO}" font-size="12" fill="${t.text}">${live ? "live site ↗" : "source ↗"}</text></svg>`;
 }
 
 // ---- buttons: one quiet outline style for every link ----

@@ -1,4 +1,4 @@
-<img src="https://i.pinimg.com/originals/42/b4/22/42b4229a9ec3145edaa895b2415dd720.gif" alt="Banner" width="100%" />
+<img src="assets/banner.gif" alt="Pixel-art desk with a glowing monitor" width="100%" />
 
 <a href="https://www.advaitachandra.in"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/hero-dark.svg"><img src="assets/hero-light.svg" width="100%" alt="Advaita Chandra (w1tneess): a wireframe globe spinning above a moving grid. Building small things, keeping the questions open."></picture></a>
 
