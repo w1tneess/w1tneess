@@ -11,68 +11,17 @@
 
 <h2 data-importer="text" align="left">What I do</h2>
 
-```js
-const advaita = {
-  handle: "w1tneess",
-  based: "India",
-  role: "student & developer",
-  between: ["software", "philosophy", "history"],
-  builds: ["websites", "useful little tools", "interactive archives"],
-  notebook: "advaitachandra.in",
-  questions: "kept open",
-};
-```
-
-<h2 data-importer="text" align="left">Focus areas</h2>
-
-```text
-▸ Software      → websites and useful little tools
-▸ History       → archives that grade their evidence, with timelines and maps
-▸ Philosophy    → a public notebook of what I am reading
-▸ Photography   → kept on the site, next to the notes
-```
+- **Software**: websites and useful little tools
+- **History**: archives that grade their evidence, with timelines and maps
+- **Philosophy**: a public notebook of what I am reading
+- **Photography**: kept on the site, next to the notes
 
 <h2 data-importer="text" align="left">Stack</h2>
 
-<h4 align="left">Languages</h4>
 <div data-importer="techs" align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="python logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" height="40" alt="csharp logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="html5 logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="css3 logo" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="TypeScript" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="JavaScript" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="40" alt="Python" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg" height="40" alt="C#" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" height="40" alt="HTML" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" height="40" alt="CSS" /><img width="32" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="React" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" height="40" alt="Vue" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" height="40" alt="Vite" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="40" alt="Tailwind CSS" /><img width="32" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="40" alt="Node.js" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" height="40" alt="Supabase" /><img width="12" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" height="40" alt="Cloudflare" /><img width="32" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="40" alt="Git" />
 </div>
-
-<h4 align="left">Frontend</h4>
-<div data-importer="techs" align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" height="40" alt="vue logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg" height="40" alt="vite logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="40" alt="tailwind logo" />
-</div>
-
-<h4 align="left">Backend and cloud</h4>
-<div data-importer="techs" align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="40" alt="nodejs logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" height="40" alt="supabase logo" />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg" height="40" alt="cloudflare logo" />
-</div>
-
-<h4 align="left">Tools</h4>
-<div data-importer="techs" align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="40" alt="git logo" />
-</div>
+<sub>TypeScript, JavaScript, Python, C#, HTML, CSS &nbsp;·&nbsp; React, Vue, Vite, Tailwind CSS &nbsp;·&nbsp; Node.js, Supabase, Cloudflare &nbsp;·&nbsp; Git</sub>
 
 <h2 data-importer="text" align="left">Selected work</h2>
 
@@ -103,8 +52,7 @@ const advaita = {
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-dark.svg" /><img src="https://raw.githubusercontent.com/w1tneess/w1tneess/stats-output/languages-light.svg" width="49%" alt="Top languages" /></picture>
 </p>
 
-
-<h3 align="left">How <a href="https://github.com/w1tneess/advaita-website">advaita-website</a> works</h3>
+<h2 align="left">How <a href="https://github.com/w1tneess/advaita-website">advaita-website</a> works</h2>
 
 <p>A personal portfolio and public notebook built with React 19 and Vite. Pages read through a content store that syncs with Supabase and falls back to seed data; an admin studio edits it.</p>
 
