@@ -200,12 +200,15 @@ ${desc}<text x="${X}" y="144" font-family="${MONO}" font-size="12" fill="${t.mut
 
 // ---- buttons: one quiet outline style for every link ----
 // Optional 16px brand/line icon on the left (same muted ink as the text roles allow, never its own colour).
-function button(label, t, d) {
-  const pad = d ? 24 : 0, w = Math.round(label.length * 8 + 40 + pad), h = 44, bh = 36;
-  const icon = d ? glyph(d, 14, 10, 16, t.muted) : "";
+function button(label, t, d, filled = false) {
+  // Icon and label are one centred group; width tracks the label so every pill has the same inner padding.
+  const PX = 16, IW = d ? 16 : 0, GAP = d ? 9 : 0, tw = Math.round(label.length * 7.7);
+  const w = PX * 2 + IW + GAP + tw, h = 44, bh = 36;
+  const ink = filled ? t.on : t.text;
+  const icon = d ? glyph(d, PX, (bh - 16) / 2, 16, filled ? t.on : t.muted) : "";
   return { w, svg: `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(label)}">
-<rect x=".5" y=".5" width="${w - 1}" height="${bh - 1}" rx="8" fill="none" stroke="${t.border}"/>${icon}
-<text x="${(w + pad) / 2}" y="23" text-anchor="middle" font-family="${SANS}" font-size="14" font-weight="500" fill="${t.text}">${esc(label)}</text></svg>` };
+<rect x=".5" y=".5" width="${w - 1}" height="${bh - 1}" rx="${bh / 2}" fill="${filled ? t.text : t.card}" stroke="${filled ? t.text : t.border}"/>${icon}
+<text x="${PX + IW + GAP}" y="23" font-family="${SANS}" font-size="14" font-weight="500" fill="${ink}">${esc(label)}</text></svg>` };
 }
 
 // ---- square stack tiles ----
@@ -277,7 +280,7 @@ for (const [mode, t] of Object.entries(THEMES)) {
   for (const c of CARDS) put(`card-${c.id}-${mode}`, card(c, t));
   put(`btn-live-${mode}`, button("Live site ↗", t).svg);
   put(`btn-source-${mode}`, button("Source ↗", t).svg);
-  for (const [id, label, d] of SOCIALS) put(`btn-${id}-${mode}`, button(label, t, d).svg);
+  for (const [id, label, d] of SOCIALS) put(`btn-${id}-${mode}`, button(label, t, d, id === "support").svg);
   for (const [id, label, filled] of PILLS) put(`pill-${id}-${mode}`, pill(label, t, filled).svg);
   for (const c of CONTACTS) put(`contact-${c.id}-${mode}`, contact(c, t));
 }
