@@ -245,6 +245,7 @@ function divider(t) {
 // ---- content ----
 const GH = (r) => `https://github.com/${OWNER}/${r}`;
 const CARDS = [
+  { id: "aperture", slug: "aperture", title: "Aperture", kind: "live", lines: ["Paste a link, keep the post: saves reels,", "photos and carousels. No ads, no accounts."], tags: ["React", "Node.js", "yt-dlp"], live: "https://aperture.advaitachandra.in/", repo: GH("aperture") },
   { id: "osho", slug: "osho-documentary", title: "Osho Documentary", kind: "live", lines: ["Evidence-graded archive on Osho and", "Rajneeshpuram with timeline and map."], tags: ["Next.js", "TypeScript"], live: "https://oshodocumentary.advaitachandra.in/", repo: GH("osho-documentary") },
   { id: "declutter", slug: "declutter", title: "Declutter", kind: "live", lines: ["Sorts a messy folder, finds duplicates.", "Previews first, never permanently deletes."], tags: ["Python", "Windows"], live: "https://declutter.advaitachandra.in/", repo: GH("declutter") },
   { id: "site", slug: "advaita-website", title: "advaitachandra.in", kind: "live", lines: ["Personal site and public notebook:", "projects, reading notes, photography."], tags: ["React", "Vite", "Supabase"], live: "https://www.advaitachandra.in/", repo: GH("advaita-website") },
@@ -297,7 +298,9 @@ const cardCell = (c) => {
   const btns = [c.live && link(c.live, themed(local("btn-live"), 'height="44"', "Live site")), link(c.repo, themed(local("btn-source"), 'height="44"', "Source code"))].filter(Boolean).join("&nbsp;&nbsp;");
   return `<td width="50%" valign="top">${link(c.live ?? c.repo, themed(local(`card-${c.id}`), 'width="100%"', esc(c.title)))}<br>${btns}<br><br></td>`;
 };
-const rows = [0, 2, 4].map((i) => `<tr>\n${cardCell(CARDS[i])}\n${cardCell(CARDS[i + 1])}\n</tr>`).join("\n");
+const rows = Array.from({ length: Math.ceil(CARDS.length / 2) }, (_, r) => CARDS.slice(r * 2, r * 2 + 2))
+  .map((pair) => `<tr>\n${pair.map(cardCell).join("\n")}${pair.length < 2 ? '\n<td width="50%"></td>' : ""}\n</tr>`)
+  .join("\n");
 const contactCell = (c) => `<td width="50%">${link(c.href, themed(local(`contact-${c.id}`), 'width="100%"', `${c.label}: ${c.value}`))}</td>`;
 const pills = PILLS.map(([id, label, , href]) => link(href, themed(local(`pill-${id}`), 'height="40"', label))).join("\n");
 
